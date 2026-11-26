@@ -1,5 +1,5 @@
 const fs=require('fs'),path=require('path');
-(async()=>{const {x,d}=await require('../fx-research/distortion-reference.cjs')(process.argv[2]);
+(async()=>{const {x,d}=await require('./distortion-reference.cjs')(process.argv[2]);
  const q=addr=>(d.getInt32(addr,true)<<8>>8)/8388608;
  const tab=(addr,n)=>Array.from({length:n},(_,i)=>q(addr+i*4));
  const fmt=n=>{let s=Math.fround(n).toPrecision(9);return s+'f'};

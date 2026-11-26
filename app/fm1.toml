@@ -1,16 +1,16 @@
-name = "Virooos"
+name = "Contagion"
 id_prefix = "FM-1_15"
 usb_manufacturer = "FM1 Research"
-usb_product = "Virooos TEST74"
+usb_product = "Contagion 8V"
 ble = false
 usb_audio_in = false
 usb_audio_out = false
 words = "words.tsv"
 frozen_gen = "../assets/generated"
 include = ["../engine"]
-o2 = ["../engine/virooos.c", "../engine/wave_cache.c", "../engine/lfo.c", "../engine/saturation.c", "../engine/distortion.c", "../engine/eq.c", "../engine/presets.c", "../engine/matrix.c"]
-o2_cflags = ["-O2", "-DVC_VOICES=4", "-DVC_DYNAMIC_WAVES", "-DVC_ACTIVE_LFO", "-DVC_POST_FX", "-DVC_MATRIX"]
+o2 = ["../engine/virooos.c", "../runtime/patch_sysex.c", "../runtime/patch_record.c", "../runtime/wavetable_device.c", "../runtime/wavetable_bank.c", "../runtime/wavetable_rebuild.c", "../runtime/wavetable_cache.c", "../runtime/wavetable_handoff.c", "../runtime/wavetable_voice.c", "../engine/lfo.c", "../engine/saturation.c", "../engine/distortion.c", "../engine/eq.c", "../engine/presets.c", "../engine/matrix.c"]
+o2_cflags = ["-O2", "-DVC_BAND_CACHE", "-DVC_DUAL_RENDER", "-DVC_DYNAMIC_WAVES", "-DVC_ACTIVE_LFO", "-DVC_POST_FX", "-DVC_MATRIX"]
 load_time_double = true
-tagline = "Four-voice native core prototype"
+tagline = "Eight-voice dual-core wavetable synth"
 licence = "Research checkpoint; source licence unconfirmed; platform MPL-2.0"
 credits = "DSP translated from virooos.vercel.app. Platform: fm1-base and Felucca BSP."

@@ -6,7 +6,7 @@ import sys
 from PIL import Image
 
 ROOT = Path(__file__).resolve().parent.parent
-OUT = ROOT / "app-band" / "access_art.inc"
+OUT = ROOT / "app" / "access_art.inc"
 
 
 def rgb565(red, green, blue):

@@ -3,7 +3,7 @@
 #include "../app/dual_core.h"
 #endif
 #ifdef VC_BAND_CACHE
-#include "../experimental/band_voice.h"
+#include "../runtime/wavetable_voice.h"
 #ifndef VC_DYNAMIC_WAVES
 #error VC_BAND_CACHE requires VC_DYNAMIC_WAVES
 #endif

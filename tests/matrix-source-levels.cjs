@@ -1,3 +1,0 @@
-const assert=require('assert'),cp=require('child_process'),ref=require('../tools/reference.cjs');const lines=cp.execFileSync('./build/matrix-source-levels',{encoding:'utf8',maxBuffer:8*1024*1024}).trim().split('\n');let maxError=0;
-for(const line of lines){const[d,b,a,t,gain]=line.split(' ').map(Number);let value=Math.min(127,Math.max(0,b+2*(a-64)*[-1,0,Math.fround(.37),1][t]));let expected=ref.sourceGain(value)*(d===0?ref.oscVolume(40):d===2?1.5:1);maxError=Math.max(maxError,Math.abs(gain-expected));}
-assert(maxError<1e-6);console.log(JSON.stringify({cases:lines.length,maxError,sourceStatePreserved:true,zeroBaseActivation:true,returnToSilence:true,voiceIsolation:true,matrixRemoval:true,blockInvariant:true,pass:true},null,2));

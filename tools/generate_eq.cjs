@@ -1,5 +1,5 @@
 const fs=require('fs'),path=require('path');
-(async()=>{const {x,d}=await require('../fx-research/eq-reference.cjs')(process.argv[2]);
+(async()=>{const {x,d}=await require('./eq-reference.cjs')(process.argv[2]);
  const q=a=>(d.getInt32(a,true)<<8)>>8,ints=(a,n)=>Array.from({length:n},(_,i)=>q(a+i*4));
  const arr=(name,a,type)=>`static const ${type} ${name}[${a.length}]={\n${a.map(v=>type==='float'?Math.fround(v).toPrecision(9)+'f':v).join(',')}\n};\n`;
  let s='/* Original FX coefficients; generated from hash-checked WASM. */\n';

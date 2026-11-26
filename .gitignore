@@ -7,3 +7,5 @@ __pycache__/
 /release/contagion/
 /demo/*.wav
 /docs/screenshots/midi_out.txt
+/presets/*.json
+!/presets/midi-map.json

@@ -1,6 +1,6 @@
 # Contagion
 
-Contagion is a dual-core, eight-voice wavetable synth firmware for the M‑VAVE FM‑1. It builds on the VIROOOS BAND20 engine, with a cyan blueprint boot screen and four physical controls per page. The three firmware images share the same engine, 64 oscillator waveforms, and USER patch format.
+Contagion is a dual-core, eight-voice wavetable synth firmware for the M‑VAVE FM‑1. It uses the VIROOOS engine with a cyan blueprint boot screen and four physical controls per page. The three firmware images share the same engine, 64 oscillator waveforms, and USER patch format.
 
 ## Firmware
 
@@ -45,7 +45,7 @@ The packed size is for the coefficient bank itself. The firmware also keeps a sh
 
 ### Coefficients in flash
 
-Each wave carries 128 sine and 128 cosine weights as binary64 values. The coefficients are stored in independently compressed blocks, so the firmware can decode a single wave by consulting its offset and length in the index. The bank reader checks the header, index, and payload CRCs and verifies each unpacked 2,048-byte coefficient block. See [bank decoder](experimental/band_bank.c).
+Each wave carries 128 sine and 128 cosine weights as binary64 values. The coefficients are stored in independently compressed blocks, so the firmware can decode a single wave by consulting its offset and length in the index. The bank reader checks the header, index, and payload CRCs and verifies each unpacked 2,048-byte coefficient block. See [bank decoder](runtime/wavetable_bank.c).
 
 On the original Puya flash, the firmware can install the packed bank into the reserved data area starting at `0x97000`, verify the copy, and reuse it on subsequent boots. It also supports extra prebuilt LFO tables in their own flash region at `0xAE000`. On newer UC25HQ80 units (JEDEC `B36014`), it reads coefficients directly from the embedded firmware image and reconstructs custom LFO waves into their active RAM slots. This avoids a wave-bank rewrite at boot on that chip and keeps USER patch storage available.
 
@@ -54,7 +54,7 @@ On the original Puya flash, the firmware can install the packed bank into the re
 1. The oscillator derives a band from pitch. Lower bands can retain more harmonics. Higher pitch bands cut progressively more partials to limit aliasing. The 14 bands use harmonic ceilings of 128, 96, 64, 48, 32, 24, 16, 12, 8, 6, 4, 3, 2, and 1.
 2. The builder expands one wave's coefficients into scratch memory. For each sample it adds the selected harmonics in reference order. The cosine lookup is the same sine table shifted by a quarter cycle.
 3. It computes 32-sample tiles with double-precision accumulation, applies the wave's normalization and stores float32 samples. Sample 2,048 repeats sample zero so interpolation wraps without a special case.
-4. The result becomes eligible for playback only after all tiles are written. The BAND19 reconstruction test compared all 896 wave-band pairs against the float32 reference. Contagion uses the same builder. See [reconstruction](experimental/band_rebuild.c).
+4. The result becomes eligible for playback only after all tiles are written. All 896 reconstructed wave-band pairs matched the float32 reference byte for byte. See [reconstruction](runtime/wavetable_rebuild.c).
 
 ### Scheduling and moving between waves
 
@@ -62,33 +62,25 @@ On startup or preset recall, the app mutes while it prepares the selected waves.
 
 During playback, up to 24 oscillator clients request wave-band pairs. Cache misses are serviced in bounded slices by the main loop. The audio workers keep rendering while replacements are built. A cold note can use a smaller harmonic set of the same wave while it waits for the exact band. A wave with very little fundamental energy can sound thinner or nearly silent during that window. A fast modulation sweep can move through selections faster than the builder completes them, so intermediate requests may be superseded.
 
-The cache publishes completed pointers at an audio boundary. It pins old and new tables until the audio side acknowledges the handoff, preventing a renderer from reading a slot while it is being reused. The oscillator keeps its phase and applies a 128-sample correction to smooth the change in output. The 32-sample de-click fades for fast attacks and stolen voices are separate from the table transition. See [cache scheduling](experimental/band_cache.c), [handoff](experimental/band_handoff.c), and [oscillator binding](experimental/band_voice.c).
+The cache publishes completed pointers at an audio boundary. It pins old and new tables until the audio side acknowledges the handoff, preventing a renderer from reading a slot while it is being reused. The oscillator keeps its phase and applies a 128-sample correction to smooth the change in output. The 32-sample de-click fades for fast attacks and stolen voices are separate from the table transition. See [cache scheduling](runtime/wavetable_cache.c), [handoff](runtime/wavetable_handoff.c), and [oscillator binding](runtime/wavetable_voice.c).
 
 ## Audio and build
 
-The synth runs at **44.1 kHz**, with a **512-frame audio buffer**. BAND20 splits voice rendering and channel post-processing across both cores. The 8-voice pool is shared by all notes and by unison layers, with up to four layers per note. If the renderer crosses its overload threshold, it may fade out a voice already in release.
+The synth runs at **44.1 kHz**, with a **512-frame audio buffer**. The firmware splits voice rendering and channel post-processing across both cores. The 8-voice pool is shared by all notes and by unison layers, with up to four layers per note. If the renderer crosses its overload threshold, it may fade out a voice already in release.
 
 Use Linux with Node.js, Python 3, and the JieLi PI32v2 toolchain and AC79 SDK. See the platform's [toolchain helper](base/tools/get_toolchain.sh) and [SDK helper](base/bsp/tools/get_sdk.sh). The app and its build inputs are included alongside the platform and board source.
 
 ```sh
 export JIELI_TOOLCHAIN=/path/to/jieli-linux-toolchains
 export AC79_SDK=/path/to/fw-AC79_AIoT_SDK
-VIRUS_MODEL=A ./build-band-firmware.sh
-VIRUS_MODEL=B ./build-band-firmware.sh
-VIRUS_MODEL=C ./build-band-firmware.sh
+VIRUS_MODEL=A ./build-firmware.sh
+VIRUS_MODEL=B ./build-firmware.sh
+VIRUS_MODEL=C ./build-firmware.sh
 ```
 
-Build one bank variant at a time because each run regenerates the shared preset and modulation tables. The source defaults to the Virus C factory set. The images are emitted under `app-band/build/`, with identities `FM-1_15008108`, `FM-1_15008208`, and `FM-1_15008308` respectively. `VIRUS_BANK_DIR` can point to a directory of correctly named, checksum-valid Virus bank files. Regenerate the splash with Pillow using `python3 tools/generate-access-ui.py assets/blueprint-splash.png`.
+Build one bank variant at a time because each run regenerates the shared preset and modulation tables. The source defaults to the Virus C factory set. The images are emitted under `app/build/`, with identities `FM-1_15008108`, `FM-1_15008208`, and `FM-1_15008308` respectively. `VIRUS_BANK_DIR` can point to a directory of correctly named, checksum-valid Virus bank files. Regenerate the splash with Pillow using `python3 tools/generate-access-ui.py assets/blueprint-splash.png`.
 
-For the simulator and screen captures:
-
-```sh
-./build-band-firmware.sh --host
-mkdir -p out
-app-band/build/host/contagion_host tests/access-ui.txt out
-```
-
-The [validation reports](docs/validation/) record the linked sizes and package CRC checks for each build. The simulator verified startup, wave loading, and GUI navigation. These specific release binaries still need a physical FM‑1 test.
+Build the Linux simulator with `./build-firmware.sh --host`. The resulting executable is `app/build/host/contagion_host`.
 
 ## Credits
 

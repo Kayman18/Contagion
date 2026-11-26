@@ -111,18 +111,18 @@ not reload; new requests during loading replace pending selections. OSC3 keeps
 its independent wave selection; slave/built-in modes follow oscillator 2.
 These are load operations, not continuous wavetable-position modulation.
 
-TEST42 adds CC69/81 envelope-mode selection. Both explicitly enable their LFO,
+CC69/81 select envelope mode. Both explicitly enable their LFO,
 including from OFF: 0 selects CYCLE and any nonzero MIDI value selects ENVELOPE.
 Select OFF on the device. Phase is preserved; switching does not retrigger notes.
-Other LFO controls do not enable an OFF LFO by themselves. TEST43 adds shared/global mode for LFO1/2 via CC70/82. It does not enable an OFF LFO. Shared rate ignores key tracking and per-voice detuning. Trigger phase 0 free-runs in CYCLE; nonzero phase retriggers the shared LFO on each note-on. Envelope mode retriggers even at phase 0. Shared LFOs run while idle, and selecting VOICE/GLOBAL preserves phase. Live envelope-mode changes retain TEST42 behavior (the original applies the shared envelope flag at note-on). TEST41 provides all 62 wavetable
+Other LFO controls do not enable an OFF LFO by themselves. CC70/82 select shared/global mode for LFO1/2. It does not enable an OFF LFO. Shared rate ignores key tracking and per-voice detuning. Trigger phase 0 free-runs in CYCLE; nonzero phase retriggers the shared LFO on each note-on. Envelope mode retriggers even at phase 0. Shared LFOs run while idle, and selecting VOICE/GLOBAL preserves phase. Live envelope-mode changes preserve phase and do not retrigger notes. The LFO offers all 62 wavetable
 shapes 6–67 (WAVE 2–63); shapes above 67 clamp to 67. CC71/74 retain filter
 aliases; they do not control LFO1 contour or oscillator-1 pitch. LFO3 has no new
 CC assignments. Incoming MIDI clock is not supported.
 
-## TEST36 keyboard mode
+## Keyboard mode
 
 CC94 -> keyMode: 0 POLY, 1 MONO 1, 2 MONO 2, 3 MONO 3, 4 MONO 4, 5 HOLD.
-TEST37 adds HOLD. Values above 5 clamp to 5. Released chords remain latched
+Values above 5 clamp to 5. Released chords remain latched
 until the next phrase starts; CC123 releases them and PLAY/panic clears them.
 Mode changes clear notes, held/deferred stacks and pedal state. See README
 for retrigger/glide differences. CC5 still controls portamento.

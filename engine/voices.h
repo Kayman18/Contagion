@@ -1,8 +1,6 @@
 #ifndef VC_VOICES_H
 #define VC_VOICES_H
-/* Physical voices. Precedence: -DVC_VOICES=n (tests), an app header that
- * defines it (the single-core TEST74 app keeps 4), then voice_count.h,
- * which build-band-firmware.sh writes from VOICES (default 12). */
+/* The firmware build generates voice_count.h. VC_VOICES can override it. */
 #ifndef VC_VOICES
 #include "voice_count.h"
 #define VC_VOICES VC_VOICES_BUILD

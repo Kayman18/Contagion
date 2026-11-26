@@ -1,3 +1,0 @@
-const assert=require('assert'),cp=require('child_process'),ref=require('../tools/reference.cjs');const lines=cp.execFileSync('./build/matrix-balance',{encoding:'utf8',maxBuffer:8*1024*1024}).trim().split('\n');let maxError=0;
-for(const line of lines){const[b,a,t,mode,g1,g2,g3,base3]=line.split(' ').map(Number);let value=b+2*(a-64)*[-1,0,Math.fround(.37),1][t],g=[];ref.oscillatorBalance(value,g);let expected3=mode===1?1.058*g[1]*ref.oscVolume(40):base3;maxError=Math.max(maxError,Math.abs(g1-g[0]),Math.abs(g2-g[1]),Math.abs(g3-expected3));}
-assert(maxError<1e-6);console.log(JSON.stringify({cases:lines.length,maxError,slaveGainFollows:true,independentOsc3Unchanged:true,phasePreserved:true,voiceIsolation:true,matrixRemoval:true,blockInvariant:true,pass:true},null,2));

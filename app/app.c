@@ -8,8 +8,8 @@ void vc_band_device_service(unsigned);
 void vc_band_device_stats(unsigned[6]);
 static unsigned band_budget=1024,band_work_peak_ms;
 #define VC_PROFILE_KEYS 1
-#include "../experimental/patch_record.h"
-#include "../experimental/patch_sysex.h"
+#include "../runtime/patch_record.h"
+#include "../runtime/patch_sysex.h"
 int vc_band_device_prepare(const unsigned[3],unsigned);
 #else
 #define VC_PROFILE_KEYS (page!=PAGE_PROFILE)
@@ -209,7 +209,7 @@ enum {PAGE_OSC,PAGE_FILTER,PAGE_ENV,PAGE_FMOD,PAGE_STEREO,PAGE_PERF,PAGE_PROFILE
 #define PAGE_LAST PAGE_BOOST
 #endif
 #ifdef VC_ACCESS_UI
-#include "../app-band/access_pages.inc"
+#include "access_pages.inc"
 #else
 static const int8_t pages[24][8]={
  {VC_SHAPE1,VC_SHAPE2,VC_BALANCE,VC_DETUNE,VC_WAVE1,VC_WAVE2,VC_SYNC,VC_CUTOFF2},
@@ -596,7 +596,7 @@ static void vc_value(int id,char *t){
  else vc_num(t,values[id]);
 }
 #ifdef VC_ACCESS_UI
-#include "../app-band/access_draw.inc"
+#include "access_draw.inc"
 #else
 static void vc_draw(void){
  char t[40];cv_begin(240,32,C_BLACK);cv_text(8,5,&FONT_B,

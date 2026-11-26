@@ -1,7 +1,7 @@
 // Extract and losslessly encode the original Q23 table. No audio-time decoding.
 const fs=require('fs'),assert=require('assert');
 (async()=>{
- const {d}=await require('../fx-research/eq-reference.cjs')(process.argv[2]);
+ const {d}=await require('./eq-reference.cjs')(process.argv[2]);
  const data=[],offsets=[],feedback=[];
  const value=(t,a,k)=>d.getInt32(16779600+((t*128+a)*3+k)*4,true)<<8>>8;
  for(let t=0;t<128;t++){
