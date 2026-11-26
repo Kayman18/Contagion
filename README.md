@@ -10,7 +10,7 @@ Contagion is a dual-core, eight-voice wavetable synth firmware for the M‑VAVE 
 | Virus B | A–F | 648 | [Contagion-Virus-B-8V.fwsc](firmware/Contagion-Virus-B-8V.fwsc) |
 | Virus C | A–F | 650 | [Contagion-Virus-C-8V.fwsc](firmware/Contagion-Virus-C-8V.fwsc) |
 
-Choose one firmware for the factory preset collection you want. Install the `.fwsc` through your usual FM‑1-compatible updater. Back up any important USER patches before flashing. The preset numbers are zero-based and retain the positions in the original SysEx dumps. Programs with arpeggiation enabled were skipped, so some program numbers are gaps. The Virus C presets carry the same program payloads as the earlier C–H set with the supplied A–F bank labels. For example, old C2 is A2, and old E16 is C16.
+Choose one firmware for the factory preset collection you want. Install the `.fwsc` through your usual FM‑1-compatible updater. Back up any important USER patches before flashing. The preset numbers are zero-based and retain the positions in the original SysEx dumps. Programs with arpeggiation enabled were skipped, so some program numbers are gaps. 
 
 The factory files are converted at build time. The synth's USB MIDI SysEx backup and restore serve the 16 native USER slots. Original Virus bank dumps require the build-time importer. Factory sounds can differ where the original patches use unsupported functions such as delay, reverb, chorus, phaser, vocoder, or external input.
 
