@@ -1,0 +1,90 @@
+wait 12000
+expect wave_state 0
+expect dist_mode 0
+expect dist_level 0
+tap HOME
+tap FX
+tap FX
+tap FX
+tap FX
+tap FX
+tap FX
+tap FX
+tap FX
+tap FX
+tap FX
+expect page 22
+spin K2 63
+wait 30
+expect dist_level 63
+shot distortion-page.png
+midi USB 90 30 64
+midi USB 90 34 64
+midi USB 90 37 64
+midi USB 90 3C 64
+wait 100
+expect voices 4
+spin K1 1
+wait 30
+expect dist_mode 1
+wait 300
+expect voices 4
+spin K1 1
+wait 30
+expect dist_mode 2
+wait 300
+expect voices 4
+spin K1 1
+wait 30
+expect dist_mode 3
+wait 300
+expect voices 4
+spin K1 1
+wait 30
+expect dist_mode 4
+wait 300
+expect voices 4
+spin K1 1
+wait 30
+expect dist_mode 5
+wait 300
+expect voices 4
+spin K1 1
+wait 30
+expect dist_mode 6
+wait 300
+expect voices 4
+spin K1 1
+wait 30
+expect dist_mode 7
+wait 300
+expect voices 4
+spin K1 1
+wait 30
+expect dist_mode 8
+wait 300
+expect voices 4
+spin K1 1
+wait 30
+expect dist_mode 9
+wait 300
+expect voices 4
+spin K1 1
+wait 30
+expect dist_mode 10
+wait 300
+expect voices 4
+spin K1 1
+wait 30
+expect dist_mode 11
+wait 300
+expect voices 4
+spin K2 64
+wait 30
+expect dist_level 127
+spin K1 -11
+wait 30
+expect dist_mode 0
+tap PLAY
+expect voices 0
+expect queue_lost 0

@@ -1,0 +1,226 @@
+{
+  "source": {
+    "model": "Virus A",
+    "files": [
+      {
+        "name": "Virus-A-Bank-A.syx",
+        "sha256": "f53f3aaf1083071b51c9ab240be9f39019b076eba1fb3143822e021a7a9a6c3b"
+      },
+      {
+        "name": "Virus-A-Bank-B.syx",
+        "sha256": "fbb7cb057493dc5ed36620776f491fe47f550a671038b21ef2bf71cfee6382d9"
+      }
+    ]
+  },
+  "source_sha256": "6a55d8f862baa60089681fa4dcd10ca0a5c7310dfdf64c8501f624de5e32791c",
+  "original_programs": 256,
+  "excluded_arp_programs": 29,
+  "programs": 227,
+  "banks": [
+    "A",
+    "B"
+  ],
+  "native_parameters": 126,
+  "mapped_source_parameters": 124,
+  "unconnected": [
+    {
+      "parameter": "assign1Source",
+      "nondefault_programs": 33
+    },
+    {
+      "parameter": "assign1Dest",
+      "nondefault_programs": 33
+    },
+    {
+      "parameter": "assign1Amount",
+      "nondefault_programs": 31
+    },
+    {
+      "parameter": "assign2Source",
+      "nondefault_programs": 49
+    },
+    {
+      "parameter": "assign2Dest1",
+      "nondefault_programs": 48
+    },
+    {
+      "parameter": "assign2Amount1",
+      "nondefault_programs": 47
+    },
+    {
+      "parameter": "assign2Dest2",
+      "nondefault_programs": 15
+    },
+    {
+      "parameter": "assign2Amount2",
+      "nondefault_programs": 13
+    },
+    {
+      "parameter": "assign3Source",
+      "nondefault_programs": 10
+    },
+    {
+      "parameter": "assign3Dest1",
+      "nondefault_programs": 11
+    },
+    {
+      "parameter": "assign3Amount1",
+      "nondefault_programs": 10
+    },
+    {
+      "parameter": "assign3Dest2",
+      "nondefault_programs": 5
+    },
+    {
+      "parameter": "assign3Amount2",
+      "nondefault_programs": 5
+    },
+    {
+      "parameter": "assign3Dest3",
+      "nondefault_programs": 0
+    },
+    {
+      "parameter": "assign3Amount3",
+      "nondefault_programs": 0
+    },
+    {
+      "parameter": "lfo1AssignDest",
+      "nondefault_programs": 227
+    },
+    {
+      "parameter": "lfo1AssignAmount",
+      "nondefault_programs": 227
+    },
+    {
+      "parameter": "lfo2AssignDest",
+      "nondefault_programs": 227
+    },
+    {
+      "parameter": "lfo2AssignAmount",
+      "nondefault_programs": 227
+    },
+    {
+      "parameter": "assign4Source",
+      "nondefault_programs": 213
+    },
+    {
+      "parameter": "assign4Dest",
+      "nondefault_programs": 120
+    },
+    {
+      "parameter": "assign4Amount",
+      "nondefault_programs": 227
+    },
+    {
+      "parameter": "assign5Source",
+      "nondefault_programs": 227
+    },
+    {
+      "parameter": "assign5Dest",
+      "nondefault_programs": 173
+    },
+    {
+      "parameter": "assign5Amount",
+      "nondefault_programs": 227
+    },
+    {
+      "parameter": "assign6Source",
+      "nondefault_programs": 227
+    },
+    {
+      "parameter": "assign6Dest",
+      "nondefault_programs": 227
+    },
+    {
+      "parameter": "assign6Amount",
+      "nondefault_programs": 227
+    },
+    {
+      "parameter": "inputMode",
+      "nondefault_programs": 16
+    },
+    {
+      "parameter": "inputSelect",
+      "nondefault_programs": 0
+    },
+    {
+      "parameter": "controlSmoothMode",
+      "nondefault_programs": 227
+    },
+    {
+      "parameter": "inputFollowerMode",
+      "nondefault_programs": 0
+    },
+    {
+      "parameter": "vocoderMode",
+      "nondefault_programs": 28
+    },
+    {
+      "parameter": "softKnob1Name",
+      "nondefault_programs": 227
+    },
+    {
+      "parameter": "softKnob2Name",
+      "nondefault_programs": 227
+    },
+    {
+      "parameter": "secondOutputBalance",
+      "nondefault_programs": 227
+    },
+    {
+      "parameter": "softKnob1Dest",
+      "nondefault_programs": 47
+    },
+    {
+      "parameter": "softKnob2Dest",
+      "nondefault_programs": 0
+    },
+    {
+      "parameter": "inputRingmod",
+      "nondefault_programs": 227
+    },
+    {
+      "parameter": "filterSelect",
+      "nondefault_programs": 0
+    },
+    {
+      "parameter": "category1",
+      "nondefault_programs": 0
+    },
+    {
+      "parameter": "category2",
+      "nondefault_programs": 0
+    }
+  ],
+  "excluded": [
+    "chorusMix",
+    "chorusRate",
+    "chorusDepth",
+    "chorusDelay",
+    "chorusFeedback",
+    "chorusShape",
+    "delayReverbMode",
+    "effectSend",
+    "delayTime",
+    "delayFeedback",
+    "delayRate",
+    "delayDepth",
+    "delayShape",
+    "delayColor",
+    "delayClock",
+    "phaserMode",
+    "phaserMix",
+    "phaserRate",
+    "phaserDepth",
+    "phaserFrequency",
+    "phaserFeedback",
+    "phaserSpread",
+    "arpMode",
+    "arpPattern",
+    "arpOctaves",
+    "arpHold",
+    "arpNoteLength",
+    "arpSwing",
+    "arpClock"
+  ]
+}

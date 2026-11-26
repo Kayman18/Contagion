@@ -1,0 +1,75 @@
+wait 12000
+expect wave_state 0
+master 1000
+wav test33-midi-synth.wav
+midi USB 90 30 64
+midi USB 90 37 64
+midi USB 90 3C 64
+midi USB 90 40 64
+wait 300
+expect voices 4
+midi USB B0 11 20
+midi USB B0 11 30
+midi USB B0 11 40
+wait 80
+expect shape1 64
+expect ui_shape1 64
+spin K1 1
+wait 80
+expect shape1 65
+midi USB B0 12 30
+midi USB B0 16 60
+midi USB B0 1B 18
+midi USB B0 22 20
+midi USB B0 25 08
+midi USB B0 26 10
+wait 150
+expect fm_amount 24
+expect sub_volume 32
+expect noise_volume 8
+expect ring_volume 16
+tap EDIT
+midi USB B0 28 50
+midi USB B0 2A 20
+wait 80
+expect cutoff 80
+expect ui_cutoff 80
+expect resonance 32
+spin K1 1
+wait 80
+expect cutoff 81
+midi USB B0 2B 30
+midi USB B0 33 01
+midi USB B0 34 02
+midi USB B0 35 02
+wait 100
+expect routing 2
+shot midi-filter-controls.png
+tap ENV
+midi USB B0 3B 10
+wait 80
+expect attack 16
+expect ui_attack 16
+spin K1 1
+wait 80
+expect attack 17
+midi USB B0 36 20
+midi USB B0 3C 20
+midi USB B0 3D 60
+midi USB B0 3F 30
+wait 150
+expect f_attack 32
+shot midi-envelope-controls.png
+midi USB B0 5D 4C
+wait 150
+expect transpose 76
+midi USB B0 5D 40
+midi USB B0 4A 64
+midi USB B0 47 14
+wait 80
+expect cutoff 100
+expect resonance 20
+tap PLAY
+wait 100
+expect voices 0
+expect queue_lost 0

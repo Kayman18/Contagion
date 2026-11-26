@@ -1,0 +1,47 @@
+FM1 Virooos TEST74 - transpose modulation
+
+Connects matrix destination 4, bringing the total to 73 connected sound
+destinations. Ten retained presets configure non-neutral routes to it; this
+includes one Random-source route, whose source remains zero as observed in
+the original control path.
+
+Retains fractional transpose and the original unbounded matrix contribution.
+Oscillator key tracking scales its pitch effect, including oscillator 3's
+shared oscillator-2 tracking. Filter tracking and pitch-following saturation
+use the transposed pitch. Per-voice state avoids changing global transpose or
+other voices. Phase is preserved and route removal restores base behavior.
+
+Hardware examples (original zero-based programs):
+C118 T Pot BC or G17 CrossQ BC: hold notes and move the mod wheel.
+D44 GateRim HS and G68 NewSnareBC also use wheel-driven transpose.
+C97 Rise up!SV uses LFO1; D67 Multasm HS uses LFO2.
+Other assigned destinations may also move. Report CPU average/peak,
+xruns/deadlines and any clicks; four-layer unison can provide heavier load.
+
+Validation:
+8192 comparisons against the captured original key-tracking function across
+four key-tracking settings, all route amounts, four source levels and four
+oscillator-3 modes. Maximum increment error 8.952e-8 cycles/sample.
+ASan/UBSan checks verify phase preservation, voice isolation, route removal,
+block-size invariance, pitch-following saturation, and equivalent filter
+tracking for base transpose versus matrix transpose.
+Full/reduced/rounded matrix routing, key-tracking, main-level and pitch
+regressions passed. All 650 presets rendered finite/nonzero output over 4096
+stereo frames each under ASan/UBSan. Unison/Analog Boost host scripts and
+firmware CRC/package, executable-RAM and cache checks passed.
+
+Linked memory:
+Application 530700 / 581564 bytes (50864 free).
+Normal RAM 90840 / 98304 bytes (7464 free; 32 bytes more than TEST73).
+Pool 327836 / 344064 bytes (16228 free; unchanged).
+Executable RAM 24272 / 24576 bytes (304 free; 44 bytes used).
+Matrix result scratch grows by one float (4 bytes).
+
+TEST74 hardware performance remains unmeasured. Last supplied hardware result
+is TEST60: 47% average / 56% peak, clean audio, zero xruns/deadlines.
+Remaining non-null original sound matrix destinations are oscillator 1/2 wave
+selection and initial oscillator phase; original behavior and cache limits
+must be checked before implementation. Patch import/persistence and other
+previously documented limitations remain. No arp, reverb, delay, chorus or
+phaser added. Four physical voices remain.
+Install release/FM1-Virooos-TEST74.fwsc.

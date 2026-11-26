@@ -1,0 +1,335 @@
+[
+  {
+    "cc": 5,
+    "source": "portamento",
+    "native": "VC_PORTAMENTO"
+  },
+  {
+    "cc": 10,
+    "source": "panorama",
+    "native": "VC_PAN"
+  },
+  {
+    "cc": 17,
+    "source": "osc1Shape",
+    "native": "VC_SHAPE1"
+  },
+  {
+    "cc": 18,
+    "source": "osc1PulseWidth",
+    "native": "VC_PW1"
+  },
+  {
+    "cc": 20,
+    "source": "osc1Semitone",
+    "native": "VC_TUNE1"
+  },
+  {
+    "cc": 21,
+    "source": "osc1Keyfollow",
+    "native": "VC_KEYFOLLOW1"
+  },
+  {
+    "cc": 22,
+    "source": "osc2Shape",
+    "native": "VC_SHAPE2"
+  },
+  {
+    "cc": 23,
+    "source": "osc2PulseWidth",
+    "native": "VC_PW2"
+  },
+  {
+    "cc": 25,
+    "source": "osc2Semitone",
+    "native": "VC_TUNE2"
+  },
+  {
+    "cc": 26,
+    "source": "osc2Detune",
+    "native": "VC_DETUNE"
+  },
+  {
+    "cc": 27,
+    "source": "fmAmount",
+    "native": "VC_FM_AMOUNT"
+  },
+  {
+    "cc": 28,
+    "source": "osc2Sync",
+    "native": "VC_SYNC"
+  },
+  {
+    "cc": 29,
+    "source": "osc2FiltEnvAmt",
+    "native": "VC_OSC2_ENV"
+  },
+  {
+    "cc": 30,
+    "source": "fmFiltEnvAmt",
+    "native": "VC_FM_ENV"
+  },
+  {
+    "cc": 31,
+    "source": "osc2Keyfollow",
+    "native": "VC_KEYFOLLOW2"
+  },
+  {
+    "cc": 33,
+    "source": "oscBalance",
+    "native": "VC_BALANCE"
+  },
+  {
+    "cc": 34,
+    "source": "subOscVolume",
+    "native": "VC_SUB_VOLUME"
+  },
+  {
+    "cc": 35,
+    "source": "subOscShape",
+    "native": "VC_SUB_SHAPE"
+  },
+  {
+    "cc": 36,
+    "source": "oscVolume",
+    "native": "VC_SAT_DRIVE"
+  },
+  {
+    "cc": 37,
+    "source": "noiseVolume",
+    "native": "VC_NOISE_VOLUME"
+  },
+  {
+    "cc": 38,
+    "source": "ringModVolume",
+    "native": "VC_RING_VOLUME"
+  },
+  {
+    "cc": 39,
+    "source": "noiseColor",
+    "native": "VC_NOISE_COLOR"
+  },
+  {
+    "cc": 40,
+    "source": "cutoff",
+    "native": "VC_CUTOFF"
+  },
+  {
+    "cc": 41,
+    "source": "cutoff2",
+    "native": "VC_CUTOFF2"
+  },
+  {
+    "cc": 42,
+    "source": "filter1Resonance",
+    "native": "VC_RESONANCE"
+  },
+  {
+    "cc": 43,
+    "source": "filter2Resonance",
+    "native": "VC_RESONANCE2"
+  },
+  {
+    "cc": 44,
+    "source": "filter1EnvAmt",
+    "native": "VC_F_AMOUNT1"
+  },
+  {
+    "cc": 45,
+    "source": "filter2EnvAmt",
+    "native": "VC_F_AMOUNT2"
+  },
+  {
+    "cc": 46,
+    "source": "filter1Keyfollow",
+    "native": "VC_F_KEYFOLLOW1"
+  },
+  {
+    "cc": 47,
+    "source": "filter2Keyfollow",
+    "native": "VC_F_KEYFOLLOW2"
+  },
+  {
+    "cc": 48,
+    "source": "filterBalance",
+    "native": "VC_FILTER_BALANCE"
+  },
+  {
+    "cc": 49,
+    "source": "saturationCurve",
+    "native": "VC_SAT_CURVE"
+  },
+  {
+    "cc": 51,
+    "source": "filter1Mode",
+    "native": "VC_FILTER_MODE"
+  },
+  {
+    "cc": 52,
+    "source": "filter2Mode",
+    "native": "VC_FILTER_MODE2"
+  },
+  {
+    "cc": 53,
+    "source": "filterRouting",
+    "native": "VC_ROUTING"
+  },
+  {
+    "cc": 54,
+    "source": "filtEnvAttack",
+    "native": "VC_F_ATTACK"
+  },
+  {
+    "cc": 55,
+    "source": "filtEnvDecay",
+    "native": "VC_F_DECAY"
+  },
+  {
+    "cc": 56,
+    "source": "filtEnvSustain",
+    "native": "VC_F_SUSTAIN"
+  },
+  {
+    "cc": 57,
+    "source": "filtEnvSustainTime",
+    "native": "VC_F_SLOPE"
+  },
+  {
+    "cc": 58,
+    "source": "filtEnvRelease",
+    "native": "VC_F_RELEASE"
+  },
+  {
+    "cc": 59,
+    "source": "ampEnvAttack",
+    "native": "VC_ATTACK"
+  },
+  {
+    "cc": 60,
+    "source": "ampEnvDecay",
+    "native": "VC_DECAY"
+  },
+  {
+    "cc": 61,
+    "source": "ampEnvSustain",
+    "native": "VC_SUSTAIN"
+  },
+  {
+    "cc": 62,
+    "source": "ampEnvSustainTime",
+    "native": "VC_AMP_SLOPE"
+  },
+  {
+    "cc": 63,
+    "source": "ampEnvRelease",
+    "native": "VC_RELEASE"
+  },
+  {
+    "cc": 67,
+    "source": "lfo1Rate",
+    "native": "VC_LFO_RATE"
+  },
+  {
+    "cc": 68,
+    "source": "lfo1Shape",
+    "native": "VC_LFO_SHAPE"
+  },
+  {
+    "cc": 72,
+    "source": "lfo1Keyfollow",
+    "native": "VC_LFO_KEYTRACK"
+  },
+  {
+    "cc": 73,
+    "source": "lfo1TrigPhase",
+    "native": "VC_LFO_TRIGGER"
+  },
+  {
+    "cc": 75,
+    "source": "lfo1Osc2",
+    "native": "VC_LFO_OSC2"
+  },
+  {
+    "cc": 76,
+    "source": "lfo1PulseWidth",
+    "native": "VC_LFO_PW"
+  },
+  {
+    "cc": 77,
+    "source": "lfo1Resonance",
+    "native": "VC_LFO_RESONANCE"
+  },
+  {
+    "cc": 78,
+    "source": "lfo1FilterGain",
+    "native": "VC_LFO_FILTER_GAIN"
+  },
+  {
+    "cc": 79,
+    "source": "lfo2Rate",
+    "native": "VC_LFO2_RATE"
+  },
+  {
+    "cc": 80,
+    "source": "lfo2Shape",
+    "native": "VC_LFO2_SHAPE"
+  },
+  {
+    "cc": 83,
+    "source": "lfo2Contour",
+    "native": "VC_LFO2_CONTOUR"
+  },
+  {
+    "cc": 84,
+    "source": "lfo2Keyfollow",
+    "native": "VC_LFO2_KEYTRACK"
+  },
+  {
+    "cc": 85,
+    "source": "lfo2TrigPhase",
+    "native": "VC_LFO2_TRIGGER"
+  },
+  {
+    "cc": 86,
+    "source": "lfo2Shape12",
+    "native": "VC_LFO2_SHAPE_AMOUNT"
+  },
+  {
+    "cc": 87,
+    "source": "lfo2FmAmount",
+    "native": "VC_LFO2_FM_AMOUNT"
+  },
+  {
+    "cc": 88,
+    "source": "lfo2Cutoff1",
+    "native": "VC_LFO2_CUTOFF1"
+  },
+  {
+    "cc": 89,
+    "source": "lfo2Cutoff2",
+    "native": "VC_LFO2_CUTOFF2"
+  },
+  {
+    "cc": 90,
+    "source": "lfo2Panorama",
+    "native": "VC_LFO2_PAN"
+  },
+  {
+    "cc": 91,
+    "source": "patchVolume",
+    "native": "VC_PATCH_VOLUME"
+  },
+  {
+    "cc": 93,
+    "source": "transpose",
+    "native": "VC_TRANSPOSE"
+  },
+  {
+    "cc": 69,
+    "source": "lfo1EnvMode"
+  },
+  {
+    "cc": 81,
+    "source": "lfo2EnvMode"
+  }
+]

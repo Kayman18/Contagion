@@ -1,0 +1,18 @@
+TEST48 — FACTORY PRESETS WITHOUT ARP
+
+Install release/FM1-Virooos-TEST48.fwsc. Startup stays INIT.
+Turn PRESET to select C0, then browse. Wait for loading before playing.
+On the preset page: K1 bank C–H, K2 next/previous retained program, K3 INIT.
+Original program numbers have gaps because 118 arp presets were removed.
+MIDI: CC0 bank 0–5; Program Change original number 0–127. Removed numbers ignored.
+
+Try several sounds in each bank. Rapidly select programs while loading; check
+that the final name/program is used and sound resumes. Test C23 (Digedi JS)
+for shared LFO3. Check K3 returns INIT and reboot returns INIT.
+Record CPU average/peak, xruns/deadlines and loading duration with four notes.
+Some patches are intentionally mono according to their original key mode.
+
+PARTIAL means remaining missing features can alter the sound. Modulation
+matrix, unison and other listed gaps remain; do not expect full equivalence.
+No arp is implemented. Reverb/delay/chorus/phaser remain excluded.
+Factory edits are not saved. TEST47 is the previous firmware fallback.

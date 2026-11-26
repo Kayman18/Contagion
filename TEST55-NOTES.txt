@@ -1,0 +1,44 @@
+FM1 Virooos TEST55 - FM modulation matrix
+
+Connects four original matrix destinations:
+16 FM amount; 18 filter-envelope-to-FM depth; 53 LFO2-to-FM depth;
+75 velocity-to-FM depth. The previous 21 filter and pan targets remain connected.
+Original fractional depths, individual sensitivity clamps, bipolar scaling,
+combined amount clamp and special FM-curve endpoint at 127 are preserved.
+Modulation is evaluated at the existing 32-frame control cadence. No added
+persistent state. FM source modes remain the existing supported native modes;
+this update does not implement external audio input or new FM sources.
+
+35 retained presets configure non-neutral routes to these four targets.
+473 retained presets configure a route to at least one supported destination.
+650 factory presets remain; 118 arp programs excluded. No arp, EQ/distortion only.
+Other matrix targets, unison and other documented gaps remain unfinished.
+
+Hardware listening checks:
+C program 33 FnkNastyBC: hold notes and sweep the mod wheel (FM amount).
+C program 91 Red lineSV: listen for LFO2 movement in FM amount.
+C program 117 TiptaptuSV: compare velocities while moving the wheel (FM velocity).
+D program 7 BellBoy BC: hold notes and sweep the wheel (FM amount).
+These are original zero-based program numbers shown in the preset page.
+Report CPU average/peak, xruns and deadlines for a four-note test.
+No physical FM-1 testing was performed on TEST55.
+
+Linked memory:
+Application 478924 / 581564 bytes; 102640 free (+436 vs TEST54).
+Normal RAM 89704 / 98304 bytes; 8600 free (unchanged).
+Pool 327836 / 344064 bytes; 16228 free (unchanged).
+Executable RAM 20168 / 24576 bytes; 4408 free (+308 vs TEST54).
+Temporary matrix result array increases by 16 bytes.
+
+Validation:
+New FM matrix integration: 4648 cases (650 factory patches and 512 synthetic
+patches, four source/controller configurations each), maximum absolute FM-depth
+error 0.00000360455 against captured original JS. ASan/UBSan passed.
+Full/reduced matrix evaluator, filter/pan/balance regressions, existing FM
+curve/audio/noise tests, host controller/INIT regression, and short all-preset
+render results are included under validation/test55-*.
+Firmware CRC/exact payload and target memory placement checks pass.
+Full tests/run.sh was last completed on TEST52; historical evidence is retained.
+Short preset renders are not listening-equivalence or physical CPU tests.
+
+Firmware: release/FM1-Virooos-TEST55.fwsc (FM-1_15005500).

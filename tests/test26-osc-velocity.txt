@@ -1,0 +1,72 @@
+wait 12000
+expect wave_state 0
+master 1600
+wav test26-osc-velocity.wav
+tap HOME
+tap FX
+tap FX
+tap FX
+tap FX
+tap FX
+tap FX
+tap FX
+expect page 18
+expect vel_shape1 64
+expect vel_pw 64
+expect vel_pan 64
+spin K1 32
+spin K2 -32
+spin K4 32
+wait 40
+expect vel_shape1 96
+expect vel_pan 96
+shot osc-velocity-shape.png
+midi USB 90 3C 20
+wait 400
+midi USB 80 3C 00
+wait 300
+midi USB 90 3C 40
+wait 400
+midi USB 80 3C 00
+wait 300
+midi USB 90 3C 64
+wait 400
+midi USB 80 3C 00
+wait 300
+midi USB 90 3C 7F
+wait 400
+midi USB 80 3C 00
+wait 300
+spin K1 -32
+spin K2 32
+spin K3 32
+spin K4 -64
+wait 40
+expect vel_shape1 64
+expect vel_pw 96
+expect vel_pan 32
+tap SEL
+spin K1 63
+spin K2 63
+spin K3 40
+spin K4 40
+wait 40
+shot osc-velocity-pulse.png
+midi USB 90 30 20
+midi USB 90 37 40
+midi USB 90 3C 64
+midi USB 90 40 7F
+wait 1000
+expect voices 4
+tap SEL
+spin K3 -32
+spin K4 32
+wait 40
+expect vel_pw 64
+expect vel_pan 64
+tap FX
+expect page 19
+tap PLAY
+wait 100
+expect voices 0
+expect queue_lost 0

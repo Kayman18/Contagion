@@ -1,0 +1,39 @@
+BAND13 EXP — reuse ready tables across muted preset preparation
+
+Effects deferred. Default worker budget remains1024. No new hardware results.
+
+Ready cache entries now survive muted handoff reset during preset/LFO/wave
+preparation. Required bands are reserved up front so preparing another wave
+cannot evict a ready band needed later in the same preload. Newly completed
+bands are also reserved until preparation finishes; then temporary pins are
+released. Incomplete tables are discarded, never published or reused.
+
+Only metadata is copied, not waveform samples. The audio mute acknowledgment
+remains required before resetting ownership. Preset changes still panic/mute
+as before; this is not seamless preset switching. Other startup/LFO work can
+still cause a pause even when oscillator tables are reused.
+
+Fixed bank-reinitialization recovery: preload progress now resets along with
+the bank, avoiding resume from an obsolete partial index.
+
+ASan/UBSan tests:
+- identical three-wave selection: zero reconstructions
+- changing one of three waves: five band reconstructions
+- duplicate waves reuse existing entries
+- required reference tables remain byte-exact
+- changed selection during partial preload recovers
+- bank reinitialization restarts preparation
+- first prepared audio request needs no reconstruction
+- pending publication is safely discarded during acknowledged mute
+Target link and package CRC/decryption/loader/entry validation pass.
+
+Normal RAM61044 /98304; pool155720 /344064, unchanged from BAND12.
+Muted preparation adds a temporary320-byte metadata copy on the main-loop
+stack. Application image532532 /581564 bytes.
+
+Test repeat loading a preset, then change between presets sharing waves.
+Check loading time and FAILURES on GLO twice. BUILT counts only newly rebuilt
+tables since preparation reset; READY may include retained unused entries.
+Listen for correct timbre after changes and report CPU/xruns/deadlines.
+BAND12 diagnostics and K1 budget adjustment remain available.
+BAND8 and TEST74 rollback firmware included.

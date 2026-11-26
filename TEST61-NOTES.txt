@@ -1,0 +1,51 @@
+FM1 Virooos TEST61 - Analog Boost
+
+New ANALOG BOOST page after UNISON. Reach it with ALGO or FX.
+K1: intensity 0..127 (zero bypasses).
+K2: tune 0..127.
+INIT starts at intensity 0, tune 64.
+Factory intensity and tune are now mapped; 419 of 650 retained presets use
+nonzero intensity. Examples: C0 AutoBendBC (40/32), C4 BlkvelvtSV (14/0),
+C5 B-SquareBC (65/32). Program numbers are the original zero-based numbers.
+
+Original signal position: distortion -> Analog Boost -> EQ.
+The native stereo filter follows the captured original WASM's Q23 coefficient
+table, recurrence, clipping and separate channel histories. Live edits preserve
+history; loading a patch resets it. Zero intensity preserves the native bypass
+audio while keeping the filter history ready for re-enabling.
+
+All 16384 intensity/tune combinations have exactly matching coefficients.
+The original 196608-byte table is losslessly encoded in 37512 bytes, including
+row offsets and feedback values. Decoding happens on parameter/preset changes,
+not per audio sample. Only the selected coefficients and stereo history occupy
+RAM (32-byte state). No new WAV partition data or large buffers are required.
+
+Validation:
+- 16656 reference cases, 4325376 output samples; maximum absolute difference
+  5.056e-7, RMS 3.104e-8. Includes all settings, long tails and live changes.
+- ASan/UBSan coefficient decoder/audio checks passed.
+- 98304 integrated output samples match a separate distortion/boost/EQ chain
+  exactly, across all 12 distortion settings, four voices and live edits.
+- Existing EQ reference, stress, live-change and integration tests passed.
+- All 650 presets: 81900 parameter checks; 4096 stereo frames each with finite,
+  nonzero output.
+- Host controls/preset loading, executable-RAM placement, cache layout and
+  firmware packaging checks passed.
+
+Linked memory:
+Application 525872 / 581564 bytes (55692 free).
+Normal RAM 90008 / 98304 bytes (8296 free; +96 bytes vs TEST60).
+Pool 327836 / 344064 bytes (16228 free; unchanged).
+Executable RAM 23732 / 24576 bytes (844 free).
+
+TEST60 unison hardware baseline supplied by user:
+47% average CPU, 56% peak, zero xruns/deadlines, clean audio.
+TEST61 hardware performance has not yet been measured. Please try intensity
+127 with tune low/mid/high while using four-layer unison, and report CPU
+average/peak and xruns/deadlines. Listen for clicks when editing the controls.
+
+No arp, reverb, delay, chorus or phaser added. Existing partial-preset limitations
+and four-voice/unison cap remain. This adds the base Analog Boost controls;
+it does not claim completion of unrelated missing modulation destinations.
+
+Install release/FM1-Virooos-TEST61.fwsc.

@@ -1,0 +1,48 @@
+BAND16 EXP —16 on-device user patch slots
+
+Effects remain deferred. This is the first firmware integrating patch storage.
+No hardware power-cycle result yet.
+
+Use ALGO to reach USER PATCHES (after ANALOG BOOST).
+K1 selects slot1..16. SAVE stores the current edited patch into that slot,
+overwriting that user slot only. K2 recalls the selected occupied slot.
+The screen shows stored name and READY/SAVED/RECALLED/EMPTY/FAILED/BAD BANK.
+SAVE from another page stores into the currently selected user slot and opens
+USER PATCHES. There is no rename editor yet: source name is retained, INIT for
+an initial patch. Recall does not happen automatically at boot.
+
+Save captures all126 native controls and11 matrix routes in the audio event
+handler, then requests mute. The main loop waits for audio acknowledgment
+before encoding and writing the bank. It reads flash back and compares it
+before displaying SAVED. Recall validates the slot before queuing a stable
+snapshot to audio, then uses the normal wave/LFO preparation before unmuting.
+Save/recall interrupts held notes; it is not a seamless live-performance save.
+Storage jobs lock slot selection and reject additional jobs while busy.
+Queue-overflow panic clears queued storage jobs rather than leaving them stuck.
+
+The3044-byte bank uses existing OBJ_SETTINGS at0xFC000 (A/B sector pair),
+separate from panel calibration and WAV/LFO partitions. Factory presets are
+unchanged. No writes occur until SAVE is pressed. The platform supplies A/B
+CRC and torn-write handling; real power-loss behavior has not been tested here.
+A readable but incompatible/invalid bank is reported BAD BANK and not
+silently overwritten. The platform reports no readable valid object as absent;
+in that case an empty bank is initialized in RAM, not automatically written.
+
+Validation:host simulator saves an edited factory sound, switches away,
+recalls all native parameters and matrix routes exactly, handles empty slots,
+saves another slot, and recalls after simulated reboot. Screen visually checked.
+Codec ASan/UBSan tests and schema validation pass. Target firmware and package
+checks pass. Actual hardware flash persistence and write failure paths still
+need testing; host storage does not simulate interrupted flash writes.
+
+Normal RAM67668 /98304 (+6624 versus BAND15), pool155720 /344064 unchanged.
+Application image535796 /581564.16 slots stored in3044 bytes.
+The additional RAM includes candidate/readback and stable audio snapshots.
+Default cache budget1024 and audio DSP remain unchanged.
+
+Hardware test: edit cutoff, choose an empty user slot, press SAVE and wait for
+SAVED/loading completion. Load a different factory preset, return to USER
+PATCHES and turn K2 to recall. Then power-cycle and recall the same slot.
+Confirm sound/settings/name and check FAILURES plus CPU/xruns/deadlines.
+BAND15 rollback firmware and TEST74 are included. Older firmware has no
+user-slot UI; do not assume other firmware preserves this settings object.

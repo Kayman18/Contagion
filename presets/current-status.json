@@ -1,0 +1,7859 @@
+{
+  "scope": "Native control mapping only; excluded effects, cache latency and other port differences are not a sound-equivalence certification.",
+  "flags": {
+    "1": "voice limit",
+    "2": "external FM",
+    "4": "input",
+    "8": "vocoder",
+    "16": "matrix gap",
+    "32": "wave cache"
+  },
+  "counts": {
+    "MAPPED": 618,
+    "PARTIAL": 15,
+    "CACHE": 17
+  },
+  "presets": [
+    {
+      "bank": "A",
+      "program": 0,
+      "name": "AutoBendBC",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "A",
+      "program": 1,
+      "name": "Avenues JS",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [
+        102,
+        117,
+        65,
+        105
+      ],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "A",
+      "program": 2,
+      "name": "Back280sSV",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [
+        117,
+        102
+      ],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "A",
+      "program": 3,
+      "name": "BC NewVoV3",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "A",
+      "program": 4,
+      "name": "BlkvelvtSV",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [
+        117
+      ],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "A",
+      "program": 5,
+      "name": "B-SquareBC",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [
+        117
+      ],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "A",
+      "program": 6,
+      "name": "BusysawsSV",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [
+        67,
+        117
+      ],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "A",
+      "program": 7,
+      "name": "ChilloutJS",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [
+        67
+      ],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "A",
+      "program": 8,
+      "name": "ChrunchyJS",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [
+        105,
+        65,
+        111
+      ],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "A",
+      "program": 9,
+      "name": "ClubbassSV",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "A",
+      "program": 10,
+      "name": "ClubtoolBC",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [
+        117
+      ],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "A",
+      "program": 11,
+      "name": "Comm basSV",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [
+        102
+      ],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "A",
+      "program": 12,
+      "name": "CommerseSV",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [
+        117
+      ],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "A",
+      "program": 13,
+      "name": "Contra  BC",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [
+        102
+      ],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "A",
+      "program": 14,
+      "name": "CosmicbsSV",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [
+        67,
+        102
+      ],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "A",
+      "program": 15,
+      "name": "CreameryBC",
+      "flags": 2,
+      "status": "PARTIAL",
+      "limitations": [
+        "External FM source unsupported"
+      ],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [
+        108,
+        117
+      ],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "A",
+      "program": 17,
+      "name": "Da Funk BC",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "A",
+      "program": 18,
+      "name": "Dawn    JS",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [
+        105,
+        117,
+        106,
+        95,
+        110
+      ],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "A",
+      "program": 19,
+      "name": "Decay   JS",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "A",
+      "program": 20,
+      "name": "Deep9thsBC",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "A",
+      "program": 21,
+      "name": "Devlish SV",
+      "flags": 1,
+      "status": "PARTIAL",
+      "limitations": [
+        "Unison exceeds four layers per note"
+      ],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [
+        102
+      ],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "A",
+      "program": 22,
+      "name": "DHR Amb BC",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [
+        65
+      ],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "A",
+      "program": 23,
+      "name": "Digedi  JS",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "A",
+      "program": 24,
+      "name": "Driver  SV",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [
+        102
+      ],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "A",
+      "program": 25,
+      "name": "Drmswpr SV",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [
+        102
+      ],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "A",
+      "program": 26,
+      "name": "Duffer  BC",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "A",
+      "program": 27,
+      "name": "Edgy    JS",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [
+        117,
+        102
+      ],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "A",
+      "program": 28,
+      "name": "Etheral SV",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "A",
+      "program": 29,
+      "name": "Far EastJS",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [
+        117,
+        65,
+        105
+      ],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "A",
+      "program": 30,
+      "name": "FatWah  BC",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [
+        95,
+        102
+      ],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "A",
+      "program": 31,
+      "name": "Five in1BC",
+      "flags": 1,
+      "status": "PARTIAL",
+      "limitations": [
+        "Unison exceeds four layers per note"
+      ],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [
+        117
+      ],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "A",
+      "program": 32,
+      "name": "FlyBy   BC",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [
+        102,
+        117
+      ],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "A",
+      "program": 33,
+      "name": "FnkNastyBC",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [
+        117,
+        95
+      ],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "A",
+      "program": 34,
+      "name": "Freno   BC",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [
+        102
+      ],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "A",
+      "program": 35,
+      "name": "Fripper JS",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [
+        102
+      ],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "A",
+      "program": 36,
+      "name": "Future XSV",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [
+        62
+      ],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "A",
+      "program": 37,
+      "name": "FuturwldSV",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [
+        102
+      ],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "A",
+      "program": 38,
+      "name": "GarBass8BC",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "A",
+      "program": 40,
+      "name": "Glassey SV",
+      "flags": 2,
+      "status": "PARTIAL",
+      "limitations": [
+        "External FM source unsupported"
+      ],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [
+        106
+      ],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "A",
+      "program": 42,
+      "name": "GoindownSV",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "A",
+      "program": 44,
+      "name": "Gulf    JS",
+      "flags": 32,
+      "status": "CACHE",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [
+        65
+      ],
+      "waveCacheDestinations": [
+        8,
+        13
+      ]
+    },
+    {
+      "bank": "A",
+      "program": 45,
+      "name": "Hifive  SV",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [
+        117
+      ],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "A",
+      "program": 46,
+      "name": "HOA Pad SV",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [
+        102
+      ],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "A",
+      "program": 47,
+      "name": "Hollow  JS",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [
+        105
+      ],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "A",
+      "program": 48,
+      "name": "Homeboy JS",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [
+        105,
+        95,
+        65
+      ],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "A",
+      "program": 49,
+      "name": "HongKongBC",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [
+        62
+      ],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "A",
+      "program": 52,
+      "name": "IntntentSV",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [
+        67
+      ],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "A",
+      "program": 53,
+      "name": "Jazzy   JS",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [
+        102,
+        65,
+        105
+      ],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "A",
+      "program": 54,
+      "name": "JoeZolo BC",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [
+        102
+      ],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "A",
+      "program": 55,
+      "name": "KatmanduJS",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [
+        111,
+        65
+      ],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "A",
+      "program": 56,
+      "name": "KingsizeJS",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [
+        105
+      ],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "A",
+      "program": 57,
+      "name": "LatitudeSV",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "A",
+      "program": 58,
+      "name": "Let's goSV",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [
+        67
+      ],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "A",
+      "program": 59,
+      "name": "Lite    JS",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "A",
+      "program": 60,
+      "name": "LongskrtSV",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [
+        102
+      ],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "A",
+      "program": 61,
+      "name": "Maja    JS",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [
+        102
+      ],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "A",
+      "program": 62,
+      "name": "Mamba   JS",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [
+        62,
+        103
+      ],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "A",
+      "program": 63,
+      "name": "MentalitJS",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [
+        65,
+        70,
+        71,
+        67
+      ],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "A",
+      "program": 64,
+      "name": "MetalsynJS",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [
+        102
+      ],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "A",
+      "program": 66,
+      "name": "MoveMyMWBC",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [
+        102
+      ],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "A",
+      "program": 67,
+      "name": "Muzzle  BC",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [
+        102
+      ],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "A",
+      "program": 68,
+      "name": "MWC#ord BC",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "A",
+      "program": 69,
+      "name": "MystiqueJS",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [
+        117
+      ],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "A",
+      "program": 70,
+      "name": "NasalbasSV",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [
+        102
+      ],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "A",
+      "program": 71,
+      "name": "NastyFX JS",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [
+        70,
+        71,
+        67,
+        117
+      ],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "A",
+      "program": 72,
+      "name": "NewVoV4 BC",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [
+        95,
+        118
+      ],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "A",
+      "program": 73,
+      "name": "NoiztoyzJS",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [
+        108
+      ],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "A",
+      "program": 74,
+      "name": "OddgssaySV",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [
+        117,
+        67
+      ],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "A",
+      "program": 75,
+      "name": "OffSoft BC",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [
+        62,
+        102
+      ],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "A",
+      "program": 76,
+      "name": "Oil-crwlSV",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "A",
+      "program": 77,
+      "name": "OwWah   BC",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [
+        102
+      ],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "A",
+      "program": 78,
+      "name": "Pathos  BC",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [
+        102
+      ],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "A",
+      "program": 79,
+      "name": "Peace   BC",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [
+        102
+      ],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "A",
+      "program": 80,
+      "name": "Pensive BC",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "A",
+      "program": 81,
+      "name": "Phlute JS",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [
+        117
+      ],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "A",
+      "program": 82,
+      "name": "Pitchy  BC",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [
+        117,
+        95
+      ],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "A",
+      "program": 83,
+      "name": "PlaycoolSV",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [
+        67,
+        102,
+        117
+      ],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "A",
+      "program": 84,
+      "name": "Plugged JS",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [
+        117
+      ],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "A",
+      "program": 85,
+      "name": "Polar   JS",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [
+        62,
+        103,
+        63
+      ],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "A",
+      "program": 86,
+      "name": "PolyGrovJS",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [
+        102
+      ],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "A",
+      "program": 87,
+      "name": "PseudoTBSV",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [
+        117
+      ],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "A",
+      "program": 88,
+      "name": "Pulsar  SV",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [
+        117
+      ],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "A",
+      "program": 89,
+      "name": "Q-Pad   BC",
+      "flags": 32,
+      "status": "CACHE",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [
+        117
+      ],
+      "waveCacheDestinations": [
+        8
+      ]
+    },
+    {
+      "bank": "A",
+      "program": 90,
+      "name": "RbbrHrp2BC",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [
+        117,
+        102
+      ],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "A",
+      "program": 91,
+      "name": "Red lineSV",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "A",
+      "program": 92,
+      "name": "ReflxshnBC",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [
+        66
+      ],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "A",
+      "program": 93,
+      "name": "RepeaterJS",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "A",
+      "program": 94,
+      "name": "RestlessBC",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [
+        102
+      ],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "A",
+      "program": 95,
+      "name": "Rezoid  SV",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "A",
+      "program": 96,
+      "name": "Rezzer2 BC",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [
+        95
+      ],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "A",
+      "program": 97,
+      "name": "Rise up!SV",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "A",
+      "program": 98,
+      "name": "RubbrHrpBC",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [
+        102
+      ],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "A",
+      "program": 99,
+      "name": "Sawz 2  SV",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [
+        117
+      ],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "A",
+      "program": 101,
+      "name": "S&HOrganBC",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [
+        102
+      ],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "A",
+      "program": 102,
+      "name": "Sickly  BC",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [
+        117
+      ],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "A",
+      "program": 104,
+      "name": "SinebassJS",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [
+        62,
+        67
+      ],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "A",
+      "program": 105,
+      "name": "SomethngSV",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [
+        67
+      ],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "A",
+      "program": 106,
+      "name": "SpitfireJS",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [
+        95,
+        102
+      ],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "A",
+      "program": 107,
+      "name": "Spoiled SV",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [
+        117
+      ],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "A",
+      "program": 108,
+      "name": "SpringPdSV",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [
+        66,
+        95,
+        67
+      ],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "A",
+      "program": 109,
+      "name": "Spring  SV",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [
+        102
+      ],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "A",
+      "program": 110,
+      "name": "StellarpSV",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [
+        117
+      ],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "A",
+      "program": 111,
+      "name": "StickyPdBC",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "A",
+      "program": 112,
+      "name": "SubmergeSV",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [
+        117
+      ],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "A",
+      "program": 113,
+      "name": "T-Axxe  JS",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [
+        102,
+        117
+      ],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "A",
+      "program": 114,
+      "name": "Ten InchJS",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [
+        117
+      ],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "A",
+      "program": 115,
+      "name": "ThirdEarJS",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [
+        117
+      ],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "A",
+      "program": 116,
+      "name": "Tinycat SV",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "A",
+      "program": 117,
+      "name": "TiptaptuSV",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "A",
+      "program": 118,
+      "name": "T Pot   BC",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [
+        62
+      ],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "A",
+      "program": 119,
+      "name": "TwotonesBC",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "A",
+      "program": 120,
+      "name": "UniVoV  BC",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "A",
+      "program": 121,
+      "name": "Vapour  SV",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [
+        117
+      ],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "A",
+      "program": 122,
+      "name": "V-Bells JS",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [
+        89
+      ],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "A",
+      "program": 123,
+      "name": "VindictrSV",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [
+        106
+      ],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "A",
+      "program": 124,
+      "name": "Low",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "A",
+      "program": 125,
+      "name": " >>INPUT<<",
+      "flags": 4,
+      "status": "PARTIAL",
+      "limitations": [
+        "External input mode unsupported"
+      ],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "A",
+      "program": 126,
+      "name": " - Init -",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "A",
+      "program": 127,
+      "name": " - START -",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "B",
+      "program": 0,
+      "name": "AndromdaHS",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [
+        102,
+        117
+      ],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "B",
+      "program": 2,
+      "name": "AT-Mini HS",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [
+        117
+      ],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "B",
+      "program": 3,
+      "name": "AwashBs HS",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "B",
+      "program": 4,
+      "name": "Backing HS",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "B",
+      "program": 5,
+      "name": "BadTape HS",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "B",
+      "program": 7,
+      "name": "BellBoy BC",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "B",
+      "program": 8,
+      "name": "BerimTamHS",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [
+        105
+      ],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "B",
+      "program": 10,
+      "name": "BowBouncHS",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [
+        117
+      ],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "B",
+      "program": 11,
+      "name": "Bronze HS",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [
+        117
+      ],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "B",
+      "program": 12,
+      "name": "BubblX HS",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [
+        105
+      ],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "B",
+      "program": 13,
+      "name": "CantburyHS",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [
+        117
+      ],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "B",
+      "program": 15,
+      "name": "Choir2 HS",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "B",
+      "program": 17,
+      "name": "Congoid HS",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [
+        117
+      ],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "B",
+      "program": 18,
+      "name": "CptKork HS",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "B",
+      "program": 19,
+      "name": "Cremoma HS",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "B",
+      "program": 20,
+      "name": "DancePn HS",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [
+        117
+      ],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "B",
+      "program": 21,
+      "name": "Dangelo HS",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "B",
+      "program": 23,
+      "name": "DinoBassHS",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [
+        89
+      ],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "B",
+      "program": 25,
+      "name": "Dread-0 HS",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "B",
+      "program": 28,
+      "name": "DX-Pno1 HS",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [
+        67
+      ],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "B",
+      "program": 29,
+      "name": "DX-Pno2 HS",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "B",
+      "program": 30,
+      "name": "DX-Pno3 HS",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "B",
+      "program": 31,
+      "name": "Dynette HS",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "B",
+      "program": 33,
+      "name": "E-Grand HS",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [
+        117
+      ],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "B",
+      "program": 34,
+      "name": "EkoRoad HS",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [
+        107
+      ],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "B",
+      "program": 35,
+      "name": "E.Rigby HS",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "B",
+      "program": 36,
+      "name": "Everest HS",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [
+        67
+      ],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "B",
+      "program": 37,
+      "name": "Expense HS",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [
+        102
+      ],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "B",
+      "program": 39,
+      "name": "Flutes HS",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [
+        117
+      ],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "B",
+      "program": 40,
+      "name": "Flutoon HS",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "B",
+      "program": 41,
+      "name": "Froese HS",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "B",
+      "program": 42,
+      "name": "FunctionHS",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "B",
+      "program": 44,
+      "name": "GateRim HS",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [
+        117,
+        108
+      ],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "B",
+      "program": 45,
+      "name": "Goomby HS",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [
+        102
+      ],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "B",
+      "program": 46,
+      "name": "Ham&X   HS",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [
+        105,
+        63,
+        65
+      ],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "B",
+      "program": 47,
+      "name": "Harpsie HS",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [
+        117
+      ],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "B",
+      "program": 49,
+      "name": "HissPad BC",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [
+        102,
+        117
+      ],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "B",
+      "program": 50,
+      "name": "JamMini HS",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "B",
+      "program": 52,
+      "name": "JazRoad HS",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [
+        107
+      ],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "B",
+      "program": 53,
+      "name": "J.Edgar HS",
+      "flags": 1,
+      "status": "PARTIAL",
+      "limitations": [
+        "Unison exceeds four layers per note"
+      ],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [
+        95
+      ],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "B",
+      "program": 54,
+      "name": "JuicOrg HS",
+      "flags": 32,
+      "status": "CACHE",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [
+        105,
+        63,
+        64,
+        65
+      ],
+      "waveCacheDestinations": [
+        8
+      ]
+    },
+    {
+      "bank": "B",
+      "program": 56,
+      "name": "Latex HS",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "B",
+      "program": 57,
+      "name": "LordOrg HS",
+      "flags": 32,
+      "status": "CACHE",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [
+        105,
+        63,
+        64
+      ],
+      "waveCacheDestinations": [
+        8
+      ]
+    },
+    {
+      "bank": "B",
+      "program": 58,
+      "name": "Macho HS",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [
+        102
+      ],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "B",
+      "program": 59,
+      "name": "Manfman HS",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "B",
+      "program": 60,
+      "name": "MarkOne HS",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "B",
+      "program": 61,
+      "name": "MarsAtx HS",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "B",
+      "program": 63,
+      "name": "MelloVl HS",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [
+        65,
+        104
+      ],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "B",
+      "program": 64,
+      "name": "MinorityHS",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [
+        111
+      ],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "B",
+      "program": 65,
+      "name": "Monza HS",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [
+        117
+      ],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "B",
+      "program": 66,
+      "name": "MoonWeedHS",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "B",
+      "program": 67,
+      "name": "Multasm HS",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "B",
+      "program": 68,
+      "name": "MW-StepsHS",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [
+        62,
+        63
+      ],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "B",
+      "program": 69,
+      "name": "Nowhere BC",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "B",
+      "program": 70,
+      "name": "NylSolo HS",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "B",
+      "program": 71,
+      "name": "Oboe HS",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [
+        67
+      ],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "B",
+      "program": 72,
+      "name": "Oddigy HS",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "B",
+      "program": 73,
+      "name": "Old S&H HS",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "B",
+      "program": 74,
+      "name": "Orange HS",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "B",
+      "program": 76,
+      "name": "Outpost HS",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "B",
+      "program": 77,
+      "name": "PanShakeHS",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [
+        117
+      ],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "B",
+      "program": 78,
+      "name": "PataFiz HS",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [
+        67,
+        110,
+        117,
+        92
+      ],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "B",
+      "program": 79,
+      "name": "PeaceOrgHS",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "B",
+      "program": 81,
+      "name": "PickUp HS",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "B",
+      "program": 82,
+      "name": "PingOrg HS",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [
+        105,
+        63
+      ],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "B",
+      "program": 83,
+      "name": "Pit-Str HS",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [
+        67,
+        102
+      ],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "B",
+      "program": 85,
+      "name": "PlukalogHS",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [
+        102
+      ],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "B",
+      "program": 86,
+      "name": "PopCorn HS",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [
+        117
+      ],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "B",
+      "program": 88,
+      "name": "Pstyro2 HS",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "B",
+      "program": 91,
+      "name": "Quack! HS",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "B",
+      "program": 92,
+      "name": "RadioG HS",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [
+        70,
+        71,
+        67
+      ],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "B",
+      "program": 95,
+      "name": "Saloon  HS",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [
+        117
+      ],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "B",
+      "program": 96,
+      "name": "Saxpet HS",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [
+        117
+      ],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "B",
+      "program": 98,
+      "name": "ShineOn HS",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "B",
+      "program": 99,
+      "name": "SidKid HS",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "B",
+      "program": 100,
+      "name": "SimSyn HS",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "B",
+      "program": 101,
+      "name": "SinSolo HS",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "B",
+      "program": 104,
+      "name": "Spy HS",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [
+        117
+      ],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "B",
+      "program": 106,
+      "name": "Squoid HS",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "B",
+      "program": 107,
+      "name": "Sunder HS",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [
+        105
+      ],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "B",
+      "program": 110,
+      "name": "Thustra HS",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "B",
+      "program": 111,
+      "name": "TimeStepHS",
+      "flags": 1,
+      "status": "PARTIAL",
+      "limitations": [
+        "Unison exceeds four layers per note"
+      ],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [
+        61
+      ],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "B",
+      "program": 112,
+      "name": "Tunnel HS",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [
+        65
+      ],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "B",
+      "program": 113,
+      "name": "TuvaWeelHS",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "B",
+      "program": 115,
+      "name": "TwoOfUs HS",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "B",
+      "program": 116,
+      "name": "Untune HS",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [
+        117
+      ],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "B",
+      "program": 117,
+      "name": "Vanilla HS",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "B",
+      "program": 119,
+      "name": "Vorwerk HS",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [
+        117
+      ],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "B",
+      "program": 121,
+      "name": "Wheee! HS",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "B",
+      "program": 122,
+      "name": "WishBom HS",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [
+        111
+      ],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "B",
+      "program": 123,
+      "name": "WoodyBs HS",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "B",
+      "program": 124,
+      "name": "X-Didge HS",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "B",
+      "program": 125,
+      "name": "X-Werx HS",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [
+        110,
+        111
+      ],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "B",
+      "program": 126,
+      "name": "Xyrimba HS",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "C",
+      "program": 0,
+      "name": "AESound zs",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "C",
+      "program": 1,
+      "name": "AldoNovaM",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [
+        95,
+        117
+      ],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "C",
+      "program": 2,
+      "name": "AmbientBlJ",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [
+        63
+      ],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "C",
+      "program": 3,
+      "name": "AmbientFXJ",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "C",
+      "program": 4,
+      "name": "ambiRgM zs",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "C",
+      "program": 5,
+      "name": "AnHigh  M",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [
+        117
+      ],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "C",
+      "program": 6,
+      "name": "Arcade  BC",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "C",
+      "program": 7,
+      "name": "Atlas    J",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "C",
+      "program": 8,
+      "name": "Attack!  J",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [
+        102
+      ],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "C",
+      "program": 10,
+      "name": "BadLand M",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [
+        95
+      ],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "C",
+      "program": 11,
+      "name": "Bass 415 M",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "C",
+      "program": 12,
+      "name": "Bass 504 M",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "C",
+      "program": 13,
+      "name": "Basser M",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [
+        117
+      ],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "C",
+      "program": 14,
+      "name": "BassIk M",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "C",
+      "program": 15,
+      "name": "basting2zs",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [
+        117
+      ],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "C",
+      "program": 16,
+      "name": "basting zs",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [
+        102
+      ],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "C",
+      "program": 17,
+      "name": "B-Deep  M",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [
+        67
+      ],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "C",
+      "program": 18,
+      "name": "B-Foe    M",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [
+        117
+      ],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "C",
+      "program": 19,
+      "name": "bigTung zs",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "C",
+      "program": 20,
+      "name": "Bleu!   M",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "C",
+      "program": 21,
+      "name": "Blotto  M",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [
+        102
+      ],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "C",
+      "program": 22,
+      "name": "Bubble2 M",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [
+        117
+      ],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "C",
+      "program": 23,
+      "name": "CappSt  M",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [
+        117,
+        118
+      ],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "C",
+      "program": 24,
+      "name": "Cavsak M",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "C",
+      "program": 25,
+      "name": "cirqStb zs",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [
+        117,
+        62
+      ],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "C",
+      "program": 26,
+      "name": "CLEeeN  M",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "C",
+      "program": 27,
+      "name": "Cloakin M",
+      "flags": 2,
+      "status": "PARTIAL",
+      "limitations": [
+        "External FM source unsupported"
+      ],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "C",
+      "program": 28,
+      "name": "cutRes  zs",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [
+        117
+      ],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "C",
+      "program": 29,
+      "name": "decDATA2zs",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [
+        117
+      ],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "C",
+      "program": 30,
+      "name": "decDATA3zs",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [
+        117
+      ],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "C",
+      "program": 31,
+      "name": "decDATA zs",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "C",
+      "program": 32,
+      "name": "deciDAT4zs",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [
+        117
+      ],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "C",
+      "program": 33,
+      "name": "dirty   zs",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [
+        62,
+        66
+      ],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "C",
+      "program": 34,
+      "name": "dopeEp zs",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "C",
+      "program": 35,
+      "name": "Dragon  M",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "C",
+      "program": 36,
+      "name": "dropIT  zs",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [
+        117
+      ],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "C",
+      "program": 37,
+      "name": "drpBomb zs",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "C",
+      "program": 38,
+      "name": "Drubber BC",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [
+        117
+      ],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "C",
+      "program": 39,
+      "name": "Dry Bass J",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "C",
+      "program": 40,
+      "name": "dstStep zs",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [
+        117
+      ],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "C",
+      "program": 41,
+      "name": "Dubsak M",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "C",
+      "program": 42,
+      "name": "Dumb!    M",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [
+        117
+      ],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "C",
+      "program": 43,
+      "name": "Empira 2M",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [
+        102
+      ],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "C",
+      "program": 44,
+      "name": "Entropie J",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "C",
+      "program": 45,
+      "name": "Everest  J",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "C",
+      "program": 46,
+      "name": "Facial M",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "C",
+      "program": 47,
+      "name": "FePudn zs",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "C",
+      "program": 48,
+      "name": "FlutDrumBC",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [
+        117
+      ],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "C",
+      "program": 49,
+      "name": "fnkStrg zs",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "C",
+      "program": 50,
+      "name": "GBEp3   zs",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [
+        102
+      ],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "C",
+      "program": 51,
+      "name": "george2 zs",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "C",
+      "program": 52,
+      "name": "GooHat  M",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [
+        102
+      ],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "C",
+      "program": 53,
+      "name": "GotHAM! M",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [
+        117
+      ],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "C",
+      "program": 54,
+      "name": "HIDEson M",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [
+        117
+      ],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "C",
+      "program": 55,
+      "name": "IndustryBC",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [
+        102,
+        117
+      ],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "C",
+      "program": 56,
+      "name": "LepY2 zs",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [
+        64
+      ],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "C",
+      "program": 57,
+      "name": "LepY3 zs",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [
+        117
+      ],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "C",
+      "program": 58,
+      "name": "lootRng zs",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [
+        62,
+        117
+      ],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "C",
+      "program": 59,
+      "name": "Lost    M",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [
+        102
+      ],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "C",
+      "program": 60,
+      "name": "marimba1zs",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "C",
+      "program": 61,
+      "name": "marimba4zs",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "C",
+      "program": 62,
+      "name": "MeBad?  M",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "C",
+      "program": 63,
+      "name": "Menace  M",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [
+        102
+      ],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "C",
+      "program": 64,
+      "name": "MONose  zs",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "C",
+      "program": 65,
+      "name": "mostHih zs",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "C",
+      "program": 66,
+      "name": "Mr.Foo M",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "C",
+      "program": 67,
+      "name": "Necro   M",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [
+        95
+      ],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "C",
+      "program": 68,
+      "name": "NoFuture M",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "C",
+      "program": 69,
+      "name": "orguit  zs",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "C",
+      "program": 70,
+      "name": "phasEP  zs",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "C",
+      "program": 71,
+      "name": "Plead   M",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "C",
+      "program": 72,
+      "name": "Pluka   zs",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "C",
+      "program": 73,
+      "name": "PowerStrnJ",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [
+        102
+      ],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "C",
+      "program": 74,
+      "name": "pulsRay zs",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "C",
+      "program": 76,
+      "name": "RbbrBellBC",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "C",
+      "program": 77,
+      "name": "ReBird  M",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [
+        117
+      ],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "C",
+      "program": 78,
+      "name": "resPad  zs",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "C",
+      "program": 79,
+      "name": "Reverse  J",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "C",
+      "program": 80,
+      "name": "rmBack  zs",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "C",
+      "program": 81,
+      "name": "rngPort zs",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "C",
+      "program": 82,
+      "name": "Roboe   zs",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [
+        63
+      ],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "C",
+      "program": 83,
+      "name": "Shifted BC",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "C",
+      "program": 84,
+      "name": "ShineChrdJ",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "C",
+      "program": 85,
+      "name": "shivrPd zs",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "C",
+      "program": 86,
+      "name": "sineZZZ zs",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "C",
+      "program": 87,
+      "name": "sinMorf zs",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "C",
+      "program": 88,
+      "name": "sitar   zs",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [
+        62,
+        102
+      ],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "C",
+      "program": 89,
+      "name": "Skware  zs",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [
+        117
+      ],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "C",
+      "program": 90,
+      "name": "smoovLd zs",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "C",
+      "program": 91,
+      "name": "sneakr  zs",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [
+        66
+      ],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "C",
+      "program": 92,
+      "name": "SoftBell J",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "C",
+      "program": 93,
+      "name": "Softi    J",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "C",
+      "program": 95,
+      "name": "sofueMODzs",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "C",
+      "program": 96,
+      "name": "SoSad  M",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "C",
+      "program": 98,
+      "name": "spasDrv zs",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "C",
+      "program": 99,
+      "name": "Spinner  M",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [
+        62
+      ],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "C",
+      "program": 100,
+      "name": "spoolPd zs",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "C",
+      "program": 101,
+      "name": "sqPadMM zs",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "C",
+      "program": 102,
+      "name": "squar00 zs",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "C",
+      "program": 103,
+      "name": "Sr.Goo M",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "C",
+      "program": 104,
+      "name": "step2it zs",
+      "flags": 1,
+      "status": "PARTIAL",
+      "limitations": [
+        "Unison exceeds four layers per note"
+      ],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "C",
+      "program": 105,
+      "name": "Subbass zs",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "C",
+      "program": 106,
+      "name": "Sunday  M",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [
+        117
+      ],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "C",
+      "program": 107,
+      "name": "Tomita   J",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [
+        102
+      ],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "C",
+      "program": 108,
+      "name": "Torque",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [
+        117,
+        95,
+        67
+      ],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "C",
+      "program": 109,
+      "name": "UfO 4   M",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "C",
+      "program": 110,
+      "name": "UKG2    BC",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "C",
+      "program": 111,
+      "name": "UKG     BC",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "C",
+      "program": 112,
+      "name": "V_Acid#9 M",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [
+        92,
+        70,
+        66,
+        65,
+        102,
+        105,
+        67,
+        107
+      ],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "C",
+      "program": 113,
+      "name": "V-Acid#4 M",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "C",
+      "program": 114,
+      "name": "V-Acid#7 M",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "C",
+      "program": 115,
+      "name": "VCS 3a   J",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [
+        102
+      ],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "C",
+      "program": 116,
+      "name": "videoG1 zs",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "C",
+      "program": 117,
+      "name": "videoG2 zs",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "C",
+      "program": 118,
+      "name": "videoG4 zs",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "C",
+      "program": 119,
+      "name": "waowLd  zs",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [
+        62,
+        67
+      ],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "C",
+      "program": 120,
+      "name": "Weazel  M",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [
+        67,
+        102
+      ],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "C",
+      "program": 121,
+      "name": "WetThn  zs",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "C",
+      "program": 122,
+      "name": "Wobble  M",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "C",
+      "program": 123,
+      "name": "xPandr  zs",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [
+        102
+      ],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "C",
+      "program": 124,
+      "name": "yahy    zs",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "C",
+      "program": 125,
+      "name": "Yeao!  M",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "C",
+      "program": 126,
+      "name": "ZartPad  J",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "C",
+      "program": 127,
+      "name": "Zupfi    J",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "D",
+      "program": 0,
+      "name": "7thHeavnJS",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [
+        102
+      ],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "D",
+      "program": 1,
+      "name": "Ah RESO JS",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "D",
+      "program": 3,
+      "name": "Anabo|icJS",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "D",
+      "program": 6,
+      "name": "ArtificlJS",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "D",
+      "program": 8,
+      "name": "Bassic  JS",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "D",
+      "program": 9,
+      "name": "Bassta  JS",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "D",
+      "program": 11,
+      "name": "BC VoV-2BC",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "D",
+      "program": 12,
+      "name": "BC VoV-3BC",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "D",
+      "program": 14,
+      "name": "BElla 2 JS",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [
+        89
+      ],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "D",
+      "program": 16,
+      "name": "Bella   JS",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [
+        89
+      ],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "D",
+      "program": 17,
+      "name": "BIG FLY JS",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "D",
+      "program": 18,
+      "name": "BigSweepJS",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [
+        105,
+        68
+      ],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "D",
+      "program": 20,
+      "name": "Braxter JV",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "D",
+      "program": 21,
+      "name": "CalliopeJS",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "D",
+      "program": 22,
+      "name": "Carpets JS",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "D",
+      "program": 23,
+      "name": "ChainsawJS",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [
+        71,
+        105
+      ],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "D",
+      "program": 24,
+      "name": "Chant   JS",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [
+        68
+      ],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "D",
+      "program": 25,
+      "name": "Choir 4 BC",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "D",
+      "program": 26,
+      "name": "Cold SawJS",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [
+        95
+      ],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "D",
+      "program": 28,
+      "name": "Deeper  JS",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "D",
+      "program": 29,
+      "name": "Dig Me  JS",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "D",
+      "program": 30,
+      "name": "Dig ThisJS",
+      "flags": 32,
+      "status": "CACHE",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [],
+      "waveCacheDestinations": [
+        13
+      ]
+    },
+    {
+      "bank": "D",
+      "program": 31,
+      "name": "Disco   OK",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "D",
+      "program": 33,
+      "name": "Dukbass+BC",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "D",
+      "program": 34,
+      "name": "Dyson+  BC",
+      "flags": 1,
+      "status": "PARTIAL",
+      "limitations": [
+        "Unison exceeds four layers per note"
+      ],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [
+        95
+      ],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "D",
+      "program": 36,
+      "name": "EnoesqueJS",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "D",
+      "program": 37,
+      "name": "FeedyPadJS",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [
+        69,
+        68
+      ],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "D",
+      "program": 38,
+      "name": "Feng JuiJS",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "D",
+      "program": 40,
+      "name": "For DeepJS",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "D",
+      "program": 41,
+      "name": "Frozen  JS",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "D",
+      "program": 42,
+      "name": "FuzzBellJS",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [
+        102
+      ],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "D",
+      "program": 43,
+      "name": "Fuzzbox JS",
+      "flags": 32,
+      "status": "CACHE",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [
+        95
+      ],
+      "waveCacheDestinations": [
+        8,
+        13
+      ]
+    },
+    {
+      "bank": "D",
+      "program": 45,
+      "name": "Ghost 2 JS",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [
+        68
+      ],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "D",
+      "program": 46,
+      "name": "Ghost   JS",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [
+        68
+      ],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "D",
+      "program": 47,
+      "name": "GinaPad JS",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "D",
+      "program": 48,
+      "name": "Glitch  OK",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "D",
+      "program": 50,
+      "name": "HackbartJS",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "D",
+      "program": 51,
+      "name": "HarmonixJS",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "D",
+      "program": 52,
+      "name": "Haunted JS",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [
+        68,
+        65
+      ],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "D",
+      "program": 53,
+      "name": "Hauntin'JS",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [
+        95,
+        65
+      ],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "D",
+      "program": 54,
+      "name": "Hovis   JS",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [
+        102
+      ],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "D",
+      "program": 55,
+      "name": "Hybrid  JS",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "D",
+      "program": 57,
+      "name": "Induced JS",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "D",
+      "program": 59,
+      "name": "InfinityJS",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [
+        68,
+        92
+      ],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "D",
+      "program": 60,
+      "name": "JaySync JS",
+      "flags": 1,
+      "status": "PARTIAL",
+      "limitations": [
+        "Unison exceeds four layers per note"
+      ],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "D",
+      "program": 62,
+      "name": "Justice JS",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "D",
+      "program": 63,
+      "name": "KyotoLd JS",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "D",
+      "program": 64,
+      "name": "Laville JS",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [
+        68
+      ],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "D",
+      "program": 65,
+      "name": "Lead    JS",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "D",
+      "program": 66,
+      "name": "MajorityJS",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "D",
+      "program": 68,
+      "name": "MonolithJS",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [
+        68
+      ],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "D",
+      "program": 69,
+      "name": "Moon PadJS",
+      "flags": 32,
+      "status": "CACHE",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [
+        68
+      ],
+      "waveCacheDestinations": [
+        13
+      ]
+    },
+    {
+      "bank": "D",
+      "program": 70,
+      "name": "MorsSpc JS",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "D",
+      "program": 71,
+      "name": "Moving  JS",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "D",
+      "program": 72,
+      "name": "Nasty   JS",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "D",
+      "program": 74,
+      "name": "No Age  JS",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "D",
+      "program": 75,
+      "name": "Odyssey JS",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "D",
+      "program": 76,
+      "name": "OldScol OK",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "D",
+      "program": 77,
+      "name": "Opener  JS",
+      "flags": 32,
+      "status": "CACHE",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [
+        105
+      ],
+      "waveCacheDestinations": [
+        8
+      ]
+    },
+    {
+      "bank": "D",
+      "program": 78,
+      "name": "Organic JS",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [
+        111
+      ],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "D",
+      "program": 79,
+      "name": "Outland JS",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "D",
+      "program": 80,
+      "name": "OverloadJS",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "D",
+      "program": 81,
+      "name": "OvertoneJS",
+      "flags": 32,
+      "status": "CACHE",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [
+        105,
+        103
+      ],
+      "waveCacheDestinations": [
+        8
+      ]
+    },
+    {
+      "bank": "D",
+      "program": 84,
+      "name": "PluckMe BC",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "D",
+      "program": 86,
+      "name": "Prodigy JS",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "D",
+      "program": 87,
+      "name": "Puls4thsBC",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "D",
+      "program": 88,
+      "name": "Pulsic  JV",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [
+        107
+      ],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "D",
+      "program": 89,
+      "name": "Puncher JS",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "D",
+      "program": 92,
+      "name": "Raw     JS",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "D",
+      "program": 94,
+      "name": "Rough   JS",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "D",
+      "program": 95,
+      "name": "ScanJob JS",
+      "flags": 32,
+      "status": "CACHE",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [
+        112
+      ],
+      "waveCacheDestinations": [
+        13,
+        8
+      ]
+    },
+    {
+      "bank": "D",
+      "program": 97,
+      "name": "Simply  JS",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "D",
+      "program": 99,
+      "name": "SinderelJS",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "D",
+      "program": 100,
+      "name": "SineBeezJS",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "D",
+      "program": 101,
+      "name": "SmoothBsBC",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "D",
+      "program": 102,
+      "name": "Soaker  JS",
+      "flags": 32,
+      "status": "CACHE",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [],
+      "waveCacheDestinations": [
+        8
+      ]
+    },
+    {
+      "bank": "D",
+      "program": 103,
+      "name": "Soaring JS",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "D",
+      "program": 104,
+      "name": "Soft3rdsBC",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "D",
+      "program": 105,
+      "name": "Soloist JS",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "D",
+      "program": 106,
+      "name": "Start UpJS",
+      "flags": 32,
+      "status": "CACHE",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [
+        68
+      ],
+      "waveCacheDestinations": [
+        13
+      ]
+    },
+    {
+      "bank": "D",
+      "program": 107,
+      "name": "Subaqua BC",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "D",
+      "program": 108,
+      "name": "Sweeper JS",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "D",
+      "program": 109,
+      "name": "Taurus  JS",
+      "flags": 1,
+      "status": "PARTIAL",
+      "limitations": [
+        "Unison exceeds four layers per note"
+      ],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "D",
+      "program": 110,
+      "name": "Tight   JS",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [
+        111
+      ],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "D",
+      "program": 111,
+      "name": "Tubez   JS",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "D",
+      "program": 112,
+      "name": "Tubular JS",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "D",
+      "program": 113,
+      "name": "Uprite  JS",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "D",
+      "program": 114,
+      "name": "V-Birth1 K",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "D",
+      "program": 116,
+      "name": "Virus B JS",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [
+        111
+      ],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "D",
+      "program": 117,
+      "name": "Voyager JS",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "D",
+      "program": 118,
+      "name": "Wailin  JS",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "D",
+      "program": 120,
+      "name": "Walker  JS",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [
+        111
+      ],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "D",
+      "program": 121,
+      "name": "Wave-PadJS",
+      "flags": 32,
+      "status": "CACHE",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [],
+      "waveCacheDestinations": [
+        8
+      ]
+    },
+    {
+      "bank": "D",
+      "program": 123,
+      "name": "WetFunk BC",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "D",
+      "program": 124,
+      "name": "Whirly  JS",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "D",
+      "program": 125,
+      "name": "X-Bellz JS",
+      "flags": 32,
+      "status": "CACHE",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [
+        108,
+        102
+      ],
+      "waveCacheDestinations": [
+        8
+      ]
+    },
+    {
+      "bank": "D",
+      "program": 126,
+      "name": "Yucca   JS",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [
+        95
+      ],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "D",
+      "program": 127,
+      "name": "Low",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "E",
+      "program": 0,
+      "name": "AandreasM@",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "E",
+      "program": 1,
+      "name": "Aerosol  J",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "E",
+      "program": 2,
+      "name": "AerSynthM@",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "E",
+      "program": 3,
+      "name": "AI2 Pad M@",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "E",
+      "program": 4,
+      "name": "AirMonixM@",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "E",
+      "program": 5,
+      "name": "Apogee  M@",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "E",
+      "program": 6,
+      "name": "AqutouchM@",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "E",
+      "program": 7,
+      "name": "Baggins M@",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "E",
+      "program": 9,
+      "name": "BigPadSwM@",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [
+        117
+      ],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "E",
+      "program": 10,
+      "name": "Bowzerz M@",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "E",
+      "program": 11,
+      "name": "Cali-AirM@",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [
+        117
+      ],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "E",
+      "program": 12,
+      "name": "CheezwizM@",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [
+        62,
+        63,
+        102
+      ],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "E",
+      "program": 13,
+      "name": "Claps2  HS",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [
+        117
+      ],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "E",
+      "program": 14,
+      "name": "Clench  BC",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [
+        117
+      ],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "E",
+      "program": 15,
+      "name": "CloudCtyM@",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "E",
+      "program": 16,
+      "name": "COMPump M@",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [
+        117
+      ],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "E",
+      "program": 17,
+      "name": "CrossQ  BC",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [
+        95,
+        67,
+        102,
+        117
+      ],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "E",
+      "program": 18,
+      "name": "D&B FX",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "E",
+      "program": 19,
+      "name": "D&B Geneqa",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "E",
+      "program": 20,
+      "name": "D&B Woover",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [
+        102
+      ],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "E",
+      "program": 22,
+      "name": "DetektorM@",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "E",
+      "program": 23,
+      "name": "DigiKoto M",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "E",
+      "program": 24,
+      "name": "DontFretM@",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "E",
+      "program": 25,
+      "name": "DripDropM@",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "E",
+      "program": 26,
+      "name": "Driven  M@",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "E",
+      "program": 27,
+      "name": "EddiWho?M@",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [
+        95
+      ],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "E",
+      "program": 28,
+      "name": "EPhase  BC",
+      "flags": 32,
+      "status": "CACHE",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [],
+      "waveCacheDestinations": [
+        13
+      ]
+    },
+    {
+      "bank": "E",
+      "program": 29,
+      "name": "EPStage?M@",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "E",
+      "program": 30,
+      "name": "EPTines2M@",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "E",
+      "program": 31,
+      "name": "EPWhirlyM@",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [
+        102
+      ],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "E",
+      "program": 32,
+      "name": "EPZeply M@",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [
+        63
+      ],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "E",
+      "program": 33,
+      "name": "ETom2002M@",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "E",
+      "program": 34,
+      "name": "Fingers M@",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [
+        117
+      ],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "E",
+      "program": 35,
+      "name": "FMChittrM@",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [
+        117
+      ],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "E",
+      "program": 36,
+      "name": "FourSaws",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "E",
+      "program": 37,
+      "name": "FunkLd-1SM",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "E",
+      "program": 38,
+      "name": "FunkLd-2SM",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "E",
+      "program": 39,
+      "name": "FunkLd-3SM",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "E",
+      "program": 40,
+      "name": "FunkLd-4SM",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "E",
+      "program": 41,
+      "name": "GedyLeedM@",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [
+        117
+      ],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "E",
+      "program": 42,
+      "name": "Gntle9thM@",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "E",
+      "program": 43,
+      "name": "Grander M@",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "E",
+      "program": 44,
+      "name": "GrimeyM@",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "E",
+      "program": 45,
+      "name": "Hallows M@",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "E",
+      "program": 46,
+      "name": "HarmopadM@",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "E",
+      "program": 48,
+      "name": "HoldChrdM@",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [
+        95
+      ],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "E",
+      "program": 49,
+      "name": "HrmadnesM@",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [
+        67
+      ],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "E",
+      "program": 50,
+      "name": "Jetropa M@",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [
+        103,
+        105
+      ],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "E",
+      "program": 51,
+      "name": "JunoPowrM@",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [
+        117
+      ],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "E",
+      "program": 52,
+      "name": "JV Bass M@",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [
+        117
+      ],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "E",
+      "program": 53,
+      "name": "Kompin' M@",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "E",
+      "program": 54,
+      "name": "Korgan  M@",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "E",
+      "program": 56,
+      "name": "Lektrik M@",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "E",
+      "program": 57,
+      "name": "LetsSyncM@",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "E",
+      "program": 58,
+      "name": "LongKickSM",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "E",
+      "program": 59,
+      "name": "LuckyMan J",
+      "flags": 1,
+      "status": "PARTIAL",
+      "limitations": [
+        "Unison exceeds four layers per note"
+      ],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [
+        67,
+        102,
+        62
+      ],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "E",
+      "program": 60,
+      "name": "MelodieaM@",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "E",
+      "program": 61,
+      "name": "MiniBassSM",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "E",
+      "program": 62,
+      "name": "MiniBS-2SM",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "E",
+      "program": 63,
+      "name": "MiniBS-3SM",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "E",
+      "program": 64,
+      "name": "MiniBS-4SM",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "E",
+      "program": 65,
+      "name": "MiniBS-5SM",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "E",
+      "program": 66,
+      "name": "MiniLeadSM",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "E",
+      "program": 67,
+      "name": "ModsweepM@",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "E",
+      "program": 68,
+      "name": "NewSnareBC",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "E",
+      "program": 69,
+      "name": "NewWorldM@",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [
+        117
+      ],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "E",
+      "program": 70,
+      "name": "NoizBassM@",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "E",
+      "program": 71,
+      "name": "ObiPad   J",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "E",
+      "program": 72,
+      "name": "OceanusM@",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "E",
+      "program": 73,
+      "name": "OhEq-8  M@",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "E",
+      "program": 74,
+      "name": "Oh Yeah M@",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "E",
+      "program": 75,
+      "name": "O'Pad M@",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "E",
+      "program": 76,
+      "name": "OrbteriaM@",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "E",
+      "program": 77,
+      "name": "PadLayerM@",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "E",
+      "program": 78,
+      "name": "Paiow   M@",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "E",
+      "program": 79,
+      "name": "Pat'sGR M@",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "E",
+      "program": 81,
+      "name": "Perky!  M@",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "E",
+      "program": 83,
+      "name": "Popcomp M@",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "E",
+      "program": 84,
+      "name": "PortaPoly@",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "E",
+      "program": 85,
+      "name": "ProfeticM@",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "E",
+      "program": 86,
+      "name": "PrtaBeloBC",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [
+        95
+      ],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "E",
+      "program": 87,
+      "name": "Punchit2SV",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "E",
+      "program": 88,
+      "name": "Punsh itSV",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "E",
+      "program": 89,
+      "name": "QMenMW  BC",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [
+        62
+      ],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "E",
+      "program": 90,
+      "name": "Replika M@",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "E",
+      "program": 92,
+      "name": "Reveal  JS",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [
+        65,
+        105
+      ],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "E",
+      "program": 93,
+      "name": "RezTailsM@",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "E",
+      "program": 94,
+      "name": "RichWind",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "E",
+      "program": 95,
+      "name": "RimShot BC",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [
+        95
+      ],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "E",
+      "program": 96,
+      "name": "Ripper  JS",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "E",
+      "program": 97,
+      "name": "Rollin  JS",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [
+        105,
+        103,
+        65,
+        63,
+        64,
+        66
+      ],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "E",
+      "program": 98,
+      "name": "Rollups M@",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "E",
+      "program": 99,
+      "name": "Saw-Ya! M@",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "E",
+      "program": 100,
+      "name": "ShortWAVM@",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "E",
+      "program": 101,
+      "name": "Spaced  JS",
+      "flags": 32,
+      "status": "CACHE",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [],
+      "waveCacheDestinations": [
+        8,
+        13
+      ]
+    },
+    {
+      "bank": "E",
+      "program": 102,
+      "name": "StarPad  J",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "E",
+      "program": 103,
+      "name": "Stratus JS",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "E",
+      "program": 104,
+      "name": "SubdvisnM@",
+      "flags": 1,
+      "status": "PARTIAL",
+      "limitations": [
+        "Unison exceeds four layers per note"
+      ],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [
+        102
+      ],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "E",
+      "program": 107,
+      "name": "Synchym2M@",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "E",
+      "program": 108,
+      "name": "SyncPedlM@",
+      "flags": 1,
+      "status": "PARTIAL",
+      "limitations": [
+        "Unison exceeds four layers per note"
+      ],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "E",
+      "program": 109,
+      "name": "Tender  JS",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "E",
+      "program": 110,
+      "name": "TheramosM@",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [
+        67
+      ],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "E",
+      "program": 111,
+      "name": "Tight8s M@",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "E",
+      "program": 112,
+      "name": "Tremor  JS",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [
+        105
+      ],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "E",
+      "program": 113,
+      "name": "TronFlt M@",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "E",
+      "program": 114,
+      "name": "TronStr M@",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "E",
+      "program": 115,
+      "name": "TwinPadsM@",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "E",
+      "program": 116,
+      "name": "UofYouthM@",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "E",
+      "program": 117,
+      "name": "VibePad M@",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [
+        62,
+        108
+      ],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "E",
+      "program": 118,
+      "name": "VolutionM@",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "E",
+      "program": 120,
+      "name": "Whales  JS",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [
+        105,
+        111,
+        65
+      ],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "E",
+      "program": 121,
+      "name": "WineglasM@",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "E",
+      "program": 122,
+      "name": "WowGrowlM@",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "E",
+      "program": 123,
+      "name": "WynwouldM@",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "E",
+      "program": 124,
+      "name": "X Dream JS",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "E",
+      "program": 125,
+      "name": "XitLeft M@",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "E",
+      "program": 126,
+      "name": "X-Men  JS",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "F",
+      "program": 0,
+      "name": "2-Brass RP",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [
+        111
+      ],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "F",
+      "program": 5,
+      "name": "101BASS RP",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "F",
+      "program": 6,
+      "name": "101-SUB RP",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "F",
+      "program": 7,
+      "name": "AlfBass RP",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "F",
+      "program": 8,
+      "name": "ARP-BD2 RP",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "F",
+      "program": 9,
+      "name": "ARP-HH2 RP",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "F",
+      "program": 10,
+      "name": "BANDPAD RP",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "F",
+      "program": 11,
+      "name": "BASS ME RP",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "F",
+      "program": 12,
+      "name": "BASS-O  RP",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "F",
+      "program": 14,
+      "name": "BE-TWO  RP",
+      "flags": 32,
+      "status": "CACHE",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [],
+      "waveCacheDestinations": [
+        13
+      ]
+    },
+    {
+      "bank": "F",
+      "program": 15,
+      "name": "BOWED   RP",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "F",
+      "program": 16,
+      "name": "BPM-PAD RP",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "F",
+      "program": 17,
+      "name": "BRASS-1 RP",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "F",
+      "program": 18,
+      "name": "BRASS-2 RP",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "F",
+      "program": 19,
+      "name": "BRASS-8 RP",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "F",
+      "program": 21,
+      "name": "CLOCKED RP",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "F",
+      "program": 25,
+      "name": "DEEBASS RP",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "F",
+      "program": 26,
+      "name": "DIS-BD  RP",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "F",
+      "program": 28,
+      "name": "DSP-V   RP",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "F",
+      "program": 29,
+      "name": "DX-OEM  RP",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "F",
+      "program": 30,
+      "name": "DX-VE   RP",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [
+        68,
+        111
+      ],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "F",
+      "program": 31,
+      "name": "EASE    RP",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "F",
+      "program": 34,
+      "name": "FAT-SN. RP",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "F",
+      "program": 35,
+      "name": "FENDERB RP",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "F",
+      "program": 36,
+      "name": "FILTERS RP",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "F",
+      "program": 37,
+      "name": "FLUBBER RP",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "F",
+      "program": 38,
+      "name": "GO BASS RP",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "F",
+      "program": 39,
+      "name": "HAWSCH  RP",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "F",
+      "program": 40,
+      "name": "HENDRIX RP",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [
+        111
+      ],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "F",
+      "program": 41,
+      "name": "Howner  RP",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [
+        111
+      ],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "F",
+      "program": 42,
+      "name": "IQsnare RP",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "F",
+      "program": 43,
+      "name": "K-Organ RP",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "F",
+      "program": 44,
+      "name": "K-WERK1 RP",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "F",
+      "program": 45,
+      "name": "K-WERK2 RP",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "F",
+      "program": 46,
+      "name": "K-Werk3 RP",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "F",
+      "program": 47,
+      "name": "LowKick RP",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "F",
+      "program": 48,
+      "name": "MAXWave RP",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "F",
+      "program": 49,
+      "name": "MELLOTR.RP",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "F",
+      "program": 50,
+      "name": "MISTERY RP",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "F",
+      "program": 51,
+      "name": "MooBass RP",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "F",
+      "program": 52,
+      "name": "MO-TJO  RP",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [
+        111
+      ],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "F",
+      "program": 53,
+      "name": "MOVER   RP",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "F",
+      "program": 57,
+      "name": "NABASS  RP",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "F",
+      "program": 59,
+      "name": "NO-TJO  RP",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "F",
+      "program": 61,
+      "name": "OBY-PAD RP",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "F",
+      "program": 62,
+      "name": "O-ME-2  RP",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "F",
+      "program": 63,
+      "name": "Omnef   RP",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [
+        110
+      ],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "F",
+      "program": 64,
+      "name": "OZ-LEAD RP",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "F",
+      "program": 65,
+      "name": "P6OO    RP",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "F",
+      "program": 66,
+      "name": "PAD-FLG RP",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "F",
+      "program": 67,
+      "name": "PADINGS RP",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "F",
+      "program": 68,
+      "name": "PHASA   RP",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "F",
+      "program": 69,
+      "name": "PickGTR RP",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "F",
+      "program": 70,
+      "name": "P-LEAD  RP",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "F",
+      "program": 71,
+      "name": "PolyPha RP",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "F",
+      "program": 72,
+      "name": "P-ORGAN RP",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "F",
+      "program": 73,
+      "name": "PRO-12  RP",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "F",
+      "program": 74,
+      "name": "Q-TECK  RP",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "F",
+      "program": 75,
+      "name": "QT-SOFT RP",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "F",
+      "program": 76,
+      "name": "RE-BASS RP",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "F",
+      "program": 77,
+      "name": "RIBASS  RP",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "F",
+      "program": 78,
+      "name": "ROBASS  RP",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "F",
+      "program": 79,
+      "name": "ROBOPAD RP",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "F",
+      "program": 81,
+      "name": "SADINGS RP",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "F",
+      "program": 82,
+      "name": "SFX-VC3 RP",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "F",
+      "program": 83,
+      "name": "SFX- X~ RP",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "F",
+      "program": 85,
+      "name": "SHYCUS  RP",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "F",
+      "program": 86,
+      "name": "SNARE X RP",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "F",
+      "program": 87,
+      "name": "SoLead  RP",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "F",
+      "program": 89,
+      "name": "STEVIE  RP",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "F",
+      "program": 91,
+      "name": "STR-II  RP",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "F",
+      "program": 92,
+      "name": "STRINGS RP",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "F",
+      "program": 94,
+      "name": "T-8     RP",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "F",
+      "program": 98,
+      "name": "TECBASS RP",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "F",
+      "program": 100,
+      "name": "TEC-NOS RP",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "F",
+      "program": 101,
+      "name": "TEC-STR RP",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "F",
+      "program": 102,
+      "name": "TE-T42  RP",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "F",
+      "program": 103,
+      "name": "TF BASS RP",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "F",
+      "program": 104,
+      "name": "THE-BD2 RP",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "F",
+      "program": 105,
+      "name": "TI-BASS RP",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "F",
+      "program": 106,
+      "name": "TING    RP",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "F",
+      "program": 107,
+      "name": "TOMBASS RP",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "F",
+      "program": 108,
+      "name": "T-ORGAN RP",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "F",
+      "program": 109,
+      "name": "V-2-U   RP",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "F",
+      "program": 111,
+      "name": "V Cl.HH RP",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "F",
+      "program": 112,
+      "name": "VELO-ME RP",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "F",
+      "program": 113,
+      "name": "VeloPEW RP",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "F",
+      "program": 116,
+      "name": "VITAR   RP",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "F",
+      "program": 117,
+      "name": "VO-PAD  RP",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "F",
+      "program": 118,
+      "name": "V Op.HH RP",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "F",
+      "program": 119,
+      "name": "VR-78 1 RP",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "F",
+      "program": 120,
+      "name": "VR-78 2 RP",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "F",
+      "program": 121,
+      "name": "Whl-PAD RP",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "F",
+      "program": 122,
+      "name": "WINDO   RP",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "F",
+      "program": 123,
+      "name": "Wurly   RP",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "F",
+      "program": 124,
+      "name": "X0X KCK RP",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "F",
+      "program": 126,
+      "name": "=BASS=  RP",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [],
+      "waveCacheDestinations": []
+    },
+    {
+      "bank": "F",
+      "program": 127,
+      "name": "??F=V   RP",
+      "flags": 0,
+      "status": "MAPPED",
+      "limitations": [],
+      "unsupportedDestinations": [],
+      "sourceInactiveDestinations": [],
+      "waveCacheDestinations": []
+    }
+  ]
+}

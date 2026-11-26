@@ -1,0 +1,57 @@
+FM1 Virooos - synth oscillator binding prototype 6
+
+Source-only experimental checkpoint. The default firmware remains TEST74.
+The synth core now supports VC_BAND_CACHE behind an explicit build option;
+this option is NOT enabled in app/fm1.toml.
+
+Implemented experimental/band_voice.c:
+Twelve cache clients bind to four voices x three oscillators. Audio consumes
+published replacements at render-call boundaries and requests wave/band keys
+after control updates. Cache pointers are copied into oscillator table handles.
+No reconstruction or compressed decoding happens in those audio hooks.
+Oscillator 3 slave mode shares oscillator 2's wave selection while retaining
+its own frequency-band requirement. Silent/unused oscillators release requests.
+Voice termination/panic releases references through the acknowledgement path.
+A voice age change identifies stealing/retriggered allocation.
+
+Cache-miss policy in this prototype:
+An already-playing oscillator can retain its old wave only if its frequency
+band still matches. A new voice, or a request for a different frequency band,
+uses a zero wavetable contribution until the correct data is ready. Saw/pulse
+components remain available. This avoids reading an unsuitable harmonic band,
+but can create audible delay/dropout. These transitions are not crossfaded.
+The policy is explicit and has not been accepted as final sound behavior.
+Initialization will need preloading before device playback is unmuted.
+
+Host integration validation:
+ASan/UBSan passed a four-voice, twelve-client synth test using the actual
+compressed bank. Once settled, 256 stereo frames matched an identical synth
+state using captured full tables byte-for-byte. Tests cover initial misses,
+same-band waveform changes, pitch-band changes, oscillator-3 slave sharing,
+voice stealing, natural note release, panic and complete reference cleanup.
+Run bash tests/run-band-voice.sh.
+Evidence: validation/band-voice-prototype6.json.
+
+Target compilation:
+Experimental synth and binding objects compile for pi32v2/r3. Symbol checks
+show no old vc_wave_table dependency, atomic runtime helpers or arithmetic
+software-double helpers in the audio DSP/binding. Indirect calls are used for
+cross-region boundary/control hooks. This is not a full experimental link.
+Run JIELI_TOOLCHAIN=... bash tests/check-band-voice-target.sh.
+Evidence: validation/band-voice-target-prototype6.json.
+
+Default firmware safety check:
+The normal build, with VC_BAND_CACHE disabled, rebuilt byte-for-byte identical
+to released TEST74: SHA256
+72195918cd1e9338e9d05c642ed71b0c7b830b193f9e55c6f99b4ce6edfc4d7d.
+Evidence: validation/band-prototype6-default-firmware.json.
+No new firmware version is being offered in this source checkpoint.
+
+Remaining before device test:
+- Device startup/flash-bank validation, shared sine pointer and table allocation.
+- Main-loop background service budget and initialization preloading.
+- Replace the old muted whole-wave loader for the experimental build.
+- Single-synth attach/detach lifecycle; profiler path needs explicit support or
+  disabling because it is not covered by normal render hooks.
+- Full linker-region/hot-code verification, target timings and cache-miss audio.
+- The two matrix wave-selection destinations are still not enabled.

@@ -1,0 +1,15 @@
+{
+  "identity": "FM-1_15008208",
+  "fwsc_bytes": 610108,
+  "application_bytes": 575108,
+  "app_slot_bytes": 581564,
+  "loader_bytes": 6952,
+  "all_crcs_valid": true,
+  "decrypted_app_exact": true,
+  "loader_exact": true,
+  "entry_stub_valid": true,
+  "fwsc_sha256": "898eb24fe23cf13db70ef24fa85ec9ec770d31bac292de3435601a38f6d41a93",
+  "app_sha256": "528491bb1d420450fb397ada8c5c395b9934daf563420106be4dec17afca88cb",
+  "hardware_tested": false,
+  "corruption_detection_checks": 3
+}

@@ -1,0 +1,41 @@
+{
+  "baseline": "TEST44",
+  "retained": [
+    "EQ",
+    "distortion"
+  ],
+  "excluded": [
+    "reverb",
+    "delay",
+    "chorus",
+    "phaser"
+  ],
+  "original_eq_block_including_boost_bytes": 408,
+  "original_distortion_block_all_modes_bytes": 80,
+  "proposed_native_fx_state_reservation": 1024,
+  "mid_eq": {
+    "original_bytes": 131072,
+    "packed_bytes": 98304,
+    "words_verified": 32768,
+    "lossless": true,
+    "sha256": "07eb348a1de979401d7e61ebe95a1d17808cdf08977becb3e97d90c77206a84c"
+  },
+  "current_free_ram": 50068,
+  "current_application_flash_free": 3788,
+  "proposal": {
+    "implemented": false,
+    "embedded_lfo_bytes_removable": 327840,
+    "three_active_lfo_tables_ram": 24588,
+    "remaining_ram_after_tables_and_fx_reservation": 24456,
+    "application_flash_after_removal": 331628,
+    "application_flash_after_removal_and_packed_mid_eq": 233324,
+    "not_yet_counted": [
+      "LFO loading control/state and code",
+      "remaining EQ/distortion tables and native DSP code",
+      "UI/MIDI integration",
+      "alignment"
+    ],
+    "tradeoff": "Selecting a different LFO wavetable would require muted preparation; playback would still read decoded float32 samples."
+  },
+  "pass": true
+}

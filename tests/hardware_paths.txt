@@ -1,0 +1,48 @@
+wait 12000
+expect wave_state 0
+master 2400
+key 0 down 100
+wait 80
+expect voices 1
+tap OCT+
+key 0 up
+wait 10000
+expect voices 0
+key 0 down 100
+key 4 down 100
+key 7 down 100
+key 12 down 100
+wait 100
+expect voices 4
+key 14 down 100
+wait 100
+expect voices 4
+tap PLAY
+wait 50
+expect voices 0
+key 0 up
+key 4 up
+key 7 up
+key 12 up
+key 14 up
+midi USB 90 3C 64
+wait 80
+expect voices 1
+midi USB B0 4A 20
+wait 50
+expect cutoff 32
+midi USB E0 7F 7F
+wait 50
+midi USB E0 00 00
+wait 50
+midi USB E0 00 40
+midi USB 90 3C 00
+wait 10000
+expect voices 0
+midi TRS 90 40 64
+wait 100
+expect voices 1
+midi TRS B0 78 00
+wait 50
+expect voices 0
+expect queue_lost 0

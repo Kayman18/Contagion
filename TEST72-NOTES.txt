@@ -1,0 +1,45 @@
+FM1 Virooos TEST72 - oscillator balance modulation
+
+Connects matrix destination 20, bringing the total to 71 connected sound
+destinations. Thirty-one retained presets configure non-neutral routes to it.
+Uses the original fractional balance curve, center gains and endpoint mapping
+(127 promotes to 128). Balance gains are cached per voice; the audio loop no
+longer recalculates the static balance per render call.
+
+Oscillator 3 in slave mode follows oscillator 2's effective balance gain,
+including the original 1.058 scaling and main oscillator volume. Independent
+oscillator 3 modes retain their own level. Modulation preserves oscillator
+phase; route removal restores base balance without retriggering notes.
+
+Hardware examples (original zero-based programs):
+D40 Flutoon HS and D19 Cremoma HS: hold notes and move the mod wheel.
+C66 MoveMyMWBC also moves oscillator 1 key tracking, connected in TEST70.
+Report CPU average/peak, xruns/deadlines and any clicks; use four-layer unison
+for a heavier test if desired.
+
+Validation:
+10240 comparisons against the captured original balance function across all
+route amounts, four base settings, four source levels and oscillator-3 modes
+0..4. Maximum gain error 8.742e-8. ASan/UBSan checks cover phase preservation,
+voice isolation, route removal and audio block-size invariance.
+Full/reduced/rounded routing, 4608 source-level cases and 23040 oscillator-3
+cases passed. All 650 presets rendered finite/nonzero output over 4096 stereo
+frames each under ASan/UBSan. Unison and Analog Boost host scripts passed.
+Native engine stress and original filter-routing/audio comparisons passed.
+The routing harness now initializes cached gains through normal note setup.
+Firmware CRC/package, hot-code placement and cache layout checks passed.
+
+Linked memory:
+Application 529816 / 581564 bytes (51748 free).
+Normal RAM 90776 / 98304 bytes (7528 free; 64 bytes more than TEST71).
+Pool 327836 / 344064 bytes (16228 free; unchanged).
+Executable RAM 24220 / 24576 bytes (356 free; 104 bytes recovered).
+Matrix result scratch grows by one float (4 bytes).
+
+TEST72 is not hardware-tested. Last supplied hardware result remains TEST60:
+47% average / 56% peak, clean audio, zero xruns/deadlines.
+Main oscillator level modulation is still pending: its volume and saturation
+responses must both support fractional control before the route is connected.
+Earlier Analog Boost and modulation work remain included. No arp, reverb,
+delay, chorus or phaser added. Four physical voices and other partial-preset
+limitations remain. Install release/FM1-Virooos-TEST72.fwsc.

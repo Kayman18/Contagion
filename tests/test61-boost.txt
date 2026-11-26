@@ -1,0 +1,22 @@
+wait 12000
+spin ALGO 26
+expect page 26
+expect boost_level 0
+expect boost_tune 64
+spin K1 127
+spin K2 -64
+wait 100
+expect boost_level 127
+expect boost_tune 0
+midi USB 90 3C 64
+wait 100
+expect voices 1
+spin K1 -127
+wait 100
+expect boost_level 0
+midi USB B0 00 00
+midi USB C0 00
+wait 12000
+expect boost_level 40
+expect boost_tune 32
+expect queue_lost 0

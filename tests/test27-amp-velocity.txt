@@ -1,0 +1,92 @@
+wait 12000
+expect wave_state 0
+master 1600
+wav test27-amp-velocity.wav
+tap HOME
+tap FX
+tap FX
+tap FX
+tap FX
+tap FX
+tap FX
+tap FX
+tap FX
+expect page 19
+expect amp_velocity 128
+shot amp-velocity-linear.png
+spin K1 -32
+wait 40
+expect amp_velocity 96
+shot amp-velocity96.png
+midi USB 90 3C 20
+wait 350
+midi USB 80 3C 00
+wait 250
+midi USB 90 3C 40
+wait 350
+midi USB 80 3C 00
+wait 250
+midi USB 90 3C 64
+wait 350
+midi USB 80 3C 00
+wait 250
+midi USB 90 3C 7F
+wait 350
+midi USB 80 3C 00
+wait 250
+spin K1 -32
+wait 40
+expect amp_velocity 64
+midi USB 90 3C 20
+wait 350
+midi USB 80 3C 00
+wait 250
+midi USB 90 3C 40
+wait 350
+midi USB 80 3C 00
+wait 250
+midi USB 90 3C 64
+wait 350
+midi USB 80 3C 00
+wait 250
+midi USB 90 3C 7F
+wait 350
+midi USB 80 3C 00
+wait 250
+spin K1 -32
+wait 40
+expect amp_velocity 32
+midi USB 90 3C 20
+wait 350
+midi USB 80 3C 00
+wait 250
+midi USB 90 3C 40
+wait 350
+midi USB 80 3C 00
+wait 250
+midi USB 90 3C 64
+wait 350
+midi USB 80 3C 00
+wait 250
+midi USB 90 3C 7F
+wait 350
+midi USB 80 3C 00
+wait 250
+midi USB 90 30 20
+midi USB 90 37 40
+midi USB 90 3C 64
+midi USB 90 40 7F
+wait 500
+expect voices 4
+spin K1 64
+wait 100
+expect amp_velocity 96
+spin K1 32
+wait 100
+expect amp_velocity 128
+tap FX
+expect page 20
+tap PLAY
+wait 100
+expect voices 0
+expect queue_lost 0

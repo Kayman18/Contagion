@@ -1,0 +1,658 @@
+wait 30000
+expect wave_state 0
+midi USB 90 30 64
+midi USB 90 37 64
+midi USB 90 3C 64
+midi USB 90 40 64
+wait 200
+expect voices 4
+wav band19-live-scan.wav
+midi USB B0 13 00
+midi USB B0 18 00
+wait 5
+expect wave_state 0
+expect voices 4
+midi USB B0 13 01
+midi USB B0 18 07
+wait 5
+expect wave_state 0
+expect voices 4
+midi USB B0 13 02
+midi USB B0 18 0E
+wait 5
+expect wave_state 0
+expect voices 4
+midi USB B0 13 03
+midi USB B0 18 15
+wait 5
+expect wave_state 0
+expect voices 4
+midi USB B0 13 04
+midi USB B0 18 1C
+wait 5
+expect wave_state 0
+expect voices 4
+midi USB B0 13 05
+midi USB B0 18 23
+wait 5
+expect wave_state 0
+expect voices 4
+midi USB B0 13 06
+midi USB B0 18 2A
+wait 5
+expect wave_state 0
+expect voices 4
+midi USB B0 13 07
+midi USB B0 18 31
+wait 5
+expect wave_state 0
+expect voices 4
+midi USB B0 13 08
+midi USB B0 18 38
+wait 5
+expect wave_state 0
+expect voices 4
+midi USB B0 13 09
+midi USB B0 18 3F
+wait 5
+expect wave_state 0
+expect voices 4
+midi USB B0 13 0A
+midi USB B0 18 06
+wait 5
+expect wave_state 0
+expect voices 4
+midi USB B0 13 0B
+midi USB B0 18 0D
+wait 5
+expect wave_state 0
+expect voices 4
+midi USB B0 13 0C
+midi USB B0 18 14
+wait 5
+expect wave_state 0
+expect voices 4
+midi USB B0 13 0D
+midi USB B0 18 1B
+wait 5
+expect wave_state 0
+expect voices 4
+midi USB B0 13 0E
+midi USB B0 18 22
+wait 5
+expect wave_state 0
+expect voices 4
+midi USB B0 13 0F
+midi USB B0 18 29
+wait 5
+expect wave_state 0
+expect voices 4
+midi USB B0 13 10
+midi USB B0 18 30
+wait 5
+expect wave_state 0
+expect voices 4
+midi USB B0 13 11
+midi USB B0 18 37
+wait 5
+expect wave_state 0
+expect voices 4
+midi USB B0 13 12
+midi USB B0 18 3E
+wait 5
+expect wave_state 0
+expect voices 4
+midi USB B0 13 13
+midi USB B0 18 05
+wait 5
+expect wave_state 0
+expect voices 4
+midi USB B0 13 14
+midi USB B0 18 0C
+wait 5
+expect wave_state 0
+expect voices 4
+midi USB B0 13 15
+midi USB B0 18 13
+wait 5
+expect wave_state 0
+expect voices 4
+midi USB B0 13 16
+midi USB B0 18 1A
+wait 5
+expect wave_state 0
+expect voices 4
+midi USB B0 13 17
+midi USB B0 18 21
+wait 5
+expect wave_state 0
+expect voices 4
+midi USB B0 13 18
+midi USB B0 18 28
+wait 5
+expect wave_state 0
+expect voices 4
+midi USB B0 13 19
+midi USB B0 18 2F
+wait 5
+expect wave_state 0
+expect voices 4
+midi USB B0 13 1A
+midi USB B0 18 36
+wait 5
+expect wave_state 0
+expect voices 4
+midi USB B0 13 1B
+midi USB B0 18 3D
+wait 5
+expect wave_state 0
+expect voices 4
+midi USB B0 13 1C
+midi USB B0 18 04
+wait 5
+expect wave_state 0
+expect voices 4
+midi USB B0 13 1D
+midi USB B0 18 0B
+wait 5
+expect wave_state 0
+expect voices 4
+midi USB B0 13 1E
+midi USB B0 18 12
+wait 5
+expect wave_state 0
+expect voices 4
+midi USB B0 13 1F
+midi USB B0 18 19
+wait 5
+expect wave_state 0
+expect voices 4
+midi USB B0 13 20
+midi USB B0 18 20
+wait 5
+expect wave_state 0
+expect voices 4
+midi USB B0 13 21
+midi USB B0 18 27
+wait 5
+expect wave_state 0
+expect voices 4
+midi USB B0 13 22
+midi USB B0 18 2E
+wait 5
+expect wave_state 0
+expect voices 4
+midi USB B0 13 23
+midi USB B0 18 35
+wait 5
+expect wave_state 0
+expect voices 4
+midi USB B0 13 24
+midi USB B0 18 3C
+wait 5
+expect wave_state 0
+expect voices 4
+midi USB B0 13 25
+midi USB B0 18 03
+wait 5
+expect wave_state 0
+expect voices 4
+midi USB B0 13 26
+midi USB B0 18 0A
+wait 5
+expect wave_state 0
+expect voices 4
+midi USB B0 13 27
+midi USB B0 18 11
+wait 5
+expect wave_state 0
+expect voices 4
+midi USB B0 13 28
+midi USB B0 18 18
+wait 5
+expect wave_state 0
+expect voices 4
+midi USB B0 13 29
+midi USB B0 18 1F
+wait 5
+expect wave_state 0
+expect voices 4
+midi USB B0 13 2A
+midi USB B0 18 26
+wait 5
+expect wave_state 0
+expect voices 4
+midi USB B0 13 2B
+midi USB B0 18 2D
+wait 5
+expect wave_state 0
+expect voices 4
+midi USB B0 13 2C
+midi USB B0 18 34
+wait 5
+expect wave_state 0
+expect voices 4
+midi USB B0 13 2D
+midi USB B0 18 3B
+wait 5
+expect wave_state 0
+expect voices 4
+midi USB B0 13 2E
+midi USB B0 18 02
+wait 5
+expect wave_state 0
+expect voices 4
+midi USB B0 13 2F
+midi USB B0 18 09
+wait 5
+expect wave_state 0
+expect voices 4
+midi USB B0 13 30
+midi USB B0 18 10
+wait 5
+expect wave_state 0
+expect voices 4
+midi USB B0 13 31
+midi USB B0 18 17
+wait 5
+expect wave_state 0
+expect voices 4
+midi USB B0 13 32
+midi USB B0 18 1E
+wait 5
+expect wave_state 0
+expect voices 4
+midi USB B0 13 33
+midi USB B0 18 25
+wait 5
+expect wave_state 0
+expect voices 4
+midi USB B0 13 34
+midi USB B0 18 2C
+wait 5
+expect wave_state 0
+expect voices 4
+midi USB B0 13 35
+midi USB B0 18 33
+wait 5
+expect wave_state 0
+expect voices 4
+midi USB B0 13 36
+midi USB B0 18 3A
+wait 5
+expect wave_state 0
+expect voices 4
+midi USB B0 13 37
+midi USB B0 18 01
+wait 5
+expect wave_state 0
+expect voices 4
+midi USB B0 13 38
+midi USB B0 18 08
+wait 5
+expect wave_state 0
+expect voices 4
+midi USB B0 13 39
+midi USB B0 18 0F
+wait 5
+expect wave_state 0
+expect voices 4
+midi USB B0 13 3A
+midi USB B0 18 16
+wait 5
+expect wave_state 0
+expect voices 4
+midi USB B0 13 3B
+midi USB B0 18 1D
+wait 5
+expect wave_state 0
+expect voices 4
+midi USB B0 13 3C
+midi USB B0 18 24
+wait 5
+expect wave_state 0
+expect voices 4
+midi USB B0 13 3D
+midi USB B0 18 2B
+wait 5
+expect wave_state 0
+expect voices 4
+midi USB B0 13 3E
+midi USB B0 18 32
+wait 5
+expect wave_state 0
+expect voices 4
+midi USB B0 13 3F
+midi USB B0 18 39
+wait 5
+expect wave_state 0
+expect voices 4
+midi USB B0 13 00
+midi USB B0 18 00
+wait 5
+expect wave_state 0
+expect voices 4
+midi USB B0 13 01
+midi USB B0 18 07
+wait 5
+expect wave_state 0
+expect voices 4
+midi USB B0 13 02
+midi USB B0 18 0E
+wait 5
+expect wave_state 0
+expect voices 4
+midi USB B0 13 03
+midi USB B0 18 15
+wait 5
+expect wave_state 0
+expect voices 4
+midi USB B0 13 04
+midi USB B0 18 1C
+wait 5
+expect wave_state 0
+expect voices 4
+midi USB B0 13 05
+midi USB B0 18 23
+wait 5
+expect wave_state 0
+expect voices 4
+midi USB B0 13 06
+midi USB B0 18 2A
+wait 5
+expect wave_state 0
+expect voices 4
+midi USB B0 13 07
+midi USB B0 18 31
+wait 5
+expect wave_state 0
+expect voices 4
+midi USB B0 13 08
+midi USB B0 18 38
+wait 5
+expect wave_state 0
+expect voices 4
+midi USB B0 13 09
+midi USB B0 18 3F
+wait 5
+expect wave_state 0
+expect voices 4
+midi USB B0 13 0A
+midi USB B0 18 06
+wait 5
+expect wave_state 0
+expect voices 4
+midi USB B0 13 0B
+midi USB B0 18 0D
+wait 5
+expect wave_state 0
+expect voices 4
+midi USB B0 13 0C
+midi USB B0 18 14
+wait 5
+expect wave_state 0
+expect voices 4
+midi USB B0 13 0D
+midi USB B0 18 1B
+wait 5
+expect wave_state 0
+expect voices 4
+midi USB B0 13 0E
+midi USB B0 18 22
+wait 5
+expect wave_state 0
+expect voices 4
+midi USB B0 13 0F
+midi USB B0 18 29
+wait 5
+expect wave_state 0
+expect voices 4
+midi USB B0 13 10
+midi USB B0 18 30
+wait 5
+expect wave_state 0
+expect voices 4
+midi USB B0 13 11
+midi USB B0 18 37
+wait 5
+expect wave_state 0
+expect voices 4
+midi USB B0 13 12
+midi USB B0 18 3E
+wait 5
+expect wave_state 0
+expect voices 4
+midi USB B0 13 13
+midi USB B0 18 05
+wait 5
+expect wave_state 0
+expect voices 4
+midi USB B0 13 14
+midi USB B0 18 0C
+wait 5
+expect wave_state 0
+expect voices 4
+midi USB B0 13 15
+midi USB B0 18 13
+wait 5
+expect wave_state 0
+expect voices 4
+midi USB B0 13 16
+midi USB B0 18 1A
+wait 5
+expect wave_state 0
+expect voices 4
+midi USB B0 13 17
+midi USB B0 18 21
+wait 5
+expect wave_state 0
+expect voices 4
+midi USB B0 13 18
+midi USB B0 18 28
+wait 5
+expect wave_state 0
+expect voices 4
+midi USB B0 13 19
+midi USB B0 18 2F
+wait 5
+expect wave_state 0
+expect voices 4
+midi USB B0 13 1A
+midi USB B0 18 36
+wait 5
+expect wave_state 0
+expect voices 4
+midi USB B0 13 1B
+midi USB B0 18 3D
+wait 5
+expect wave_state 0
+expect voices 4
+midi USB B0 13 1C
+midi USB B0 18 04
+wait 5
+expect wave_state 0
+expect voices 4
+midi USB B0 13 1D
+midi USB B0 18 0B
+wait 5
+expect wave_state 0
+expect voices 4
+midi USB B0 13 1E
+midi USB B0 18 12
+wait 5
+expect wave_state 0
+expect voices 4
+midi USB B0 13 1F
+midi USB B0 18 19
+wait 5
+expect wave_state 0
+expect voices 4
+midi USB B0 13 20
+midi USB B0 18 20
+wait 5
+expect wave_state 0
+expect voices 4
+midi USB B0 13 21
+midi USB B0 18 27
+wait 5
+expect wave_state 0
+expect voices 4
+midi USB B0 13 22
+midi USB B0 18 2E
+wait 5
+expect wave_state 0
+expect voices 4
+midi USB B0 13 23
+midi USB B0 18 35
+wait 5
+expect wave_state 0
+expect voices 4
+midi USB B0 13 24
+midi USB B0 18 3C
+wait 5
+expect wave_state 0
+expect voices 4
+midi USB B0 13 25
+midi USB B0 18 03
+wait 5
+expect wave_state 0
+expect voices 4
+midi USB B0 13 26
+midi USB B0 18 0A
+wait 5
+expect wave_state 0
+expect voices 4
+midi USB B0 13 27
+midi USB B0 18 11
+wait 5
+expect wave_state 0
+expect voices 4
+midi USB B0 13 28
+midi USB B0 18 18
+wait 5
+expect wave_state 0
+expect voices 4
+midi USB B0 13 29
+midi USB B0 18 1F
+wait 5
+expect wave_state 0
+expect voices 4
+midi USB B0 13 2A
+midi USB B0 18 26
+wait 5
+expect wave_state 0
+expect voices 4
+midi USB B0 13 2B
+midi USB B0 18 2D
+wait 5
+expect wave_state 0
+expect voices 4
+midi USB B0 13 2C
+midi USB B0 18 34
+wait 5
+expect wave_state 0
+expect voices 4
+midi USB B0 13 2D
+midi USB B0 18 3B
+wait 5
+expect wave_state 0
+expect voices 4
+midi USB B0 13 2E
+midi USB B0 18 02
+wait 5
+expect wave_state 0
+expect voices 4
+midi USB B0 13 2F
+midi USB B0 18 09
+wait 5
+expect wave_state 0
+expect voices 4
+midi USB B0 13 30
+midi USB B0 18 10
+wait 5
+expect wave_state 0
+expect voices 4
+midi USB B0 13 31
+midi USB B0 18 17
+wait 5
+expect wave_state 0
+expect voices 4
+midi USB B0 13 32
+midi USB B0 18 1E
+wait 5
+expect wave_state 0
+expect voices 4
+midi USB B0 13 33
+midi USB B0 18 25
+wait 5
+expect wave_state 0
+expect voices 4
+midi USB B0 13 34
+midi USB B0 18 2C
+wait 5
+expect wave_state 0
+expect voices 4
+midi USB B0 13 35
+midi USB B0 18 33
+wait 5
+expect wave_state 0
+expect voices 4
+midi USB B0 13 36
+midi USB B0 18 3A
+wait 5
+expect wave_state 0
+expect voices 4
+midi USB B0 13 37
+midi USB B0 18 01
+wait 5
+expect wave_state 0
+expect voices 4
+midi USB B0 13 38
+midi USB B0 18 08
+wait 5
+expect wave_state 0
+expect voices 4
+midi USB B0 13 39
+midi USB B0 18 0F
+wait 5
+expect wave_state 0
+expect voices 4
+midi USB B0 13 3A
+midi USB B0 18 16
+wait 5
+expect wave_state 0
+expect voices 4
+midi USB B0 13 3B
+midi USB B0 18 1D
+wait 5
+expect wave_state 0
+expect voices 4
+midi USB B0 13 3C
+midi USB B0 18 24
+wait 5
+expect wave_state 0
+expect voices 4
+midi USB B0 13 3D
+midi USB B0 18 2B
+wait 5
+expect wave_state 0
+expect voices 4
+midi USB B0 13 3E
+midi USB B0 18 32
+wait 5
+expect wave_state 0
+expect voices 4
+midi USB B0 13 3F
+midi USB B0 18 39
+wait 5
+expect wave_state 0
+expect voices 4
+wait 12000
+wavstop
+expect wave1 63
+expect wave2 57
+expect voices 4
+expect queue_lost 0
+midi USB B0 78 00
+wait 100
+expect voices 0

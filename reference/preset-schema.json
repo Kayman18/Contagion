@@ -1,0 +1,1172 @@
+{
+  "portamento": {
+    "page": "A",
+    "no": 5,
+    "max": 127,
+    "def": 0
+  },
+  "panorama": {
+    "page": "A",
+    "no": 10,
+    "max": 127,
+    "def": 64
+  },
+  "osc1Shape": {
+    "page": "A",
+    "no": 17,
+    "max": 127,
+    "def": 64
+  },
+  "osc1PulseWidth": {
+    "page": "A",
+    "no": 18,
+    "max": 127,
+    "def": 0
+  },
+  "osc1Wave": {
+    "page": "A",
+    "no": 19,
+    "max": 63,
+    "def": 0
+  },
+  "osc1Semitone": {
+    "page": "A",
+    "no": 20,
+    "max": 127,
+    "def": 64
+  },
+  "osc1Keyfollow": {
+    "page": "A",
+    "no": 21,
+    "max": 127,
+    "def": 96
+  },
+  "osc2Shape": {
+    "page": "A",
+    "no": 22,
+    "max": 127,
+    "def": 64
+  },
+  "osc2PulseWidth": {
+    "page": "A",
+    "no": 23,
+    "max": 127,
+    "def": 0
+  },
+  "osc2Wave": {
+    "page": "A",
+    "no": 24,
+    "max": 63,
+    "def": 0
+  },
+  "osc2Semitone": {
+    "page": "A",
+    "no": 25,
+    "max": 127,
+    "def": 64
+  },
+  "osc2Detune": {
+    "page": "A",
+    "no": 26,
+    "max": 127,
+    "def": 32
+  },
+  "fmAmount": {
+    "page": "A",
+    "no": 27,
+    "max": 127,
+    "def": 0
+  },
+  "osc2Sync": {
+    "page": "A",
+    "no": 28,
+    "max": 1,
+    "def": 0
+  },
+  "osc2FiltEnvAmt": {
+    "page": "A",
+    "no": 29,
+    "max": 127,
+    "def": 64
+  },
+  "fmFiltEnvAmt": {
+    "page": "A",
+    "no": 30,
+    "max": 127,
+    "def": 64
+  },
+  "osc2Keyfollow": {
+    "page": "A",
+    "no": 31,
+    "max": 127,
+    "def": 96
+  },
+  "oscBalance": {
+    "page": "A",
+    "no": 33,
+    "max": 127,
+    "def": 64
+  },
+  "subOscVolume": {
+    "page": "A",
+    "no": 34,
+    "max": 127,
+    "def": 0
+  },
+  "subOscShape": {
+    "page": "A",
+    "no": 35,
+    "max": 1,
+    "def": 0
+  },
+  "oscVolume": {
+    "page": "A",
+    "no": 36,
+    "max": 127,
+    "def": 64
+  },
+  "noiseVolume": {
+    "page": "A",
+    "no": 37,
+    "max": 127,
+    "def": 0
+  },
+  "ringModVolume": {
+    "page": "A",
+    "no": 38,
+    "max": 127,
+    "def": 0
+  },
+  "noiseColor": {
+    "page": "A",
+    "no": 39,
+    "max": 127,
+    "def": 64
+  },
+  "cutoff": {
+    "page": "A",
+    "no": 40,
+    "max": 127,
+    "def": 127
+  },
+  "cutoff2": {
+    "page": "A",
+    "no": 41,
+    "max": 127,
+    "def": 64
+  },
+  "filter1Resonance": {
+    "page": "A",
+    "no": 42,
+    "max": 127,
+    "def": 0
+  },
+  "filter2Resonance": {
+    "page": "A",
+    "no": 43,
+    "max": 127,
+    "def": 0
+  },
+  "filter1EnvAmt": {
+    "page": "A",
+    "no": 44,
+    "max": 127,
+    "def": 0
+  },
+  "filter2EnvAmt": {
+    "page": "A",
+    "no": 45,
+    "max": 127,
+    "def": 0
+  },
+  "filter1Keyfollow": {
+    "page": "A",
+    "no": 46,
+    "max": 127,
+    "def": 64
+  },
+  "filter2Keyfollow": {
+    "page": "A",
+    "no": 47,
+    "max": 127,
+    "def": 64
+  },
+  "filterBalance": {
+    "page": "A",
+    "no": 48,
+    "max": 127,
+    "def": 64
+  },
+  "saturationCurve": {
+    "page": "A",
+    "no": 49,
+    "max": 14,
+    "def": 0
+  },
+  "filter1Mode": {
+    "page": "A",
+    "no": 51,
+    "max": 3,
+    "def": 0
+  },
+  "filter2Mode": {
+    "page": "A",
+    "no": 52,
+    "max": 3,
+    "def": 0
+  },
+  "filterRouting": {
+    "page": "A",
+    "no": 53,
+    "max": 3,
+    "def": 0
+  },
+  "filtEnvAttack": {
+    "page": "A",
+    "no": 54,
+    "max": 127,
+    "def": 0
+  },
+  "filtEnvDecay": {
+    "page": "A",
+    "no": 55,
+    "max": 127,
+    "def": 46
+  },
+  "filtEnvSustain": {
+    "page": "A",
+    "no": 56,
+    "max": 127,
+    "def": 0
+  },
+  "filtEnvSustainTime": {
+    "page": "A",
+    "no": 57,
+    "max": 127,
+    "def": 64
+  },
+  "filtEnvRelease": {
+    "page": "A",
+    "no": 58,
+    "max": 127,
+    "def": 127
+  },
+  "ampEnvAttack": {
+    "page": "A",
+    "no": 59,
+    "max": 127,
+    "def": 0
+  },
+  "ampEnvDecay": {
+    "page": "A",
+    "no": 60,
+    "max": 127,
+    "def": 127
+  },
+  "ampEnvSustain": {
+    "page": "A",
+    "no": 61,
+    "max": 127,
+    "def": 127
+  },
+  "ampEnvSustainTime": {
+    "page": "A",
+    "no": 62,
+    "max": 127,
+    "def": 64
+  },
+  "ampEnvRelease": {
+    "page": "A",
+    "no": 63,
+    "max": 127,
+    "def": 4
+  },
+  "lfo1Rate": {
+    "page": "A",
+    "no": 67,
+    "max": 127,
+    "def": 48
+  },
+  "lfo1Shape": {
+    "page": "A",
+    "no": 68,
+    "max": 67,
+    "def": 1
+  },
+  "lfo1EnvMode": {
+    "page": "A",
+    "no": 69,
+    "max": 1,
+    "def": 0
+  },
+  "lfo1Mode": {
+    "page": "A",
+    "no": 70,
+    "max": 1,
+    "def": 0
+  },
+  "lfo1Contour": {
+    "page": "A",
+    "no": 71,
+    "max": 127,
+    "def": 64
+  },
+  "lfo1Keyfollow": {
+    "page": "A",
+    "no": 72,
+    "max": 127,
+    "def": 0
+  },
+  "lfo1TrigPhase": {
+    "page": "A",
+    "no": 73,
+    "max": 127,
+    "def": 0
+  },
+  "lfo1Osc1": {
+    "page": "A",
+    "no": 74,
+    "max": 127,
+    "def": 64
+  },
+  "lfo1Osc2": {
+    "page": "A",
+    "no": 75,
+    "max": 127,
+    "def": 64
+  },
+  "lfo1PulseWidth": {
+    "page": "A",
+    "no": 76,
+    "max": 127,
+    "def": 64
+  },
+  "lfo1Resonance": {
+    "page": "A",
+    "no": 77,
+    "max": 127,
+    "def": 64
+  },
+  "lfo1FilterGain": {
+    "page": "A",
+    "no": 78,
+    "max": 127,
+    "def": 64
+  },
+  "lfo2Rate": {
+    "page": "A",
+    "no": 79,
+    "max": 127,
+    "def": 48
+  },
+  "lfo2Shape": {
+    "page": "A",
+    "no": 80,
+    "max": 67,
+    "def": 1
+  },
+  "lfo2EnvMode": {
+    "page": "A",
+    "no": 81,
+    "max": 1,
+    "def": 0
+  },
+  "lfo2Mode": {
+    "page": "A",
+    "no": 82,
+    "max": 1,
+    "def": 0
+  },
+  "lfo2Contour": {
+    "page": "A",
+    "no": 83,
+    "max": 127,
+    "def": 64
+  },
+  "lfo2Keyfollow": {
+    "page": "A",
+    "no": 84,
+    "max": 127,
+    "def": 0
+  },
+  "lfo2TrigPhase": {
+    "page": "A",
+    "no": 85,
+    "max": 127,
+    "def": 0
+  },
+  "lfo2Shape12": {
+    "page": "A",
+    "no": 86,
+    "max": 127,
+    "def": 64
+  },
+  "lfo2FmAmount": {
+    "page": "A",
+    "no": 87,
+    "max": 127,
+    "def": 64
+  },
+  "lfo2Cutoff1": {
+    "page": "A",
+    "no": 88,
+    "max": 127,
+    "def": 64
+  },
+  "lfo2Cutoff2": {
+    "page": "A",
+    "no": 89,
+    "max": 127,
+    "def": 64
+  },
+  "lfo2Panorama": {
+    "page": "A",
+    "no": 90,
+    "max": 127,
+    "def": 64
+  },
+  "patchVolume": {
+    "page": "A",
+    "no": 91,
+    "max": 127,
+    "def": 100
+  },
+  "transpose": {
+    "page": "A",
+    "no": 93,
+    "max": 127,
+    "def": 64
+  },
+  "keyMode": {
+    "page": "A",
+    "no": 94,
+    "max": 5,
+    "def": 0
+  },
+  "unisonMode": {
+    "page": "A",
+    "no": 97,
+    "max": 15,
+    "def": 0
+  },
+  "unisonDetune": {
+    "page": "A",
+    "no": 98,
+    "max": 127,
+    "def": 48
+  },
+  "unisonPanSpread": {
+    "page": "A",
+    "no": 99,
+    "max": 127,
+    "def": 127
+  },
+  "unisonLfoPhase": {
+    "page": "A",
+    "no": 100,
+    "max": 127,
+    "def": 64
+  },
+  "chorusMix": {
+    "page": "A",
+    "no": 105,
+    "max": 127,
+    "def": 0
+  },
+  "chorusRate": {
+    "page": "A",
+    "no": 106,
+    "max": 127,
+    "def": 69
+  },
+  "chorusDepth": {
+    "page": "A",
+    "no": 107,
+    "max": 127,
+    "def": 16
+  },
+  "chorusDelay": {
+    "page": "A",
+    "no": 108,
+    "max": 127,
+    "def": 127
+  },
+  "chorusFeedback": {
+    "page": "A",
+    "no": 109,
+    "max": 127,
+    "def": 64
+  },
+  "chorusShape": {
+    "page": "A",
+    "no": 110,
+    "max": 67,
+    "def": 1
+  },
+  "delayReverbMode": {
+    "page": "A",
+    "no": 112,
+    "max": 25,
+    "def": 1
+  },
+  "effectSend": {
+    "page": "A",
+    "no": 113,
+    "max": 127,
+    "def": 0
+  },
+  "delayTime": {
+    "page": "A",
+    "no": 114,
+    "max": 127,
+    "def": 64
+  },
+  "delayFeedback": {
+    "page": "A",
+    "no": 115,
+    "max": 127,
+    "def": 0
+  },
+  "delayRate": {
+    "page": "A",
+    "no": 116,
+    "max": 127,
+    "def": 16
+  },
+  "delayDepth": {
+    "page": "A",
+    "no": 117,
+    "max": 127,
+    "def": 12
+  },
+  "delayShape": {
+    "page": "A",
+    "no": 118,
+    "max": 127,
+    "def": 1
+  },
+  "delayColor": {
+    "page": "A",
+    "no": 119,
+    "max": 127,
+    "def": 64
+  },
+  "lfo3Rate": {
+    "page": "B",
+    "no": 7,
+    "max": 127,
+    "def": 92
+  },
+  "lfo3Shape": {
+    "page": "B",
+    "no": 8,
+    "max": 67,
+    "def": 1
+  },
+  "lfo3Mode": {
+    "page": "B",
+    "no": 9,
+    "max": 1,
+    "def": 0
+  },
+  "lfo3Keyfollow": {
+    "page": "B",
+    "no": 10,
+    "max": 127,
+    "def": 0
+  },
+  "lfo3Destination": {
+    "page": "B",
+    "no": 11,
+    "max": 5,
+    "def": 1
+  },
+  "lfo3OscAmount": {
+    "page": "B",
+    "no": 12,
+    "max": 127,
+    "def": 0
+  },
+  "lfo3FadeIn": {
+    "page": "B",
+    "no": 13,
+    "max": 127,
+    "def": 0
+  },
+  "clockTempo": {
+    "page": "B",
+    "no": 16,
+    "max": 127,
+    "def": 57
+  },
+  "lfo1Clock": {
+    "page": "B",
+    "no": 18,
+    "max": 21,
+    "def": 0
+  },
+  "lfo2Clock": {
+    "page": "B",
+    "no": 19,
+    "max": 21,
+    "def": 0
+  },
+  "delayClock": {
+    "page": "B",
+    "no": 20,
+    "max": 16,
+    "def": 0
+  },
+  "lfo3Clock": {
+    "page": "B",
+    "no": 21,
+    "max": 21,
+    "def": 0
+  },
+  "bendUp": {
+    "page": "B",
+    "no": 26,
+    "max": 127,
+    "def": 66
+  },
+  "bendDown": {
+    "page": "B",
+    "no": 27,
+    "max": 127,
+    "def": 62
+  },
+  "bendScale": {
+    "page": "B",
+    "no": 28,
+    "max": 1,
+    "def": 1
+  },
+  "filter1EnvPolarity": {
+    "page": "B",
+    "no": 30,
+    "max": 1,
+    "def": 1
+  },
+  "filter2EnvPolarity": {
+    "page": "B",
+    "no": 31,
+    "max": 1,
+    "def": 1
+  },
+  "filter2CutoffLink": {
+    "page": "B",
+    "no": 32,
+    "max": 1,
+    "def": 1
+  },
+  "filterKeytrackBase": {
+    "page": "B",
+    "no": 33,
+    "max": 127,
+    "def": 36
+  },
+  "fmMode": {
+    "page": "B",
+    "no": 34,
+    "max": 12,
+    "def": 0
+  },
+  "oscInitPhase": {
+    "page": "B",
+    "no": 35,
+    "max": 127,
+    "def": 0
+  },
+  "osc3Mode": {
+    "page": "B",
+    "no": 41,
+    "max": 67,
+    "def": 0
+  },
+  "osc3Volume": {
+    "page": "B",
+    "no": 42,
+    "max": 127,
+    "def": 64
+  },
+  "osc3Semitone": {
+    "page": "B",
+    "no": 43,
+    "max": 127,
+    "def": 64
+  },
+  "osc3Detune": {
+    "page": "B",
+    "no": 44,
+    "max": 127,
+    "def": 40
+  },
+  "lowEqFreq": {
+    "page": "B",
+    "no": 45,
+    "max": 127,
+    "def": 43
+  },
+  "highEqFreq": {
+    "page": "B",
+    "no": 46,
+    "max": 127,
+    "def": 85
+  },
+  "osc1ShapeVelocity": {
+    "page": "B",
+    "no": 47,
+    "max": 127,
+    "def": 64
+  },
+  "osc2ShapeVelocity": {
+    "page": "B",
+    "no": 48,
+    "max": 127,
+    "def": 64
+  },
+  "pulseWidthVelocity": {
+    "page": "B",
+    "no": 49,
+    "max": 127,
+    "def": 64
+  },
+  "fmAmountVelocity": {
+    "page": "B",
+    "no": 50,
+    "max": 127,
+    "def": 64
+  },
+  "filter1EnvAmtVelocity": {
+    "page": "B",
+    "no": 54,
+    "max": 127,
+    "def": 64
+  },
+  "filter2EnvAmtVelocity": {
+    "page": "B",
+    "no": 55,
+    "max": 127,
+    "def": 64
+  },
+  "resonance1Velocity": {
+    "page": "B",
+    "no": 56,
+    "max": 127,
+    "def": 64
+  },
+  "resonance2Velocity": {
+    "page": "B",
+    "no": 57,
+    "max": 127,
+    "def": 64
+  },
+  "ampVelocity": {
+    "page": "B",
+    "no": 60,
+    "max": 127,
+    "def": 64
+  },
+  "panVelocity": {
+    "page": "B",
+    "no": 61,
+    "max": 127,
+    "def": 64
+  },
+  "assign1Source": {
+    "page": "B",
+    "no": 64,
+    "max": 27,
+    "def": 0
+  },
+  "assign1Dest": {
+    "page": "B",
+    "no": 65,
+    "max": 122,
+    "def": 0
+  },
+  "assign1Amount": {
+    "page": "B",
+    "no": 66,
+    "max": 127,
+    "def": 64
+  },
+  "assign2Source": {
+    "page": "B",
+    "no": 67,
+    "max": 27,
+    "def": 0
+  },
+  "assign2Dest1": {
+    "page": "B",
+    "no": 68,
+    "max": 122,
+    "def": 0
+  },
+  "assign2Amount1": {
+    "page": "B",
+    "no": 69,
+    "max": 127,
+    "def": 64
+  },
+  "assign2Dest2": {
+    "page": "B",
+    "no": 70,
+    "max": 122,
+    "def": 0
+  },
+  "assign2Amount2": {
+    "page": "B",
+    "no": 71,
+    "max": 127,
+    "def": 64
+  },
+  "assign3Source": {
+    "page": "B",
+    "no": 72,
+    "max": 27,
+    "def": 0
+  },
+  "assign3Dest1": {
+    "page": "B",
+    "no": 73,
+    "max": 122,
+    "def": 0
+  },
+  "assign3Amount1": {
+    "page": "B",
+    "no": 74,
+    "max": 127,
+    "def": 64
+  },
+  "assign3Dest2": {
+    "page": "B",
+    "no": 75,
+    "max": 122,
+    "def": 0
+  },
+  "assign3Amount2": {
+    "page": "B",
+    "no": 76,
+    "max": 127,
+    "def": 64
+  },
+  "assign3Dest3": {
+    "page": "B",
+    "no": 77,
+    "max": 122,
+    "def": 0
+  },
+  "assign3Amount3": {
+    "page": "B",
+    "no": 78,
+    "max": 127,
+    "def": 64
+  },
+  "lfo1AssignDest": {
+    "page": "B",
+    "no": 79,
+    "max": 122,
+    "def": 0
+  },
+  "lfo1AssignAmount": {
+    "page": "B",
+    "no": 80,
+    "max": 127,
+    "def": 64
+  },
+  "lfo2AssignDest": {
+    "page": "B",
+    "no": 81,
+    "max": 122,
+    "def": 0
+  },
+  "lfo2AssignAmount": {
+    "page": "B",
+    "no": 82,
+    "max": 127,
+    "def": 64
+  },
+  "phaserMode": {
+    "page": "B",
+    "no": 84,
+    "max": 6,
+    "def": 3
+  },
+  "phaserMix": {
+    "page": "B",
+    "no": 85,
+    "max": 127,
+    "def": 0
+  },
+  "phaserRate": {
+    "page": "B",
+    "no": 86,
+    "max": 127,
+    "def": 36
+  },
+  "phaserDepth": {
+    "page": "B",
+    "no": 87,
+    "max": 127,
+    "def": 112
+  },
+  "phaserFrequency": {
+    "page": "B",
+    "no": 88,
+    "max": 127,
+    "def": 48
+  },
+  "phaserFeedback": {
+    "page": "B",
+    "no": 89,
+    "max": 127,
+    "def": 64
+  },
+  "phaserSpread": {
+    "page": "B",
+    "no": 90,
+    "max": 127,
+    "def": 127
+  },
+  "midEqGain": {
+    "page": "B",
+    "no": 92,
+    "max": 127,
+    "def": 64
+  },
+  "midEqFreq": {
+    "page": "B",
+    "no": 93,
+    "max": 127,
+    "def": 71
+  },
+  "midEqQ": {
+    "page": "B",
+    "no": 94,
+    "max": 127,
+    "def": 51
+  },
+  "lowEqGain": {
+    "page": "B",
+    "no": 95,
+    "max": 127,
+    "def": 64
+  },
+  "highEqGain": {
+    "page": "B",
+    "no": 96,
+    "max": 127,
+    "def": 64
+  },
+  "analogBoostIntensity": {
+    "page": "B",
+    "no": 97,
+    "max": 127,
+    "def": 40
+  },
+  "analogBoostTune": {
+    "page": "B",
+    "no": 98,
+    "max": 127,
+    "def": 32
+  },
+  "distortionCurve": {
+    "page": "B",
+    "no": 100,
+    "max": 11,
+    "def": 0
+  },
+  "distortionIntensity": {
+    "page": "B",
+    "no": 101,
+    "max": 127,
+    "def": 0
+  },
+  "assign4Source": {
+    "page": "B",
+    "no": 103,
+    "max": 27,
+    "def": 3
+  },
+  "assign4Dest": {
+    "page": "B",
+    "no": 104,
+    "max": 122,
+    "def": 0
+  },
+  "assign4Amount": {
+    "page": "B",
+    "no": 105,
+    "max": 127,
+    "def": 64
+  },
+  "assign5Source": {
+    "page": "B",
+    "no": 106,
+    "max": 27,
+    "def": 3
+  },
+  "assign5Dest": {
+    "page": "B",
+    "no": 107,
+    "max": 122,
+    "def": 0
+  },
+  "assign5Amount": {
+    "page": "B",
+    "no": 108,
+    "max": 127,
+    "def": 64
+  },
+  "assign6Source": {
+    "page": "B",
+    "no": 109,
+    "max": 27,
+    "def": 3
+  },
+  "assign6Dest": {
+    "page": "B",
+    "no": 110,
+    "max": 122,
+    "def": 0
+  },
+  "assign6Amount": {
+    "page": "B",
+    "no": 111,
+    "max": 127,
+    "def": 64
+  },
+  "arpMode": {
+    "page": "B",
+    "no": 1,
+    "max": 6,
+    "def": 0
+  },
+  "arpPattern": {
+    "page": "B",
+    "no": 2,
+    "max": 63,
+    "def": 0
+  },
+  "arpOctaves": {
+    "page": "B",
+    "no": 3,
+    "max": 3,
+    "def": 0
+  },
+  "arpHold": {
+    "page": "B",
+    "no": 4,
+    "max": 1,
+    "def": 0
+  },
+  "arpNoteLength": {
+    "page": "B",
+    "no": 5,
+    "max": 127,
+    "def": 64
+  },
+  "arpSwing": {
+    "page": "B",
+    "no": 6,
+    "max": 127,
+    "def": 0
+  },
+  "arpClock": {
+    "page": "B",
+    "no": 17,
+    "max": 17,
+    "def": 4
+  },
+  "inputMode": {
+    "page": "A",
+    "no": 101,
+    "max": 3,
+    "def": 0
+  },
+  "inputSelect": {
+    "page": "A",
+    "no": 102,
+    "max": 8,
+    "def": 1
+  },
+  "controlSmoothMode": {
+    "page": "B",
+    "no": 25,
+    "max": 3,
+    "def": 1
+  },
+  "punchIntensity": {
+    "page": "B",
+    "no": 36,
+    "max": 127,
+    "def": 64
+  },
+  "inputFollowerMode": {
+    "page": "B",
+    "no": 38,
+    "max": 9,
+    "def": 0
+  },
+  "vocoderMode": {
+    "page": "B",
+    "no": 39,
+    "max": 12,
+    "def": 0
+  },
+  "softKnob1Name": {
+    "page": "B",
+    "no": 51,
+    "max": 71,
+    "def": 0
+  },
+  "softKnob2Name": {
+    "page": "B",
+    "no": 52,
+    "max": 71,
+    "def": 0
+  },
+  "secondOutputBalance": {
+    "page": "B",
+    "no": 58,
+    "max": 127,
+    "def": 0
+  },
+  "softKnob1Dest": {
+    "page": "B",
+    "no": 62,
+    "max": 117,
+    "def": 0
+  },
+  "softKnob2Dest": {
+    "page": "B",
+    "no": 63,
+    "max": 117,
+    "def": 0
+  },
+  "inputRingmod": {
+    "page": "B",
+    "no": 99,
+    "max": 127,
+    "def": 0
+  },
+  "filterSelect": {
+    "page": "B",
+    "no": 122,
+    "max": 2,
+    "def": 0
+  },
+  "category1": {
+    "page": "B",
+    "no": 123,
+    "max": 127,
+    "def": 0
+  },
+  "category2": {
+    "page": "B",
+    "no": 124,
+    "max": 127,
+    "def": 0
+  }
+}

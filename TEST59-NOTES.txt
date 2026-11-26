@@ -1,0 +1,45 @@
+FM1 Virooos TEST59 - amplitude modulation matrix
+
+Adds original matrix targets 1 (patch volume), 2 (channel-volume multiplier),
+and 80 (amplitude-velocity depth). Forty-two targets are connected.
+Patch volume retains original fractional table interpolation and 0..127 clamp.
+Channel-volume modulation uses the original 0..2 multiplier, combined with the
+existing MIDI CC7/CC11 gains. Velocity depth retains the original fractional,
+bipolar amplitude curve; the native INIT linear-velocity setting 128 is retained
+when no velocity-depth modulation is applied. Voice-local cached velocity gain
+avoids repeated exponent calculations when its input is unchanged.
+Existing 32-sample gain smoothing is preserved. Removing the matrix restores
+base gain, and MIDI mute remains effective. Phase and envelope are not reset.
+
+50 retained presets configure non-neutral routes to these new destinations.
+533 presets configure a route to at least one supported destination.
+Try C4 BlkvelvtSV or C23 Digedi JS for LFO-driven patch-volume movement.
+C15 CreameryBC or C66 MoveMyMWBC uses the mod wheel; C0 AutoBendBC and C34 Freno BC
+use note key tracking. Numbers are original zero-based programs on the display.
+Check four-note CPU average/peak, xruns and deadlines. This build has not been
+physically tested on an FM-1.
+
+Linked target memory:
+Application 482252 / 581564 bytes; 99312 free (+812 vs TEST58).
+Normal RAM 89768 / 98304 bytes; 8536 free (+64 vs TEST58, including profiler copy).
+Pool 327836 / 344064 bytes; 16228 free (unchanged).
+Executable RAM 23000 / 24576 bytes; 1576 free (+492 vs TEST58).
+Temporary matrix result array grows by 12 bytes.
+
+TEST59 validation:
+Amplitude integration: 36864 cases against original matrix, patch-volume and
+amplitude-velocity curves; maximum gain error 1.352e-7. Fractional inputs, depth
+clamps, MIDI CC7/CC11 gain, mute, 32-sample smoothing, neutral restoration, phase/
+envelope preservation, voice isolation and native linear INIT mode checked.
+ASan/UBSan passed. All previous matrix integration tests were rerun, along with
+native amplitude-velocity, patch-volume and MIDI-volume regressions.
+Full/reduced matrix routing each passed 78450 cases / 9649350 values.
+Host controller/INIT regression passed. All 650 presets rendered 4096 stereo
+frames each, all finite and nonzero within first 93ms, peak 1. These short renders
+are not full listening-equivalence or physical CPU tests.
+Target memory placement and firmware CRC/exact payload validation passed.
+Full tests/run.sh was last completed on TEST56; its historical evidence remains.
+
+650 presets retained; 118 arp presets excluded. No arp; EQ/distortion only.
+Unison and remaining matrix/features are unfinished.
+Firmware: release/FM1-Virooos-TEST59.fwsc, identity FM-1_15005900.

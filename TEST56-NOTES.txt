@@ -1,0 +1,43 @@
+FM1 Virooos TEST56 - oscillator shape modulation matrix
+
+New original matrix targets:
+6 oscillator 1 shape; 11 oscillator 2 shape; 52 LFO2 shape depth;
+72 oscillator 1 velocity-to-shape depth; 73 oscillator 2 velocity-to-shape depth.
+Thirty destinations now connected. Original fractional shape morphing and
+clamps are retained. Shape changes preserve phase, pulse width, selected wave,
+and pending BLEP correction. Oscillator 3 slave mode follows oscillator 2's
+updated gains in the same control block. FM scale refreshes when oscillator 1
+wave/saw gains change. Clearing the matrix restores base shapes correctly.
+No added persistent voice state. Work occurs at the 32-frame control cadence.
+
+25 retained presets configure non-neutral routes to these new targets.
+478 presets configure a route to at least one supported destination.
+Try C program 17 Da Funk BC, 35 Fripper JS, 59 Lite JS or 108 SpringPdSV:
+hold notes and sweep the mod wheel. C23 Digedi JS uses LFO2 shape modulation.
+Numbers are the original zero-based program numbers on the preset page.
+Check four-note CPU average/peak, xruns and deadlines. Physical FM-1 testing
+has not been performed on this build; no hardware CPU claim is made.
+
+Linked memory:
+Application 479616 / 581564 bytes; 101948 free (+692 vs TEST55).
+Normal RAM 89704 / 98304 bytes; 8600 free (unchanged).
+Pool 327836 / 344064 bytes; 16228 free (unchanged).
+Executable RAM 20828 / 24576 bytes; 3748 free (+660 vs TEST55).
+Temporary matrix result array grows by 20 bytes.
+
+Validation:
+Shape integration: 5160 cases / 51600 values, 650 factory plus 640 synthetic
+patches, four controller/source conditions each. Compared with original matrix,
+shape-depth curve and original oscillator setShape implementation. Max error
+3.186e-7. ASan/UBSan passed; phase, width, BLEP, slave gains, FM scale, matrix
+removal and voice isolation checked.
+Existing filter/FM/pan/balance matrix regressions and host controller/INIT
+regression pass. All 650 presets render 4096 stereo frames each with finite
+samples, 648 nonzero within first 93ms, peak 1. Short renders are not a complete
+listening-equivalence check. Target placement and package payload/CRC checks pass.
+
+650 presets retained, 118 arp programs excluded. No arp. EQ/distortion only.
+Unison, other matrix destinations and documented remaining gaps are unfinished.
+Firmware: release/FM1-Virooos-TEST56.fwsc, identity FM-1_15005600.
+
+Full tests/run.sh regression completed successfully on TEST56.

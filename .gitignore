@@ -2,3 +2,8 @@
 build-deps/
 __pycache__/
 *.pyc
+/midi_out.txt
+/release/*.fwsc
+/release/contagion/
+/demo/*.wav
+/docs/screenshots/midi_out.txt

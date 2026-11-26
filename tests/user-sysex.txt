@@ -1,0 +1,45 @@
+sysex_in build/user-sysex/request0.syx
+sysex_out build/user-sysex/busy.syx
+wait 30000
+spin PRESET 1
+wait 12000
+midi USB B0 28 4D
+wait 50
+tap SAVE
+wait 12000
+expect store_writes 1
+sysex_in build/user-sysex/request0.syx
+sysex_out build/user-sysex/dump0.syx
+sysex_in build/user-sysex/restore1.syx
+wait 12000
+expect store_writes 2
+expect cutoff 77
+sysex_out build/user-sysex/saved.syx
+sysex_in build/user-sysex/request1.syx
+sysex_out build/user-sysex/dump1.syx
+spin K2 1
+wait 12000
+expect user_loaded 1
+expect cutoff 53
+expect user_name_first 66
+expect user_matches_slot 1
+sysex_in build/user-sysex/invalid.syx
+wait 100
+expect store_writes 2
+sysex_out build/user-sysex/invalid-reply.syx
+storefail 1
+sysex_in build/user-sysex/restore2.syx
+wait 12000
+expect store_writes 2
+sysex_out build/user-sysex/failed.syx
+sysex_in build/user-sysex/request2.syx
+sysex_out build/user-sysex/empty.syx
+reboot
+wait 12000
+tap SEL
+spin K1 1
+spin K2 1
+wait 12000
+expect cutoff 53
+expect user_name_first 66
+expect user_matches_slot 1

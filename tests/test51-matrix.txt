@@ -1,0 +1,31 @@
+wait 12000
+expect wave_state 0
+midi USB B0 00 00
+midi USB C0 04
+wait 12000
+expect preset_program 4
+expect matrix_active 1
+midi USB B0 01 7F
+midi USB 90 30 64
+midi USB 90 34 64
+midi USB 90 37 64
+midi USB 90 3C 64
+wait 100
+expect voices 4
+expect matrix_env_delta 48000
+midi USB B0 01 00
+wait 50
+expect matrix_env_delta 0
+midi USB C0 22
+wait 12000
+expect preset_program 34
+midi USB B0 01 7F
+wait 50
+expect matrix_key_delta 40000
+expect queue_lost 0
+spin PRESET 1
+wait 12000
+expect page 24
+spin K3 1
+wait 12000
+expect matrix_active 0

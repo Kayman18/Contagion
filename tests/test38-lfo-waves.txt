@@ -1,0 +1,53 @@
+wait 12000
+expect wave_state 0
+master 1200
+wav test38-lfo-waves.wav
+tap HOME
+tap LFO
+tap LFO
+spin K2 6
+wait 100
+expect lfo_shape 6
+shot lfo-wave2.png
+tap SEL
+spin K1 20
+spin K4 1
+wait 100
+expect lfo_mode 1
+midi USB 90 30 64
+midi USB 90 37 64
+midi USB 90 3C 64
+midi USB 90 40 64
+wait 1000
+expect voices 4
+midi USB B0 44 15
+wait 500
+expect lfo_shape 21
+tap SEL
+shot lfo-wave17.png
+tap LFO
+tap LFO
+tap LFO
+midi USB B0 50 0A
+wait 100
+expect lfo2_shape 10
+tap SEL
+spin K1 20
+spin K3 1
+wait 100
+expect lfo2_mode 1
+wait 1000
+tap LFO
+tap LFO
+spin K2 21
+spin K3 80
+tap SEL
+spin K4 1
+wait 100
+expect lfo3_enable 1
+wait 1000
+expect voices 4
+tap PLAY
+wait 100
+expect voices 0
+expect queue_lost 0

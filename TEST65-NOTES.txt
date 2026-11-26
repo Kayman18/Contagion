@@ -1,0 +1,52 @@
+FM1 Virooos TEST65 - LFO rate and contour modulation
+
+Adds five original matrix targets: LFO1 rate/contour (43/44), LFO2 rate/contour
+(50/51), and LFO3 rate (57). There are now 59 connected destinations.
+105 retained presets configure non-neutral routes to at least one of them.
+
+Timing follows the captured source: read the current LFO values for the matrix,
+apply per-voice rate/contour changes, then advance each enabled local LFO once.
+Rate changes preserve phase, cycle count and completed one-shot state.
+Removing the matrix restores base timing without retriggering.
+Key tracking, note-on rate deviation and tempo clock divisions remain intact.
+Clock divisions override raw rate modulation, matching the original.
+LFO3 retains the source's fractional-rate behavior near its 127 endpoint.
+
+These are per-voice routes in the original. Shared LFOs retain their independent
+base rate and contour; a route does not turn a shared LFO into a local one.
+The local LFO continues running while shared scope is selected.
+Effective rate caches avoid recalculation when the value has not changed.
+
+Hardware examples (original zero-based program numbers):
+C22 DHR Amb BC: mod wheel changes LFO1 rate.
+C19 Decay   JS: mod wheel changes LFO2 rate, alongside its envelope routes.
+C97 Rise up!SV: mod wheel changes LFO1 contour.
+
+Validation:
+30720 reference cases cover all five targets, fractional/clamped values,
+key tracking, clock divisions 0/1/21, local/shared scope and phase progression.
+Maximum relative rate error 7.464e-7; contour error 5.501e-6; phase/cycle error
+7.763e-8; resulting waveform error 1.083e-5.
+ASan/UBSan checks verify one-shot completion, route removal and block invariance.
+Full/reduced/rounded matrix routing, LFO3 amount, envelope and filter integration
+regressions passed. All 650 presets render finite/nonzero output over 4096
+stereo frames each. Unison/Analog Boost host scripts passed.
+Target cache layout, executable-RAM placement and package validation passed.
+
+Linked memory:
+Application 527552 / 581564 bytes (54012 free).
+Normal RAM 90424 / 98304 bytes (7880 free; +96 bytes for per-voice rate caches).
+Pool 327836 / 344064 bytes (16228 free; unchanged).
+Executable RAM 24452 / 24576 bytes (124 free).
+Matrix result scratch grows by 20 bytes.
+
+Hardware CPU for TEST65 is unmeasured. Last supplied hardware result remains
+TEST60: 47% average / 56% peak, clean audio and zero xruns/deadlines.
+Please hold notes on C22 and move the mod wheel, then report average/peak CPU,
+xruns/deadlines and any clicks. Test C97 for contour changes.
+
+Earlier Analog Boost, unison and envelope work remains included. No arp or
+excluded effects added; unfinished preset features remain marked partial.
+Install release/FM1-Virooos-TEST65.fwsc.
+
+The full existing regression suite also passed, including 4261694 active/static LFO values compared byte-for-byte and ASan/UBSan checks.

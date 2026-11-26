@@ -1,0 +1,48 @@
+FM1 Virooos TEST54 - pan modulation matrix
+
+New original matrix destinations:
+3 Panorama; 56 LFO2 pan depth; 60 stereo spread; 81 velocity-to-pan depth.
+Seventeen previous filter destinations remain connected. Twenty-one in total.
+Spread affects the existing split-filter routing (routing 3); this does not
+implement unison. Other routing modes ignore spread, as in the original.
+Pan targets use original fractional curves/clamps and existing 32-sample gain
+smoothing. Controller changes are evaluated at the 32-frame control cadence.
+No new persistent voice state. Matrix removal returns smoothly to static pan.
+
+44 retained presets configure non-neutral routes to these four targets.
+465 presets configure a route to at least one supported destination. A route
+can still be inactive if its source is zero; original Random behavior remains.
+650 presets retained, 118 arp presets excluded. No arp; EQ and distortion only.
+Other matrix destinations, unison and other documented gaps remain unfinished.
+
+Stereo listening check:
+Bank C program 4 BlkvelvtSV or 6 BusysawsSV: listen for LFO-driven pan motion.
+C program 92 ReflxshnBC or 121 Vapour SV: sweep the mod wheel for pan depth.
+C program 15 CreameryBC: LFO2 spread modulation is audible with split routing.
+Use original zero-based program numbers on the preset page.
+Report CPU average/peak, xruns and deadlines while holding four notes.
+This build has not been tested on physical FM-1 hardware.
+
+Linked target memory:
+Application 478488 / 581564 bytes; 103076 free (+688 vs TEST53).
+Normal RAM 89704 / 98304 bytes; 8600 free (unchanged).
+Pool 327836 / 344064 bytes; 16228 free (unchanged).
+Executable RAM 19860 / 24576 bytes; 4716 free (+624 vs TEST53).
+Matrix temporary result array grows by 16 bytes.
+
+TEST54 validation:
+- Pan matrix: 8192 cases / 32768 target gain values, original matrix and pan
+  curve oracle, maximum error 1.852e-7. All four routing modes, fractional and
+  clamped inputs, 32-sample smoothing at normal control cadence, voice isolation
+  and matrix removal. ASan/UBSan passed.
+- Existing pan audio regression: 552960 audio/gain values, max error 8.131e-7.
+  Live LFO2 timing: 384000 gain values, max error 8.947e-6.
+- Filter balance 4608 cases and filter integration 8744 cases passed.
+- Full and reduced matrix routing: 78450 cases / 9649350 values each passed.
+- Host wheel/keytracking/INIT regression passed.
+- 650 presets rendered 4096 stereo frames each, all finite, 648 nonzero in the
+  first 93ms, peak 1. This short render is not listening-equivalence validation.
+- Target memory placement and exact firmware payload/CRC validation passed.
+Full tests/run.sh was last completed on TEST52; historical logs are retained.
+
+Firmware: release/FM1-Virooos-TEST54.fwsc, identity FM-1_15005400.

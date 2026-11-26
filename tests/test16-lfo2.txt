@@ -1,0 +1,62 @@
+wait 12000
+expect wave_state 0
+master 1600
+wav test16-lfo2.wav
+tap EDIT
+spin K1 -30
+tap SEL
+spin K1 -57
+tap HOME
+tap LFO
+tap LFO
+tap SEL
+spin K1 16
+spin K4 1
+tap HOME
+tap LFO
+tap LFO
+tap LFO
+tap LFO
+tap LFO
+expect page 12
+expect row 0
+shot lfo2-controls.png
+tap SEL
+spin K1 32
+spin K2 -32
+spin K3 1
+wait 40
+expect lfo2_mode 1
+expect lfo2_cutoff1 96
+shot lfo2-cutoffs.png
+midi USB 90 30 64
+midi USB 90 37 64
+midi USB 90 3C 64
+midi USB 90 40 64
+wait 1800
+expect voices 4
+tap SEL
+spin K2 4
+wait 1200
+expect lfo2_shape 4
+spin K2 1
+wait 1200
+expect lfo2_shape 5
+spin K2 -5
+spin K1 32
+tap SEL
+spin K3 1
+tap PLAY
+midi USB 90 3C 64
+wait 1800
+expect lfo2_mode 2
+spin K3 -2
+wait 40
+expect lfo2_mode 0
+expect voices 1
+tap LFO
+expect page 13
+tap PLAY
+wait 100
+expect voices 0
+expect queue_lost 0

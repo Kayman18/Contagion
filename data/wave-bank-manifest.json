@@ -1,0 +1,331 @@
+{
+  "format": "VCWAV001: LZ4 original float64 coefficients, per-wave CRCs",
+  "waves": 64,
+  "bytes": 90426,
+  "expanded_tables_bytes": 7343616,
+  "two_cache_bytes": 229488,
+  "sha256": "5c6e58d6886012493e8418737f5900fb7ea4a5b2588cdfbbce12585b6e8946d4",
+  "roundtrip_coefficients_exact": true,
+  "entries": [
+    {
+      "wave": 0,
+      "bytes": 370,
+      "table_crc": 3258798529
+    },
+    {
+      "wave": 1,
+      "bytes": 566,
+      "table_crc": 108163269
+    },
+    {
+      "wave": 2,
+      "bytes": 1283,
+      "table_crc": 880704455
+    },
+    {
+      "wave": 3,
+      "bytes": 1374,
+      "table_crc": 836161062
+    },
+    {
+      "wave": 4,
+      "bytes": 1485,
+      "table_crc": 2781891679
+    },
+    {
+      "wave": 5,
+      "bytes": 1325,
+      "table_crc": 4069098541
+    },
+    {
+      "wave": 6,
+      "bytes": 1270,
+      "table_crc": 1592214639
+    },
+    {
+      "wave": 7,
+      "bytes": 1325,
+      "table_crc": 3434493802
+    },
+    {
+      "wave": 8,
+      "bytes": 1545,
+      "table_crc": 844796599
+    },
+    {
+      "wave": 9,
+      "bytes": 1141,
+      "table_crc": 3280686203
+    },
+    {
+      "wave": 10,
+      "bytes": 1605,
+      "table_crc": 3359507796
+    },
+    {
+      "wave": 11,
+      "bytes": 1456,
+      "table_crc": 178450141
+    },
+    {
+      "wave": 12,
+      "bytes": 1535,
+      "table_crc": 2748071829
+    },
+    {
+      "wave": 13,
+      "bytes": 1300,
+      "table_crc": 993743623
+    },
+    {
+      "wave": 14,
+      "bytes": 1464,
+      "table_crc": 1275526089
+    },
+    {
+      "wave": 15,
+      "bytes": 1238,
+      "table_crc": 874609270
+    },
+    {
+      "wave": 16,
+      "bytes": 1397,
+      "table_crc": 3644667080
+    },
+    {
+      "wave": 17,
+      "bytes": 1441,
+      "table_crc": 4128068139
+    },
+    {
+      "wave": 18,
+      "bytes": 1160,
+      "table_crc": 2568014805
+    },
+    {
+      "wave": 19,
+      "bytes": 1477,
+      "table_crc": 580955706
+    },
+    {
+      "wave": 20,
+      "bytes": 1566,
+      "table_crc": 1507785340
+    },
+    {
+      "wave": 21,
+      "bytes": 1487,
+      "table_crc": 3067556554
+    },
+    {
+      "wave": 22,
+      "bytes": 1487,
+      "table_crc": 486195672
+    },
+    {
+      "wave": 23,
+      "bytes": 1756,
+      "table_crc": 550593426
+    },
+    {
+      "wave": 24,
+      "bytes": 1819,
+      "table_crc": 859087246
+    },
+    {
+      "wave": 25,
+      "bytes": 1535,
+      "table_crc": 1674656577
+    },
+    {
+      "wave": 26,
+      "bytes": 1858,
+      "table_crc": 2009867857
+    },
+    {
+      "wave": 27,
+      "bytes": 1857,
+      "table_crc": 2570378179
+    },
+    {
+      "wave": 28,
+      "bytes": 1515,
+      "table_crc": 1978657846
+    },
+    {
+      "wave": 29,
+      "bytes": 981,
+      "table_crc": 2709509907
+    },
+    {
+      "wave": 30,
+      "bytes": 1071,
+      "table_crc": 3599121709
+    },
+    {
+      "wave": 31,
+      "bytes": 1048,
+      "table_crc": 2010836078
+    },
+    {
+      "wave": 32,
+      "bytes": 1184,
+      "table_crc": 764939544
+    },
+    {
+      "wave": 33,
+      "bytes": 1234,
+      "table_crc": 1542545633
+    },
+    {
+      "wave": 34,
+      "bytes": 1121,
+      "table_crc": 4049294522
+    },
+    {
+      "wave": 35,
+      "bytes": 1277,
+      "table_crc": 2185445260
+    },
+    {
+      "wave": 36,
+      "bytes": 1203,
+      "table_crc": 1955897736
+    },
+    {
+      "wave": 37,
+      "bytes": 1152,
+      "table_crc": 1847680950
+    },
+    {
+      "wave": 38,
+      "bytes": 1342,
+      "table_crc": 2802347265
+    },
+    {
+      "wave": 39,
+      "bytes": 1224,
+      "table_crc": 3292789821
+    },
+    {
+      "wave": 40,
+      "bytes": 1815,
+      "table_crc": 3968672534
+    },
+    {
+      "wave": 41,
+      "bytes": 1306,
+      "table_crc": 4077235583
+    },
+    {
+      "wave": 42,
+      "bytes": 1288,
+      "table_crc": 3020534063
+    },
+    {
+      "wave": 43,
+      "bytes": 1297,
+      "table_crc": 2469822019
+    },
+    {
+      "wave": 44,
+      "bytes": 1329,
+      "table_crc": 351638865
+    },
+    {
+      "wave": 45,
+      "bytes": 1468,
+      "table_crc": 2392145861
+    },
+    {
+      "wave": 46,
+      "bytes": 1395,
+      "table_crc": 2504644046
+    },
+    {
+      "wave": 47,
+      "bytes": 1444,
+      "table_crc": 2915275981
+    },
+    {
+      "wave": 48,
+      "bytes": 1431,
+      "table_crc": 918205657
+    },
+    {
+      "wave": 49,
+      "bytes": 1359,
+      "table_crc": 1354090479
+    },
+    {
+      "wave": 50,
+      "bytes": 1544,
+      "table_crc": 2248324214
+    },
+    {
+      "wave": 51,
+      "bytes": 1578,
+      "table_crc": 2722990690
+    },
+    {
+      "wave": 52,
+      "bytes": 1347,
+      "table_crc": 3803079735
+    },
+    {
+      "wave": 53,
+      "bytes": 1573,
+      "table_crc": 2057521804
+    },
+    {
+      "wave": 54,
+      "bytes": 1589,
+      "table_crc": 258015988
+    },
+    {
+      "wave": 55,
+      "bytes": 1430,
+      "table_crc": 841143996
+    },
+    {
+      "wave": 56,
+      "bytes": 1762,
+      "table_crc": 3085144596
+    },
+    {
+      "wave": 57,
+      "bytes": 1233,
+      "table_crc": 3513196685
+    },
+    {
+      "wave": 58,
+      "bytes": 1765,
+      "table_crc": 296475128
+    },
+    {
+      "wave": 59,
+      "bytes": 1526,
+      "table_crc": 4016797936
+    },
+    {
+      "wave": 60,
+      "bytes": 1521,
+      "table_crc": 1213034570
+    },
+    {
+      "wave": 61,
+      "bytes": 1637,
+      "table_crc": 3619103507
+    },
+    {
+      "wave": 62,
+      "bytes": 1665,
+      "table_crc": 1469041650
+    },
+    {
+      "wave": 63,
+      "bytes": 1594,
+      "table_crc": 3700085090
+    }
+  ]
+}

@@ -1,0 +1,65 @@
+wait 12000
+expect wave_state 0
+master 1600
+wav test10-fm.wav
+tap HOME
+spin K3 63
+wait 40
+tap FX
+tap FX
+tap FX
+expect page 8
+expect row 0
+spin K1 32
+wait 40
+expect fm_amount 32
+shot fm-positive-triangle.png
+midi USB 90 30 64
+midi USB 90 37 64
+midi USB 90 3C 64
+midi USB 90 40 64
+wait 800
+expect voices 4
+spin K2 1
+wait 800
+expect fm_mode 1
+spin K2 1
+wait 800
+expect fm_mode 2
+spin K2 1
+wait 800
+expect fm_mode 3
+shot fm-noise.png
+spin K3 32
+wait 40
+expect fm_env 96
+tap ENV
+tap ENV
+spin K1 20
+spin K2 15
+wait 40
+tap PLAY
+wait 100
+midi USB 90 3C 50
+wait 1200
+tap HOME
+tap FX
+tap FX
+tap FX
+expect page 8
+spin K3 -32
+spin K4 32
+wait 40
+shot fm-velocity.png
+spin K1 -32
+spin K4 -32
+wait 40
+expect fm_amount 0
+tap SEL
+expect row 1
+tap FX
+expect page 15
+tap PLAY
+wait 100
+expect voices 0
+expect queue_lost 0

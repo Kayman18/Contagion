@@ -1,0 +1,246 @@
+{
+  "source": {
+    "model": "Virus B",
+    "files": [
+      {
+        "name": "Virus-B-Bank-A.syx",
+        "sha256": "046bbd588ac19211f0eb492a27edd515f20738eabf132f06d4ef54d3e31baa70"
+      },
+      {
+        "name": "Virus-B-Bank-B.syx",
+        "sha256": "af1a09472c4bab266c870eee4b869550292749e34bbbf6930bcbaab43a832377"
+      },
+      {
+        "name": "Virus-B-Bank-C.syx",
+        "sha256": "df51bea7a27e57ce5092ffce13d5593c51392d6c7eb7036b2d7fe1cc32f88f7a"
+      },
+      {
+        "name": "Virus-B-Bank-D.syx",
+        "sha256": "6eb0f9f380e3942a09f02b6962ccdf5aeed6a2a5cff59a51a92b3abce0dcda0e"
+      },
+      {
+        "name": "Virus-B-Bank-E.syx",
+        "sha256": "4e71400afe9968c9cd718859d54388cf3d3a9b70d8795cf937257785ce06f22f"
+      },
+      {
+        "name": "Virus-B-Bank-F.syx",
+        "sha256": "a2b4fa42a86d45e98ecef966e108538f53de29af67c87566b20210d4d579043f"
+      }
+    ]
+  },
+  "source_sha256": "8c4ed06bc27bf9bf3ce74b2145448c98fd925f6134809ad223174f44f70067a3",
+  "original_programs": 768,
+  "excluded_arp_programs": 120,
+  "programs": 648,
+  "banks": [
+    "A",
+    "B",
+    "C",
+    "D",
+    "E",
+    "F"
+  ],
+  "native_parameters": 126,
+  "mapped_source_parameters": 124,
+  "unconnected": [
+    {
+      "parameter": "assign1Source",
+      "nondefault_programs": 462
+    },
+    {
+      "parameter": "assign1Dest",
+      "nondefault_programs": 478
+    },
+    {
+      "parameter": "assign1Amount",
+      "nondefault_programs": 447
+    },
+    {
+      "parameter": "assign2Source",
+      "nondefault_programs": 484
+    },
+    {
+      "parameter": "assign2Dest1",
+      "nondefault_programs": 489
+    },
+    {
+      "parameter": "assign2Amount1",
+      "nondefault_programs": 470
+    },
+    {
+      "parameter": "assign2Dest2",
+      "nondefault_programs": 321
+    },
+    {
+      "parameter": "assign2Amount2",
+      "nondefault_programs": 288
+    },
+    {
+      "parameter": "assign3Source",
+      "nondefault_programs": 339
+    },
+    {
+      "parameter": "assign3Dest1",
+      "nondefault_programs": 351
+    },
+    {
+      "parameter": "assign3Amount1",
+      "nondefault_programs": 326
+    },
+    {
+      "parameter": "assign3Dest2",
+      "nondefault_programs": 185
+    },
+    {
+      "parameter": "assign3Amount2",
+      "nondefault_programs": 176
+    },
+    {
+      "parameter": "assign3Dest3",
+      "nondefault_programs": 108
+    },
+    {
+      "parameter": "assign3Amount3",
+      "nondefault_programs": 112
+    },
+    {
+      "parameter": "lfo1AssignDest",
+      "nondefault_programs": 102
+    },
+    {
+      "parameter": "lfo1AssignAmount",
+      "nondefault_programs": 83
+    },
+    {
+      "parameter": "lfo2AssignDest",
+      "nondefault_programs": 138
+    },
+    {
+      "parameter": "lfo2AssignAmount",
+      "nondefault_programs": 114
+    },
+    {
+      "parameter": "assign4Source",
+      "nondefault_programs": 637
+    },
+    {
+      "parameter": "assign4Dest",
+      "nondefault_programs": 203
+    },
+    {
+      "parameter": "assign4Amount",
+      "nondefault_programs": 648
+    },
+    {
+      "parameter": "assign5Source",
+      "nondefault_programs": 648
+    },
+    {
+      "parameter": "assign5Dest",
+      "nondefault_programs": 328
+    },
+    {
+      "parameter": "assign5Amount",
+      "nondefault_programs": 648
+    },
+    {
+      "parameter": "assign6Source",
+      "nondefault_programs": 648
+    },
+    {
+      "parameter": "assign6Dest",
+      "nondefault_programs": 646
+    },
+    {
+      "parameter": "assign6Amount",
+      "nondefault_programs": 648
+    },
+    {
+      "parameter": "inputMode",
+      "nondefault_programs": 1
+    },
+    {
+      "parameter": "inputSelect",
+      "nondefault_programs": 3
+    },
+    {
+      "parameter": "controlSmoothMode",
+      "nondefault_programs": 40
+    },
+    {
+      "parameter": "inputFollowerMode",
+      "nondefault_programs": 0
+    },
+    {
+      "parameter": "vocoderMode",
+      "nondefault_programs": 0
+    },
+    {
+      "parameter": "softKnob1Name",
+      "nondefault_programs": 646
+    },
+    {
+      "parameter": "softKnob2Name",
+      "nondefault_programs": 646
+    },
+    {
+      "parameter": "secondOutputBalance",
+      "nondefault_programs": 38
+    },
+    {
+      "parameter": "softKnob1Dest",
+      "nondefault_programs": 199
+    },
+    {
+      "parameter": "softKnob2Dest",
+      "nondefault_programs": 78
+    },
+    {
+      "parameter": "inputRingmod",
+      "nondefault_programs": 26
+    },
+    {
+      "parameter": "filterSelect",
+      "nondefault_programs": 2
+    },
+    {
+      "parameter": "category1",
+      "nondefault_programs": 646
+    },
+    {
+      "parameter": "category2",
+      "nondefault_programs": 106
+    }
+  ],
+  "excluded": [
+    "chorusMix",
+    "chorusRate",
+    "chorusDepth",
+    "chorusDelay",
+    "chorusFeedback",
+    "chorusShape",
+    "delayReverbMode",
+    "effectSend",
+    "delayTime",
+    "delayFeedback",
+    "delayRate",
+    "delayDepth",
+    "delayShape",
+    "delayColor",
+    "delayClock",
+    "phaserMode",
+    "phaserMix",
+    "phaserRate",
+    "phaserDepth",
+    "phaserFrequency",
+    "phaserFeedback",
+    "phaserSpread",
+    "arpMode",
+    "arpPattern",
+    "arpOctaves",
+    "arpHold",
+    "arpNoteLength",
+    "arpSwing",
+    "arpClock"
+  ]
+}

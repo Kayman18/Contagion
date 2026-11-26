@@ -1,0 +1,54 @@
+wait 12000
+expect wave_state 0
+master 2400
+wav test05-muted-profile.wav
+tap GLO
+expect page 5
+tap GLO
+wait 100
+expect page 6
+expect profile_mode 0
+expect voices 4
+shot profile-full.png
+midi USB 90 3C 64
+wait 100
+expect voices 4
+spin K1 1
+wait 100
+expect profile_mode 1
+shot profile-sources.png
+spin K1 1
+wait 100
+expect profile_mode 2
+spin K1 1
+wait 100
+expect profile_mode 3
+spin K1 1
+wait 100
+expect profile_mode 4
+spin K1 1
+wait 100
+expect profile_mode 5
+expect voices 0
+shot profile-idle.png
+spin K1 20
+wait 100
+expect profile_mode 5
+spin K1 -20
+wait 100
+expect profile_mode 0
+spin K2 1
+wait 100
+tap PLAY
+wait 100
+expect page 5
+expect profile_mode -1
+expect voices 0
+tap GLO
+wait 100
+expect profile_mode 0
+tap HOME
+wait 100
+expect profile_mode -1
+expect voices 0
+expect queue_lost 0

@@ -1,0 +1,79 @@
+wait 12000
+expect wave_state 0
+master 1600
+wav test22-saturation.wav
+tap HOME
+tap FX
+tap FX
+tap FX
+tap FX
+tap FX
+expect page 16
+expect sat_curve 0
+expect sat_drive 64
+spin K2 32
+wait 40
+expect sat_drive 96
+midi USB 90 30 64
+midi USB 90 37 64
+midi USB 90 3C 64
+midi USB 90 40 64
+wait 100
+expect voices 4
+spin K1 1
+wait 300
+expect sat_curve 1
+spin K1 1
+wait 300
+expect sat_curve 2
+shot saturation-2.png
+spin K1 1
+wait 300
+expect sat_curve 3
+spin K1 1
+wait 300
+expect sat_curve 4
+spin K1 1
+wait 300
+expect sat_curve 5
+spin K1 1
+wait 300
+expect sat_curve 6
+spin K1 1
+wait 300
+expect sat_curve 7
+spin K1 1
+wait 300
+expect sat_curve 8
+spin K1 1
+wait 300
+expect sat_curve 9
+shot saturation-9.png
+spin K1 1
+wait 300
+expect sat_curve 10
+spin K1 1
+wait 300
+expect sat_curve 11
+spin K1 1
+wait 300
+expect sat_curve 12
+spin K1 1
+wait 300
+expect sat_curve 13
+spin K1 1
+wait 300
+expect sat_curve 14
+shot saturation-14.png
+spin K1 -14
+wait 100
+expect sat_curve 0
+spin K2 -32
+wait 40
+expect sat_drive 64
+tap FX
+expect page 17
+tap PLAY
+wait 100
+expect voices 0
+expect queue_lost 0

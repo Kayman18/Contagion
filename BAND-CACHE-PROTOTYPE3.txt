@@ -1,0 +1,59 @@
+FM1 Virooos - audio/background handoff prototype 3
+
+Source-only experimental checkpoint. Firmware remains TEST74; no experimental
+cache or handoff code is linked into the firmware audio path.
+
+Implemented:
+Single audio owner / single background owner request and acknowledgement
+protocol in experimental/band_handoff.c. Audio submits desired wave/band keys.
+The background owner exclusively manages cache slots, references and rebuilds.
+It pins every proposed replacement before publishing a complete snapshot.
+Audio consumes that snapshot only at a block boundary AFTER finishing reads
+from the prior block. It copies pointers/keys, then acknowledges publication.
+Only after acknowledgement can the background owner release old references.
+Neither audio request nor boundary code waits for reconstruction or spins.
+Shared buffers are never overwritten while pinned. Missing bands keep the
+old selection; a new client has NULL until its first band is available.
+
+Contract and limits:
+Exactly one caller owns audio functions; exactly one owns background service.
+Initialization/reset requires both owners to be stopped. The audio owner must
+not retain old pointers past the boundary acknowledgement. A snapshot can be
+stale if requests change while it is in flight; it is accepted consistently,
+then the latest desired keys are serviced. This avoids mixed acceptance/pin
+state. Audible latency from stale requests/cache misses is not yet evaluated.
+
+Validation:
+Run bash tests/run-band-handoff.sh. ASan/UBSan concurrent test passed:
+1038879 full-band comparisons, 1562 concurrent boundary swaps and 30000
+background service calls in this run. Counts vary with host scheduling.
+Every visible audio table was byte-compared against the captured original.
+A delayed acknowledgement test verified that old tables remain valid even
+if the background loop is called repeatedly. Stable final requests converge;
+release acknowledgement clears every pin.
+An independent ThreadSanitizer run passed with no reported data races:
+3365 comparisons and 35 concurrent swaps in that run.
+Evidence: validation/band-handoff-prototype3.json and
+validation/band-handoff-prototype3-tsan.txt.
+
+Target compiler check:
+The pi32v2/r3 compiler accepts the code after stdint.h precedes stdatomic.h.
+However, its generated object references __sync_lock_test_and_set_4 and
+__sync_val_compare_and_swap_4 for these operations. It is NOT approved for
+integration based on the host lock-free result. No helper implementation,
+locking behavior or real-time cost has been verified on FM1.
+Evidence: validation/band-handoff-target-symbols.txt and disassembly.
+Target object compilation succeeded; this was not a firmware link or run.
+
+Storage:
+Host handoff + cache metadata + builder + coefficient scratch: 2976 bytes.
+Sixteen waveform bands: 131136 bytes. Peak metadata: 256 bytes read-only.
+Combined host accounting: 134368 bytes, plus existing shared sine constants.
+Target placement and total linked firmware size are still unmeasured.
+
+Next:
+Implement an FM1-specific publication primitive using the board's documented
+interrupt/memory-ordering mechanisms, without introducing blocking atomic
+helpers into the audio path. Keep the C11 implementation for threaded host
+verification. Then integrate decoding, cache lookup and explicit cache-miss
+behavior behind a build option and measure actual reconstruction headroom.

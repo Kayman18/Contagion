@@ -1,0 +1,50 @@
+FM1 Virooos TEST63 - LFO3 amount modulation
+
+Adds original matrix target 58 (Lfo3OscAmt), for all six LFO3 destinations:
+oscillator 1 pitch, both pitches, oscillator 2 pitch, oscillator 1 PWM,
+both PWM, and oscillator 2 PWM. Forty-four matrix destinations are connected.
+
+Pitch uses the original fractional amount curve, including the high-end
+plateau. PWM uses the original clamped linear depth. Shared/local LFO scope,
+fade behavior, third-oscillator pitch following, and source routing remain
+intact. Removing the matrix restores the base amount. Control changes preserve
+oscillator phase and pending BLEP correction.
+
+193 retained presets configure a non-neutral route to this destination.
+Try C35 Fripper JS: hold notes and move the mod wheel to raise pitch modulation.
+C8 ChrunchyJS also uses mod wheel, targeting oscillator 2 pitch.
+C47 Hollow JS routes channel pressure to this destination.
+Program numbers are the original zero-based numbers shown on the device.
+
+Validation:
+- 36864 cases against the original matrix and LFO3 curves, all six destinations,
+  three oscillator-3 modes, shared/local LFOs, parameter boundaries and
+  fractional amounts. Maximum increment error 8.854e-10; maximum PWM-depth
+  error 2.701e-6.
+- Sanitized checks for phase preservation, route removal and render block-size
+  invariance passed.
+- Full/reduced matrix routing (78450 cases and 9649350 compared values each),
+  pitch, PWM and unison-detune regressions passed.
+- All 650 presets render finite/nonzero output over 4096 stereo frames each.
+- Unison/Analog Boost host control scripts passed.
+- Target cache layout, executable-RAM placement and package checks passed.
+
+The duplicated PWM control body is now shared. Despite adding this destination,
+executable RAM and application size each decrease by 184 bytes vs TEST62.
+
+Linked memory:
+Application 524884 / 581564 bytes (56680 free).
+Normal RAM 90008 / 98304 bytes (8296 free; unchanged).
+Pool 327836 / 344064 bytes (16228 free; unchanged).
+Executable RAM 24184 / 24576 bytes (392 free).
+Matrix control scratch grows by one float (4 bytes).
+
+Hardware CPU for this build is not yet measured. Last supplied hardware result
+was TEST60: 47% average / 56% peak, clean audio and zero xruns/deadlines.
+Analog Boost and unison-detune modulation from TEST61/62 remain included.
+Please report average/peak CPU and xruns/deadlines while moving the mod wheel
+on C35, including four active DSP voices.
+
+No arp or excluded effects added. Presets with other unfinished functions
+remain marked partial, and the existing four-voice cap remains.
+Install release/FM1-Virooos-TEST63.fwsc.

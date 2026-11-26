@@ -1,0 +1,55 @@
+wait 12000
+expect wave_state 0
+master 1800
+wav test07-noise.wav
+tap FX
+tap FX
+expect page 7
+expect row 0
+spin K1 60
+wait 40
+expect noise_volume 60
+expect noise_color 64
+shot noise-white.png
+midi USB 90 30 64
+midi USB 90 37 64
+midi USB 90 3C 64
+midi USB 90 40 64
+wait 600
+expect voices 4
+spin K2 -64
+wait 40
+expect noise_color 0
+shot noise-dark.png
+wait 600
+spin K2 127
+wait 40
+expect noise_color 127
+shot noise-bright.png
+wait 600
+tap SEL
+expect row 1
+tap EDIT
+spin K4 3
+wait 40
+expect routing 3
+wait 600
+tap FX
+tap FX
+expect page 7
+spin K1 -60
+wait 40
+expect noise_volume 0
+wait 400
+tap PLAY
+wait 100
+expect voices 0
+tap GLO
+tap GLO
+wait 100
+expect profile_mode 0
+tap FX
+wait 100
+expect profile_mode -1
+expect page 4
+expect queue_lost 0

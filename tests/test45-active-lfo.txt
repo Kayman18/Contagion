@@ -1,0 +1,72 @@
+wait 12000
+expect wave_state 0
+midi USB B0 44 06
+wait 20
+expect wave_state 1
+expect voices 0
+midi USB B0 44 14
+midi USB B0 50 2D
+midi USB B0 13 03
+midi USB B0 18 04
+wait 5000
+expect wave_state 0
+expect lfo_shape 20
+expect lfo2_shape 45
+expect wave1 3
+expect wave2 4
+tap LFO
+tap LFO
+tap LFO
+tap LFO
+tap LFO
+tap LFO
+tap LFO
+expect page 14
+spin K2 30
+wait 5000
+expect wave_state 0
+expect lfo3_shape 30
+midi USB 90 30 64
+midi USB 90 34 64
+midi USB 90 37 64
+midi USB 90 3C 64
+wait 200
+expect voices 4
+midi USB B0 44 07
+wait 20
+expect voices 0
+midi USB B0 44 00
+wait 5000
+expect wave_state 0
+expect lfo_shape 0
+expect lfo2_shape 45
+expect lfo3_shape 30
+midi USB B0 44 2D
+wait 5000
+expect wave_state 0
+expect lfo_shape 45
+midi USB B0 50 00
+wait 100
+expect wave_state 0
+midi USB B0 44 43
+wait 100
+expect wave_state 0
+expect lfo_shape 67
+midi USB B0 44 06
+midi USB B0 44 08
+midi USB B0 44 0A
+wait 5000
+expect lfo_shape 10
+expect wave_state 0
+midi USB 90 3C 64
+wait 200
+expect voices 1
+tap PLAY
+expect voices 0
+expect queue_lost 0
+reboot
+wait 5000
+expect wave_state 0
+expect lfo_shape 0
+expect lfo2_shape 0
+expect lfo3_shape 0

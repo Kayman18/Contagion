@@ -1,0 +1,68 @@
+wait 12000
+expect wave_state 0
+master 1200
+wav test43-lfo-global.wav
+expect lfo_global 0
+expect lfo2_global 0
+midi USB B0 46 01
+midi USB B0 52 7F
+wait 100
+expect lfo_global 1
+expect lfo2_global 1
+expect ui_lfo_global 1
+expect ui_lfo2_global 1
+expect lfo_mode 0
+expect lfo2_mode 0
+midi USB B0 45 00
+midi USB B0 51 00
+midi USB B0 44 43
+midi USB B0 50 2E
+midi USB B0 49 00
+midi USB B0 55 00
+midi USB B0 58 5A
+tap HOME
+tap LFO
+tap LFO
+tap SEL
+spin K1 24
+tap LFO
+tap LFO
+tap LFO
+tap LFO
+tap LFO
+tap LFO
+expect page 21
+shot shared-lfo-modes.png
+midi USB 90 30 64
+wait 150
+midi USB 90 37 64
+wait 150
+midi USB 90 3C 64
+wait 150
+midi USB 90 40 64
+wait 600
+expect voices 4
+midi USB B0 46 00
+wait 100
+expect lfo_global 0
+expect ui_lfo_global 0
+spin K1 1
+wait 100
+expect lfo_global 1
+midi USB B0 52 00
+wait 100
+expect ui_lfo2_global 0
+spin K2 1
+wait 100
+expect lfo2_global 1
+shot shared-lfo-knobs.png
+midi USB B0 45 01
+midi USB B0 51 01
+wait 500
+midi USB 90 43 64
+wait 500
+expect voices 4
+tap PLAY
+wait 100
+expect voices 0
+expect queue_lost 0

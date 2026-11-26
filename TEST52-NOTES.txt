@@ -1,0 +1,39 @@
+FM1 Virooos TEST52 - filter LFO matrix depths
+
+Adds original matrix destinations 48/49 (LFO1 resonance/filter gain depth)
+and 54/55 (LFO2 filter 1/2 cutoff depth). Twelve previous destinations remain.
+Fractional depths, original curves/clamps, endpoint promotion, and route-amount
+dependencies are preserved. No new persistent state or per-sample matrix work.
+51 retained presets have non-neutral routes to these four new destinations.
+429 retained presets configure a route to at least one supported destination.
+650 factory presets; all 118 arp presets remain excluded. No arp implemented.
+Effects remain EQ and distortion only. Other matrix targets, filter balance
+modulation, unison and other documented gaps remain unfinished.
+
+Try bank C program 66 MoveMyMWBC, program 75 OffSoft BC, and program 85 Polar JS.
+Hold notes and sweep the mod wheel. Check CPU average/peak and xruns/deadlines.
+These preset numbers are the original zero-based program numbers shown in the
+bank. This build has not been tested on a physical FM-1.
+
+Linked memory:
+Application 477516 / 581564 bytes (104048 free; +648 vs TEST51).
+Normal RAM 89608 / 98304 bytes (8696 free; unchanged).
+Pool 327836 / 344064 bytes (16228 free; unchanged).
+Executable RAM 18984 / 24576 bytes (5592 free; +600 vs TEST51).
+Temporary control arrays grow by 24 bytes; this is not persistent synth state.
+
+Validation:
+Original full matrix and reduced matrix: 78450 cases each, 9649350 values each.
+Native integration: 8744 cases, 43720 cutoff/resonance/gain values; maximum
+absolute error 0.00001884234. Includes 1536 synthetic patches and 650 factory
+patches, with sanitizer checks and release-velocity regression.
+All 650 presets: 4096 stereo frames each, finite samples, 648 nonzero in the
+first 93ms, peak 1. This short render is not a listening-equivalence test.
+Host TEST51 wheel/keytracking/INIT regression passed on TEST52.
+Target cache/hot placement and firmware CRC/exact payload validation passed.
+Historical validation files retain their original build labels.
+
+Firmware: release/FM1-Virooos-TEST52.fwsc (FM-1_15005200).
+SDK packaging blobs recovered from TEST51 and verified against the build's
+three pinned SHA256 values; unchanged official SDK payloads.
+Full existing tests/run.sh regression completed successfully on TEST52.

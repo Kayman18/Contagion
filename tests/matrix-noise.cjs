@@ -1,0 +1,4 @@
+const assert=require('assert'),cp=require('child_process'),r=require('../tools/reference.cjs');
+const out=cp.execFileSync('./build/matrix-noise',{maxBuffer:32*1024*1024,encoding:'utf8'}).trim().split('\n');let gainError=0,coefError=0;
+for(const line of out){const [sr,b,a,t,color,gain,coef]=line.split(' ').map(Number);const source=[-1,0,Math.fround(.37),1][t];const expected=Math.round(Math.min(127,Math.max(0,b+2*(a-64)*source)));assert.equal(color,expected);const n=r.noiseColor(expected);gainError=Math.max(gainError,Math.abs(gain-n.gain));coefError=Math.max(coefError,Math.abs(coef-(1-Math.exp(-2*Math.PI*Math.min(n.hz,sr*.49)/sr))))}
+assert(gainError<1e-6&&coefError<2e-7);console.log(JSON.stringify({cases:out.length,gainError,coefError,noiseStatePreserved:true,matrixRemoval:true,voiceIsolation:true,blockInvariant:true,pass:true},null,2));

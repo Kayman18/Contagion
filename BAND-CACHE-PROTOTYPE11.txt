@@ -1,0 +1,35 @@
+BAND11 EXP — exact tiled background reconstruction
+
+Effects remain deferred. Latest reported hardware CPU is BAND8 unchanged
+from BAND7 (48% average /64% peak). No BAND9–11 hardware results yet.
+
+Rebuild 32 samples per tile, reusing harmonic coefficients across them.
+Each sample retains the exact original harmonic accumulation order and
+float32-before-normalization rounding. Any service budget, including one
+step, may interrupt the tile. No audio DSP or handoff policy changes.
+The same 1024-harmonic-step background budget remains in use; tile completion
+may additionally normalize up to 32 samples. This is a bounded work budget,
+not a guaranteed microsecond limit.
+
+All 896 bands /1,835,904 samples match reference bytes exactly. Tested service
+budgets include 1,17,128,4096 and37. Rapid-scan, pinned-cache, concurrent
+handoff, four-voice rendering and muted-preload regressions pass under
+ASan/UBSan. Target link and firmware package validation pass.
+
+Host benchmark: three passes of all896 bands at budget1024, compiled -O2
+with contraction disabled, no sanitizer:
+BAND10 scalar builder: 1.640419 CPU seconds.
+BAND11 tiled builder:  0.757689 CPU seconds (53.8% less).
+Both checksum -46.206863865550616.
+These are host results, NOT an FM1 speedup or real-time latency measurement.
+Reproduce using bash tests/run-band-speed.sh; timing will vary.
+
+Linked normal RAM: 61044 /98304 (+508 versus BAND10).
+Pool:155720 /344064 (unchanged). Image:532112 /581564 bytes.
+Freed RAM relative to TEST74 remains201912 bytes across normal RAM+pool.
+
+Test startup/preset-loading duration and waveform changes in Gulf JS,
+Q-Pad BC or ScanJob JS. Report CPU average/peak, xruns/deadlines and whether
+loading/scanning feels faster. Large scans may still lag or retain old waves;
+uncached pitch changes can still have onset gaps; no crossfade yet.
+BAND8 and TEST74 rollback firmware included.

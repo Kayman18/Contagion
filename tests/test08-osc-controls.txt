@@ -1,0 +1,52 @@
+wait 12000
+expect wave_state 0
+master 1800
+wav test08-osc-controls.wav
+tap HOME
+spin K1 63
+spin K2 63
+wait 40
+tap FX
+tap FX
+expect page 7
+spin K3 48
+spin K4 80
+wait 40
+expect width1 48
+expect width2 80
+shot oscillator-widths.png
+midi USB 90 30 64
+midi USB 90 37 64
+midi USB 90 3C 64
+midi USB 90 40 64
+wait 800
+expect voices 4
+tap SEL
+expect row 1
+spin K1 -12
+spin K2 7
+wait 40
+expect tune1 52
+expect tune2 71
+shot oscillator-tuning.png
+wait 800
+spin K3 -32
+wait 40
+expect keyfollow1 64
+wait 800
+spin K1 -127
+spin K2 127
+wait 40
+expect tune1 16
+expect tune2 112
+tap PLAY
+wait 100
+expect voices 0
+tap GLO
+tap GLO
+wait 100
+expect profile_mode 0
+tap HOME
+wait 100
+expect profile_mode -1
+expect queue_lost 0

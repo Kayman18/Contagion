@@ -1,0 +1,44 @@
+DISTORTION SOURCE CHECKPOINT 01 — TEST45 remains the playable baseline
+
+Current plan: EQ and distortion only. Reverb, delay, chorus and phaser excluded.
+
+Added engine/distortion.c, distortion.h and generated distortion.inc. This is a
+standalone prototype and is NOT in app/fm1.toml, the audio path or the controls.
+The release/ firmware in this kit is unchanged TEST45 (no post-mix effects).
+
+The prototype translates the original FX WASM's 11 distortion modes. It is
+separate from the existing per-voice filter saturation. Parameters are prepared
+outside the sample loop; stereo histories are independent and persist across
+parameter/mode changes as in the original. Tables are extracted offline from
+the hash-checked original module. Native processing uses no double arithmetic.
+
+Measured target object sections: 1,202 bytes code + 10,510 bytes read-only
+coefficients = 11,712 bytes before final linking, padding and integration.
+The proposed state structure is 64 bytes (all 32-bit fields). No heap buffers.
+No hardware CPU measurement, final linked effects size or sound check yet.
+
+Validation: 2,064,384 samples against isolated original WASM function 80,
+covering all 128 intensities for bypass and modes 1–11, independent stereo
+inputs, ramps, sine, noise, silence tails and live state-preserving mode changes.
+Ten effect modes pass the stated 0.00003 absolute-error gate; observed maximum
+among them is 0.000005675. Bypass and mode 9 are exact on these vectors.
+ASan and UBSan passed. Original WASM function 91 supplies filter coefficients.
+
+IMPORTANT REMAINING FAILURE: mode 8 (bit reduction) has quantization-boundary
+rounding differences with native float. Worst measured absolute error is
+0.0445972. It is not approved for integration. The test report explicitly sets
+ready_for_firmware=false; the test's zero exit status validates only modes
+other than 8 and must not be interpreted as all modes passing. This checkpoint
+includes the failing prototype so work can continue reproducibly.
+
+Reproduce from virooos/ with Node, a C compiler, and wabt installed separately:
+  node tools/generate_distortion.cjs /absolute/path/to/node_modules/wabt
+  cc -std=c99 -O2 -ffp-contract=off -Iengine tests/distortion.c engine/distortion.c -lm -o build/distortion
+  node tests/distortion.cjs /absolute/path/to/node_modules/wabt
+The comparison writes build/distortion-input.txt as a reproducible input stream.
+Build tests/distortion.c with -fsanitize=address,undefined and feed that stream
+to repeat sanitizer checks. The original WASM is in reference/virus_fx.wasm.
+
+Next: fix mode 8 boundary behavior, then integrate distortion and its controls;
+continue the EQ port and final linked memory/CPU checks. The existing TEST45
+waveform-cache implementation and all previous firmware controls are unchanged.

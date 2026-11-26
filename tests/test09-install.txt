@@ -1,0 +1,16 @@
+wait 12000
+expect wave_state 0
+expect wave_install_bytes 94208
+reboot
+wait 12000
+expect wave_state 0
+expect wave_install_bytes 0
+data tests/corrupt-wave-header.bin 0x97000
+reboot
+wait 12000
+expect wave_state 0
+expect wave_install_bytes 94208
+reboot
+wait 12000
+expect wave_state 0
+expect wave_install_bytes 0

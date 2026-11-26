@@ -1,0 +1,49 @@
+wait 12000
+expect wave_state 0
+master 1200
+wav test32-midi-parameters.wav
+tap HOME
+tap FX
+tap FX
+tap FX
+tap FX
+tap FX
+tap FX
+tap FX
+tap FX
+midi USB B0 5B 40
+wait 80
+expect patch_volume 64
+expect ui_patch_volume 64
+shot midi-patch-volume64.png
+spin K2 1
+wait 80
+expect patch_volume 65
+midi USB B0 5B 64
+midi USB B0 0A 20
+wait 80
+expect ui_pan 32
+tap SEL
+spin K3 1
+wait 80
+expect pan 33
+midi USB B0 0A 40
+midi USB B0 05 60
+wait 80
+expect portamento 96
+expect ui_portamento 96
+midi USB 90 30 64
+wait 400
+midi USB 90 48 64
+wait 400
+midi USB B0 05 00
+wait 80
+expect portamento 0
+midi USB B0 4A 50
+midi USB B0 47 20
+wait 80
+expect cutoff 80
+tap PLAY
+wait 100
+expect voices 0
+expect queue_lost 0

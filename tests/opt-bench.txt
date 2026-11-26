@@ -1,0 +1,434 @@
+wait 12000
+expect wave_state 0
+midi USB B0 00 00
+midi USB C0 00
+wait 12000
+expect wave_state 0
+wav bench-0-0.wav
+midi USB 90 30 64
+midi USB 90 37 64
+midi USB 90 3C 64
+midi USB 90 43 64
+wait 700
+midi USB B0 01 50
+wait 300
+midi USB 80 30 00
+midi USB 80 37 00
+midi USB 80 3C 00
+midi USB 80 43 00
+wait 300
+wavstop
+midi USB B0 00 00
+midi USB C0 05
+wait 12000
+expect wave_state 0
+wav bench-0-5.wav
+midi USB 90 30 64
+midi USB 90 37 64
+midi USB 90 3C 64
+midi USB 90 43 64
+wait 700
+midi USB B0 01 50
+wait 300
+midi USB 80 30 00
+midi USB 80 37 00
+midi USB 80 3C 00
+midi USB 80 43 00
+wait 300
+wavstop
+midi USB B0 00 00
+midi USB C0 17
+wait 12000
+expect wave_state 0
+wav bench-0-23.wav
+midi USB 90 30 64
+midi USB 90 37 64
+midi USB 90 3C 64
+midi USB 90 43 64
+wait 700
+midi USB B0 01 50
+wait 300
+midi USB 80 30 00
+midi USB 80 37 00
+midi USB 80 3C 00
+midi USB 80 43 00
+wait 300
+wavstop
+midi USB B0 00 00
+midi USB C0 28
+wait 12000
+expect wave_state 0
+wav bench-0-40.wav
+midi USB 90 30 64
+midi USB 90 37 64
+midi USB 90 3C 64
+midi USB 90 43 64
+wait 700
+midi USB B0 01 50
+wait 300
+midi USB 80 30 00
+midi USB 80 37 00
+midi USB 80 3C 00
+midi USB 80 43 00
+wait 300
+wavstop
+midi USB B0 00 00
+midi USB C0 61
+wait 12000
+expect wave_state 0
+wav bench-0-97.wav
+midi USB 90 30 64
+midi USB 90 37 64
+midi USB 90 3C 64
+midi USB 90 43 64
+wait 700
+midi USB B0 01 50
+wait 300
+midi USB 80 30 00
+midi USB 80 37 00
+midi USB 80 3C 00
+midi USB 80 43 00
+wait 300
+wavstop
+midi USB B0 00 01
+midi USB C0 0A
+wait 12000
+expect wave_state 0
+wav bench-1-10.wav
+midi USB 90 30 64
+midi USB 90 37 64
+midi USB 90 3C 64
+midi USB 90 43 64
+wait 700
+midi USB B0 01 50
+wait 300
+midi USB 80 30 00
+midi USB 80 37 00
+midi USB 80 3C 00
+midi USB 80 43 00
+wait 300
+wavstop
+midi USB B0 00 01
+midi USB C0 2C
+wait 12000
+expect wave_state 0
+wav bench-1-44.wav
+midi USB 90 30 64
+midi USB 90 37 64
+midi USB 90 3C 64
+midi USB 90 43 64
+wait 700
+midi USB B0 01 50
+wait 300
+midi USB 80 30 00
+midi USB 80 37 00
+midi USB 80 3C 00
+midi USB 80 43 00
+wait 300
+wavstop
+midi USB B0 00 01
+midi USB C0 43
+wait 12000
+expect wave_state 0
+wav bench-1-67.wav
+midi USB 90 30 64
+midi USB 90 37 64
+midi USB 90 3C 64
+midi USB 90 43 64
+wait 700
+midi USB B0 01 50
+wait 300
+midi USB 80 30 00
+midi USB 80 37 00
+midi USB 80 3C 00
+midi USB 80 43 00
+wait 300
+wavstop
+midi USB B0 00 02
+midi USB C0 03
+wait 12000
+expect wave_state 0
+wav bench-2-3.wav
+midi USB 90 30 64
+midi USB 90 37 64
+midi USB 90 3C 64
+midi USB 90 43 64
+wait 700
+midi USB B0 01 50
+wait 300
+midi USB 80 30 00
+midi USB 80 37 00
+midi USB 80 3C 00
+midi USB 80 43 00
+wait 300
+wavstop
+midi USB B0 00 02
+midi USB C0 1E
+wait 12000
+expect wave_state 0
+wav bench-2-30.wav
+midi USB 90 30 64
+midi USB 90 37 64
+midi USB 90 3C 64
+midi USB 90 43 64
+wait 700
+midi USB B0 01 50
+wait 300
+midi USB 80 30 00
+midi USB 80 37 00
+midi USB 80 3C 00
+midi USB 80 43 00
+wait 300
+wavstop
+midi USB B0 00 02
+midi USB C0 5A
+wait 12000
+expect wave_state 0
+wav bench-2-90.wav
+midi USB 90 30 64
+midi USB 90 37 64
+midi USB 90 3C 64
+midi USB 90 43 64
+wait 700
+midi USB B0 01 50
+wait 300
+midi USB 80 30 00
+midi USB 80 37 00
+midi USB 80 3C 00
+midi USB 80 43 00
+wait 300
+wavstop
+midi USB B0 00 03
+midi USB C0 0C
+wait 12000
+expect wave_state 0
+wav bench-3-12.wav
+midi USB 90 30 64
+midi USB 90 37 64
+midi USB 90 3C 64
+midi USB 90 43 64
+wait 700
+midi USB B0 01 50
+wait 300
+midi USB 80 30 00
+midi USB 80 37 00
+midi USB 80 3C 00
+midi USB 80 43 00
+wait 300
+wavstop
+midi USB B0 00 03
+midi USB C0 37
+wait 12000
+expect wave_state 0
+wav bench-3-55.wav
+midi USB 90 30 64
+midi USB 90 37 64
+midi USB 90 3C 64
+midi USB 90 43 64
+wait 700
+midi USB B0 01 50
+wait 300
+midi USB 80 30 00
+midi USB 80 37 00
+midi USB 80 3C 00
+midi USB 80 43 00
+wait 300
+wavstop
+midi USB B0 00 03
+midi USB C0 64
+wait 12000
+expect wave_state 0
+wav bench-3-100.wav
+midi USB 90 30 64
+midi USB 90 37 64
+midi USB 90 3C 64
+midi USB 90 43 64
+wait 700
+midi USB B0 01 50
+wait 300
+midi USB 80 30 00
+midi USB 80 37 00
+midi USB 80 3C 00
+midi USB 80 43 00
+wait 300
+wavstop
+midi USB B0 00 04
+midi USB C0 08
+wait 12000
+expect wave_state 0
+wav bench-4-8.wav
+midi USB 90 30 64
+midi USB 90 37 64
+midi USB 90 3C 64
+midi USB 90 43 64
+wait 700
+midi USB B0 01 50
+wait 300
+midi USB 80 30 00
+midi USB 80 37 00
+midi USB 80 3C 00
+midi USB 80 43 00
+wait 300
+wavstop
+midi USB B0 00 04
+midi USB C0 3C
+wait 12000
+expect wave_state 0
+wav bench-4-60.wav
+midi USB 90 30 64
+midi USB 90 37 64
+midi USB 90 3C 64
+midi USB 90 43 64
+wait 700
+midi USB B0 01 50
+wait 300
+midi USB 80 30 00
+midi USB 80 37 00
+midi USB 80 3C 00
+midi USB 80 43 00
+wait 300
+wavstop
+midi USB B0 00 04
+midi USB C0 6F
+wait 12000
+expect wave_state 0
+wav bench-4-111.wav
+midi USB 90 30 64
+midi USB 90 37 64
+midi USB 90 3C 64
+midi USB 90 43 64
+wait 700
+midi USB B0 01 50
+wait 300
+midi USB 80 30 00
+midi USB 80 37 00
+midi USB 80 3C 00
+midi USB 80 43 00
+wait 300
+wavstop
+midi USB B0 00 05
+midi USB C0 00
+wait 12000
+expect wave_state 0
+wav bench-5-0.wav
+midi USB 90 30 64
+midi USB 90 37 64
+midi USB 90 3C 64
+midi USB 90 43 64
+wait 700
+midi USB B0 01 50
+wait 300
+midi USB 80 30 00
+midi USB 80 37 00
+midi USB 80 3C 00
+midi USB 80 43 00
+wait 300
+wavstop
+midi USB B0 00 05
+midi USB C0 11
+wait 12000
+expect wave_state 0
+wav bench-5-17.wav
+midi USB 90 30 64
+midi USB 90 37 64
+midi USB 90 3C 64
+midi USB 90 43 64
+wait 700
+midi USB B0 01 50
+wait 300
+midi USB 80 30 00
+midi USB 80 37 00
+midi USB 80 3C 00
+midi USB 80 43 00
+wait 300
+wavstop
+midi USB B0 00 05
+midi USB C0 44
+wait 12000
+expect wave_state 0
+wav bench-5-68.wav
+midi USB 90 30 64
+midi USB 90 37 64
+midi USB 90 3C 64
+midi USB 90 43 64
+wait 700
+midi USB B0 01 50
+wait 300
+midi USB 80 30 00
+midi USB 80 37 00
+midi USB 80 3C 00
+midi USB 80 43 00
+wait 300
+wavstop
+midi USB B0 00 05
+midi USB C0 78
+wait 12000
+expect wave_state 0
+wav bench-5-120.wav
+midi USB 90 30 64
+midi USB 90 37 64
+midi USB 90 3C 64
+midi USB 90 43 64
+wait 700
+midi USB B0 01 50
+wait 300
+midi USB 80 30 00
+midi USB 80 37 00
+midi USB 80 3C 00
+midi USB 80 43 00
+wait 300
+wavstop
+midi USB B0 00 00
+midi USB C0 76
+wait 12000
+expect wave_state 0
+wav bench-0-118.wav
+midi USB 90 30 64
+midi USB 90 37 64
+midi USB 90 3C 64
+midi USB 90 43 64
+wait 700
+midi USB B0 01 50
+wait 300
+midi USB 80 30 00
+midi USB 80 37 00
+midi USB 80 3C 00
+midi USB 80 43 00
+wait 300
+wavstop
+midi USB B0 00 02
+midi USB C0 40
+wait 12000
+expect wave_state 0
+wav bench-2-64.wav
+midi USB 90 30 64
+midi USB 90 37 64
+midi USB 90 3C 64
+midi USB 90 43 64
+wait 700
+midi USB B0 01 50
+wait 300
+midi USB 80 30 00
+midi USB 80 37 00
+midi USB 80 3C 00
+midi USB 80 43 00
+wait 300
+wavstop
+midi USB B0 00 04
+midi USB C0 21
+wait 12000
+expect wave_state 0
+wav bench-4-33.wav
+midi USB 90 30 64
+midi USB 90 37 64
+midi USB 90 3C 64
+midi USB 90 43 64
+wait 700
+midi USB B0 01 50
+wait 300
+midi USB 80 30 00
+midi USB 80 37 00
+midi USB 80 3C 00
+midi USB 80 43 00
+wait 300
+wavstop

@@ -1,0 +1,52 @@
+wait 12000
+expect wave_state 0
+master 1600
+wav test24-punch.wav
+tap HOME
+tap FX
+tap FX
+tap FX
+tap FX
+tap FX
+tap SEL
+expect page 16
+expect punch 0
+spin K4 96
+wait 40
+expect punch 96
+shot punch96.png
+midi USB 90 30 64
+midi USB 90 37 64
+midi USB 90 3C 64
+midi USB 90 40 64
+wait 700
+expect voices 4
+tap PLAY
+midi USB 90 3C 64
+wait 150
+midi USB 80 3C 00
+wait 250
+midi USB 90 3C 64
+wait 150
+midi USB 80 3C 00
+wait 250
+midi USB 90 3C 64
+wait 150
+midi USB 80 3C 00
+wait 250
+tap SEL
+spin K1 2
+spin K2 -32
+wait 40
+expect osc_volume 32
+midi USB 90 3C 64
+wait 500
+tap SEL
+spin K4 -96
+wait 40
+expect punch 0
+shot punch-off.png
+tap PLAY
+wait 100
+expect voices 0
+expect queue_lost 0

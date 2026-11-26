@@ -1,0 +1,25 @@
+EQ + distortion memory feasibility — checkpoint 02
+
+Scope: keep EQ and distortion. Exclude reverb, delay, chorus and phaser.
+Baseline firmware: TEST44. No native effects or active-LFO cache changes are implemented in this checkpoint.
+
+Confirmed against original WASM and current linked ELF:
+- Original EQ/boost state block: 408 bytes; distortion state block: 80 bytes.
+- Proposed 1,024-byte native state allowance is provisional, not a linked native measurement.
+- Original mid-EQ lookup: 131,072 bytes. Exact packed 24-bit lookup: 98,304 bytes.
+- All 32,768 unsigned words and signed 24-bit reconstructions verified identical.
+- Current application flash free: 3,788 bytes.
+- Current normal RAM free: 33,840 bytes; separate pool free: 16,228 bytes.
+
+Proposed, NOT implemented:
+Replace the embedded 40 LFO tables (327,840 application flash bytes) with three active decoded float32 tables (24,588 normal RAM bytes).
+Normal RAM would retain 8,228 bytes after these tables and the provisional 1,024-byte FX state allowance; pool would retain 16,228 bytes. Total 24,456 bytes remains before new loader/control state and alignment.
+Application flash would have 233,324 bytes left after removing the embedded tables and adding the packed mid-EQ table, before native FX code, other coefficient tables, loader and UI/MIDI changes.
+LFO waveform changes would require muted preparation. Playback would read decoded tables directly. Load time and CPU impact have not been measured.
+
+Remaining checks: remaining coefficient inventory, native DSP port, linked size, controls and numerical/audio validation. Preserve TEST44 as the playable baseline.
+
+Contents include the original FX WASM, exact packed coefficient asset, extraction/budget script, TEST44 memory validation and linked ELF for symbol verification.
+Rerun from the included virooos tree:
+node fx-research/eq-distortion-budget.cjs /absolute/path/to/jieli/common/bin/objdump
+The script writes eq-mid-q23.bin and prints budget JSON. No npm dependency required.

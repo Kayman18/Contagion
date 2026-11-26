@@ -1,0 +1,54 @@
+FM1 Virooos TEST64 - amp and filter envelope modulation
+
+Connects ten original matrix targets (33..42): attack, decay, sustain, sustain
+slope/time and release for the filter and amplifier envelopes.
+There are now 54 connected destinations. 178 retained factory presets configure
+non-neutral routes to at least one of these ten targets.
+
+Live changes retain envelope stage and current level; they do not retrigger
+notes. Removing the matrix restores the base envelope parameters. Each voice
+keeps its own cached effective parameters, so velocity-driven envelopes remain
+independent. Unchanged values do not recalculate coefficients.
+
+Fractional decay/release and filter-attack times use the original reciprocal
+rate interpolation. Amp attack/sustain use their original curves. Sustain
+slope uses the original rounded index. A float-pair boundary calculation
+preserves half-step rounding through matrix amount dependencies without
+software-double arithmetic. The coefficient setup helper is kept in flash;
+the existing audio-rate envelope processing is unchanged.
+
+Hardware examples (original zero-based program numbers):
+C13 Contra  BC: compare softly and firmly played notes; velocity changes amp
+attack (in addition to the preset's other velocity response).
+C11 Comm basSV: use the mod wheel to vary filter decay.
+C19 Decay   JS: mod wheel also varies filter attack.
+
+Validation:
+- 20480 envelope cases at 44100/48000 Hz against original matrix/envelope code:
+  maximum coefficient error 1.183e-7, envelope-sample error 6.583e-7.
+- Stage/level preservation, independent voices, neutral restoration and render
+  block-size invariance verified under ASan/UBSan.
+- Full/reduced/rounded-slope routing each cover 78450 cases and 9649350 values;
+  includes amount dependencies, duplicate routes and clamping.
+- Existing filter, amplitude and LFO3 amount integration regressions passed.
+- All 650 presets render finite/nonzero output over 4096 stereo frames each.
+- Unison/Analog Boost host control scripts and target package/layout checks
+  passed.
+
+Linked memory:
+Application 527060 / 581564 bytes (54504 free).
+Normal RAM 90328 / 98304 bytes (7976 free; +320 bytes for voice caches).
+Pool 327836 / 344064 bytes (16228 free; unchanged).
+Executable RAM 24376 / 24576 bytes (200 free).
+Matrix result scratch grows by 40 bytes. The rare rounded-boundary helper uses
+88 bytes for its float-pair amount array, plus scalar temporaries.
+
+Hardware CPU/underruns for TEST64 remain unmeasured. Last supplied result was
+TEST60: 47% average / 56% peak, clean audio, zero xruns/deadlines.
+Please test four active voices while moving the mod wheel on C11/C19, and
+compare note attacks on C13. Report CPU average/peak, xruns/deadlines and clicks.
+
+Analog Boost, unison and earlier modulation work remain included. No arp,
+delay, reverb, chorus or phaser added. Presets with other unfinished functions
+remain marked partial.
+Install release/FM1-Virooos-TEST64.fwsc.

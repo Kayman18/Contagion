@@ -1,0 +1,60 @@
+wait 12000
+expect wave_state 0
+master 1600
+wav test20-osc3.wav
+tap FX
+tap FX
+tap FX
+tap FX
+expect page 15
+spin K1 1
+wait 40
+expect osc3_mode 1
+shot osc3-slave.png
+midi USB 90 30 64
+midi USB 90 37 64
+midi USB 90 3C 64
+midi USB 90 40 64
+wait 1800
+expect voices 4
+spin K1 1
+wait 1400
+expect osc3_mode 2
+spin K3 -12
+spin K4 32
+wait 1200
+shot osc3-saw.png
+spin K1 1
+wait 1400
+expect osc3_mode 3
+tap SEL
+spin K2 80
+wait 1400
+shot osc3-pulse.png
+tap PLAY
+tap HOME
+spin K2 -64
+tap SEL
+spin K2 63
+wait 12000
+expect wave_state 0
+expect wave2 63
+tap FX
+tap FX
+tap FX
+tap FX
+spin K1 -2
+wait 40
+expect osc3_mode 1
+midi USB 90 3C 64
+wait 1400
+expect voices 1
+spin K1 -1
+wait 100
+expect osc3_mode 0
+tap FX
+expect page 16
+tap PLAY
+wait 100
+expect voices 0
+expect queue_lost 0

@@ -1,0 +1,59 @@
+wait 12000
+expect wave_state 0
+master 1600
+wav test19-lfo3.wav
+tap LFO
+tap LFO
+tap LFO
+tap LFO
+tap LFO
+tap LFO
+tap LFO
+expect page 14
+spin K3 64
+wait 40
+expect lfo3_amount 64
+expect lfo3_dest 1
+shot lfo3-controls.png
+tap SEL
+spin K1 64
+spin K4 1
+wait 40
+expect lfo3_enable 1
+midi USB 90 30 64
+midi USB 90 37 64
+midi USB 90 3C 64
+midi USB 90 40 64
+wait 3000
+expect voices 4
+shot lfo3-fade.png
+tap PLAY
+tap HOME
+spin K1 63
+spin K2 63
+tap LFO
+tap LFO
+tap LFO
+tap LFO
+tap LFO
+tap LFO
+tap LFO
+spin K4 3
+wait 40
+expect lfo3_dest 4
+tap SEL
+spin K1 -64
+spin K3 5
+midi USB 90 3C 64
+wait 2000
+shot lfo3-pwm-clock.png
+spin K4 -1
+wait 100
+expect lfo3_enable 0
+expect voices 1
+tap LFO
+expect page 21
+tap PLAY
+wait 100
+expect voices 0
+expect queue_lost 0

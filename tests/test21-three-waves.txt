@@ -1,0 +1,60 @@
+wait 12000
+expect wave_state 0
+master 1600
+wav test21-three-waves.wav
+tap HOME
+spin K1 -64
+spin K2 -64
+tap SEL
+spin K2 31
+wait 12000
+expect wave_state 0
+expect wave1 0
+expect wave2 31
+tap FX
+tap FX
+tap FX
+tap FX
+spin K1 67
+wait 12000
+expect wave_state 0
+midi USB 90 3C 64
+wait 100
+expect voices 1
+shot osc3-wave-loading.png
+wait 12000
+expect wave_state 0
+expect osc3_mode 67
+shot osc3-wave63.png
+midi USB 90 30 64
+midi USB 90 37 64
+midi USB 90 3C 64
+midi USB 90 40 64
+wait 1400
+expect voices 4
+spin K1 -1
+wait 100
+expect wave_state 1
+expect voices 0
+spin K1 -30
+spin K1 -32
+wait 12000
+expect wave_state 0
+expect osc3_mode 4
+midi USB 90 3C 64
+wait 1000
+expect voices 1
+spin K1 31
+wait 12000
+expect wave_state 0
+expect osc3_mode 35
+midi USB 90 3C 64
+wait 1000
+expect voices 1
+spin K1 -35
+wait 100
+expect osc3_mode 0
+tap PLAY
+wait 100
+expect voices 0
+expect queue_lost 0

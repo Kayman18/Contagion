@@ -1,0 +1,40 @@
+BAND10 EXP — prevent repeated wave scans from starving reconstruction
+
+Effects remain deferred. Last hardware report: BAND8 CPU unchanged from
+BAND7's 48% average / 64% peak. BAND7 xruns/deadlines were zero.
+No BAND9 or BAND10 hardware result has been reported.
+
+When a wave request changes, finish the current table if any active client
+still requests its pitch band. This permits repeated scans to populate the
+cache instead of cancelling every in-progress table. If no client needs that
+band, cancel promptly (including release/all-notes-off or changed pitch).
+Only the exact currently requested wave/band can be newly published; this
+change does not substitute the completed stale wave for a different request.
+Existing same-band old-table retention remains unchanged.
+
+Regression comparison, identical synthetic 4-wave scan at band 0:
+2400 requests, background budget 1024 harmonic steps per call.
+Previous scheduler: 0 completed, 0 requested-wave hits, 2399 cancellations.
+BAND10 scheduler: 4 completed exact tables, 1760 requested-wave hits,
+zero scan cancellations. Release cancels abandoned work and clears pins.
+This is an algorithmic host test, not an FM1 latency or CPU measurement.
+
+Other checks: 3000 random request changes with exact pinned-table/reference
+invariants; concurrent handoff with delayed acknowledgment and final-request
+convergence; four-voice live-wave route/render tests; muted preload tests;
+firmware CRC/decryption/loader/entry validation. Sanitized host tests pass.
+
+Known limits: a new request can wait for one older same-band build to finish.
+The 16-slot cache cannot hold every possible waveform/pitch combination.
+Large or nonrepeating scans can still lag, hold an older wave, or have onset
+gaps. Abrupt table switches are not crossfaded. Fast scan equivalence to the
+original remains unproven; do not label this a finished wave-scanning port.
+Audio render path and background step budget are unchanged.
+
+RAM unchanged: normal 60536 / 98304; pool 155720 / 344064 bytes.
+Firmware image 532016 / 581564 bytes.
+
+Test BAND10 with Gulf JS, Q-Pad BC, or ScanJob JS: hold notes long enough for
+repeated scans to warm the cache, listen for movement/stalls/clicks, then
+change pitch and release. Report CPU average/peak and xruns/deadlines.
+BAND8 and TEST74 rollback firmware included. Build with build-band-firmware.sh.

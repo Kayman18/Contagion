@@ -1,0 +1,23 @@
+{
+  "captured_date": "2026-11-12",
+  "assets": [
+    {
+      "file": "processor.js",
+      "url": "https://virooos.vercel.app/assets/processor-BWrZwEKj.js",
+      "sha256": "0c23b2b1754cf838eb7399716deeebf5dd349d0f29830dcff49b2941e7c2b698",
+      "bytes": 181572
+    },
+    {
+      "file": "index.js",
+      "url": "https://virooos.vercel.app/assets/index-DXFwS-uK.js",
+      "sha256": "39bc9878638c0411a7132af8b137c240c1b2d09940b75d8aa66fb3f7b1b1b4fd",
+      "bytes": 116000
+    },
+    {
+      "file": "virus_fx.wasm",
+      "url": "https://virooos.vercel.app/assets/virus_fx-Cijgplbv.wasm",
+      "sha256": "2fd986aab9caad2eee8186d11cfd272eb99180e4cb70c51a4ad47d49dc5d0e17",
+      "bytes": 598731
+    }
+  ]
+}

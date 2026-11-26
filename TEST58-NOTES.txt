@@ -1,0 +1,49 @@
+FM1 Virooos TEST58 - oscillator pitch modulation matrix
+
+New original matrix destinations:
+9 oscillator 1 pitch; 14 oscillator 2 pitch; 17 oscillator 2 filter-envelope
+pitch depth; 45 LFO1 oscillator 1 pitch depth; 46 LFO1 oscillator 2 pitch depth.
+Thirty-nine destinations are now connected. Direct pitch offsets clamp to the
+original -48..+36 semitone range. Fractional LFO/envelope depths use the original
+8-unit anchor curve with the 127-to-128 endpoint. LFO3 pitch still combines with
+them. Frequency increments retain the native 0.45 cap and wavetable band update.
+Oscillator 3 slave mode follows direct oscillator 2 pitch; independent oscillator
+3 modes follow the shared envelope/LFO contribution without that direct offset,
+as in the captured original. Phase and pending BLEP state remain intact.
+Changes are evaluated at the existing 32-frame control cadence; no persistent
+RAM added. Clearing the matrix restores base tuning without retriggering.
+
+83 retained presets configure non-neutral routes to these five targets.
+528 presets configure a route to at least one supported destination.
+Try C66 MoveMyMWBC or C68 MWC#ord BC while sweeping the mod wheel. C82 Pitchy BC
+uses filter-envelope pitch modulation; C93 RepeaterJS uses LFO2 oscillator-2
+pitch. Program numbers are original zero-based numbers shown in the preset page.
+Report CPU average/peak, xruns and deadlines. No physical FM-1 test was performed.
+
+Final linked memory:
+Application 481440 / 581564 bytes; 100124 free (+1340 vs TEST57).
+Normal RAM 89704 / 98304 bytes; 8600 free (unchanged).
+Pool 327836 / 344064 bytes; 16228 free (unchanged).
+Executable RAM 22508 / 24576 bytes; 2068 free (+1276 vs TEST57).
+Sharing oscillator-3 control code recovered 488 bytes from the initial TEST58
+build. This routine remains in executable RAM. Matrix temporary array +20 bytes.
+
+TEST58 validation:
+- Pitch integration: 46080 cases / 276480 values against original matrix and
+  pitch-depth curves, six LFO3 destinations, oscillator-3 modes 1/2/4, high-note
+  frequency clamping, wavetable-band selection, phase/BLEP preservation, voice
+  isolation and matrix removal. ASan/UBSan passed. Maximum cents error 0.000690109,
+  maximum frequency-increment error 1.213e-7. Repeated after code consolidation.
+- Previous PWM/shape/FM/pan/balance/filter matrix integrations passed.
+- Full and reduced matrix routing each passed 78450 cases / 9649350 values.
+- Existing pitch-envelope, pitch-control, oscillator-3 and portamento regressions
+  passed, including oscillator-3 audio and 1200000 glide/control values.
+- Host controller/INIT regression passed. 650 presets rendered 4096 stereo frames
+  each: all finite, 649 nonzero in first 93ms, peak 1. These are short render
+  checks, not full listening-equivalence or physical CPU tests.
+- Final target memory placement and firmware CRC/exact payload validation passed.
+Full tests/run.sh was last completed on TEST56; historical evidence is retained.
+
+650 presets retained; 118 arp programs excluded. No arp. EQ/distortion only.
+Unison and remaining matrix/features are unfinished.
+Firmware: release/FM1-Virooos-TEST58.fwsc, identity FM-1_15005800.
