@@ -10,11 +10,6 @@ Contagion is a dual-core, eight-voice wavetable synth firmware for the M‑VAVE 
 
 Install `Contagion-1.1-All-Banks-8V.fwsc` through the FM‑1 updater. The update includes the verified wavetable cache and uses firmware ID `FM-1_15009008`. Back up any important USER patches before updating.
 
-| Factory collection | On-screen banks | Programs | MIDI CC0 |
-| --- | --- | ---: | --- |
-| Virus A | A-A through A-B | 227 | 0–1 |
-| Virus B | B-A through B-F | 648 | 2–7 |
-| Virus C | C-A through C-F | 650 | 8–13 |
 
 Original zero-based program numbers are preserved. Arpeggiated programs were skipped during import, which leaves gaps. The USB MIDI SysEx protocol reads and writes the 16 native USER slots. Importing original Virus bank dumps is a build-time operation.
 
