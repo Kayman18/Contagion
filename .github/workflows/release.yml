@@ -1,4 +1,4 @@
-name: Publish Contagion 1.0.0
+name: Publish Contagion 1.1
 
 on:
   push:
@@ -10,7 +10,7 @@ permissions:
   contents: write
 
 concurrency:
-  group: contagion-v1-release
+  group: contagion-v1-1-release
 
 jobs:
   release:
@@ -19,19 +19,18 @@ jobs:
       - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
         with:
           persist-credentials: false
-      - name: Verify and publish the three 8-voice images
+      - name: Verify and publish 1.1
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
           (cd firmware && sha256sum -c SHA256SUMS)
-          if gh release view v1.0.0 >/dev/null 2>&1; then
+          if gh release view v1.1.0 >/dev/null 2>&1; then
             exit 0
           fi
-          gh release create v1.0.0 \
-            firmware/Contagion-Virus-A-8V.fwsc \
-            firmware/Contagion-Virus-B-8V.fwsc \
-            firmware/Contagion-Virus-C-8V.fwsc \
+          gh release create v1.1.0 \
+            firmware/Contagion-1.1-All-Banks-8V.fwsc \
+            firmware/Contagion-USB-Editor-1.1.zip \
             firmware/SHA256SUMS \
             --target "$GITHUB_SHA" \
-            --title "Contagion 1.0.0 (8 voices)" \
-            --notes "Three 8-voice FM-1 firmware images, one per Virus A, B and C preset collection. Includes the blueprint splash, dual-core BAND20 engine and native USER patch storage. Package checks and simulator UI tests passed. Hardware testing of these release binaries is pending."
+            --title "Contagion 1.1" \
+            --notes-file docs/release-1.1.md

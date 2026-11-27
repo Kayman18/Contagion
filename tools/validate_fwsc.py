@@ -13,7 +13,7 @@ def crc_entry(data):
     require(pkg.crc16(data[2:])==struct.unpack_from('<H',data)[0],'directory entry CRC')
     return struct.unpack_from('<HII',data,2)
 
-def validate(raw,app,ota):
+def validate(raw,app,ota,cache=None):
     require(len(raw)>=960,'truncated FWSC')
     logical=bytearray();identity=[];ended=False
     for i in range(20):
@@ -42,7 +42,10 @@ def validate(raw,app,ota):
         require(pkg.crc16(p)==crc,'payload CRC: '+name);parts[name]=(typ,p)
     require(set(parts)=={'flash.bin','ota.bin'},'unexpected payloads')
     require(parts['ota.bin']==(100,ota),'loader differs from linked loader')
-    typ,flash=parts['flash.bin'];require(typ==0 and len(flash)==pkg.FLASH_SIZE,'flash layout/size')
+    typ,flash=parts['flash.bin'];require(typ==0 and len(flash)==(0xDC000 if cache is not None else pkg.FLASH_SIZE),'flash layout/size')
+    if cache is not None:
+        require(flash[pkg.FLASH_SIZE:0x97000] == b'\xff' * (0x97000-pkg.FLASH_SIZE),'reserved gap')
+        require(flash[0x97000:] == cache,'wave cache payload')
     config=bytearray(flash[64:96]);pkg.enc(config,0,32);crc,pos,size=crc_entry(config)
     require(bytes(config[16:30])==b'isd_config.ini','configuration name')
     cfg=flash[pos:pos+size];require(pkg.crc16(cfg)==crc,'config payload CRC')
@@ -62,11 +65,12 @@ def validate(raw,app,ota):
       'hardware_tested':False}
 
 def main():
-    p=argparse.ArgumentParser();p.add_argument('fwsc',type=Path);p.add_argument('app',type=Path);p.add_argument('loader',type=Path)
-    a=p.parse_args();raw=a.fwsc.read_bytes();app=a.app.read_bytes();ota=a.loader.read_bytes();r=validate(raw,app,ota)
+    p=argparse.ArgumentParser();p.add_argument('fwsc',type=Path);p.add_argument('app',type=Path);p.add_argument('loader',type=Path);p.add_argument('--wave-cache',type=Path)
+    a=p.parse_args();raw=a.fwsc.read_bytes();app=a.app.read_bytes();ota=a.loader.read_bytes();cache=a.wave_cache.read_bytes() if a.wave_cache else None;r=validate(raw,app,ota,cache)
+    if cache is not None:r['wave_cache_exact']=True
     for at in (0,len(raw)//2,len(raw)-1):
         damaged=bytearray(raw);damaged[at]^=1
-        try: validate(damaged,app,ota)
+        try: validate(damaged,app,ota,cache)
         except ValueError: pass
         else: raise ValueError('validator accepted damaged package')
     r['corruption_detection_checks']=3

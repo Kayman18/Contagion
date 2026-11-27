@@ -57,8 +57,6 @@ void app_splash(void){
  access_splash_progress(3);
 }
 static unsigned access_wave_progress(void){
- if(wave_install)return 5+30*wave_install_at/(vc_wave_seed_size()+4095);
- if(!wave_embedded&&!lfo_extra_ready)return 35+35*lfo_extra_index/22;
  unsigned bank[6];vc_band_device_stats(bank);
  return 70+25*(bank[0]>6?6:bank[0])/6;
 }
@@ -99,14 +97,61 @@ static void access_parameter(AccessCell *cell,int id){
  cell->step=span?(clamp(values[id]-low,0,span)*32+span/2)/span:0;
 }
 
-static void access_preset_cell(unsigned i,AccessCell *cell){
- unsigned program=vc_preset_program(preset_loaded),bank=vc_preset_bank(preset_loaded);
- static const char *const names[]={"BANK","PROGRAM","INIT PATCH","PATCH VOLUME"};
- cell->label=names[i];
- if(i==0){cell->value[0]=vc_preset_bank_letter(bank);cell->value[1]=0;cell->step=bank*32/(vc_preset_bank_count()-1);}
- else if(i==1){vc_num(cell->value,program);cell->step=program*32/127;}
- else if(i==2){vc_copy(cell->value,preset_loaded<vc_preset_count()?"TURN TO INIT":"INIT");cell->step=0;}
- else access_parameter(cell,VC_PATCH_VOLUME);
+static void access_program_number(char out[4], unsigned program){
+ out[0]=(char)('0'+program/100);
+ out[1]=(char)('0'+program/10%10);
+ out[2]=(char)('0'+program%10);
+ out[3]=0;
+}
+
+static void access_draw_presets(int changed){
+ static unsigned last_choice,last_loaded,last_wave,last_volume;
+ unsigned selected=preset_choice,loaded=preset_loaded,volume=values[VC_PATCH_VOLUME];
+ if(!changed&&selected==last_choice&&loaded==last_loaded&&wave_state==last_wave&&volume==last_volume)return;
+ unsigned bank=vc_preset_bank(selected),first=vc_preset_bank_first(bank),count=vc_preset_count();
+ unsigned end=bank+1<vc_preset_bank_count()?vc_preset_bank_first(bank+1):count;
+ unsigned top=selected<count&&selected>=first+2?selected-2:first;
+ if(top+4>end)top=end>=first+4?end-4:first;
+ char bank_text[16]="BANK ",program[4],caption[20]="PROGRAM ",level[14]="K4  VOL ";
+ vc_copy(bank_text+5,vc_preset_bank_label(bank));
+ access_program_number(program,vc_preset_program(selected));
+ vc_copy(caption+8,selected<count?program:"---");
+ cv_begin(240,32,ACCESS_RED);
+ cv_text(8,2,&FONT_M,"FACTORY PRESETS",ACCESS_LABEL);
+ cv_text(232-text_w(&FONT_XS,"SCL 1"),9,&FONT_XS,"SCL 1",ACCESS_LABEL);
+ cv_rect(0,31,240,1,ACCESS_RULE);
+ cv_blit(0,0);
+ cv_begin(240,43,ACCESS_BG);
+ cv_text(8,5,&FONT_XS,bank_text,ACCESS_AMBER);
+ cv_text(232-text_w(&FONT_XS,caption),5,&FONT_XS,caption,ACCESS_SUB);
+ cv_text(8,19,&FONT_M,selected<count?vc_preset_name(selected):user_loaded?user_active.name:"INIT PATCH",ACCESS_LABEL);
+ cv_blit(0,32);
+ for(unsigned row=0;row<4;row++){
+  unsigned top_pad=row==0?3u:0u;
+  cv_begin(240,30+top_pad,ACCESS_BG);
+  unsigned item=top+row;
+  if(item<end){
+   unsigned active=item==selected;
+   cv_rect(6,3+top_pad,228,27,active?RGB(110,63,37):ACCESS_RULE);
+   cv_rect(7,4+top_pad,226,25,active?RGB(51,24,25):RGB(24,23,23));
+   if(active)cv_rect(6,3+top_pad,3,27,ACCESS_AMBER);
+   access_program_number(program,vc_preset_program(item));
+   cv_text(16,8+top_pad,&FONT_XS,program,active?ACCESS_AMBER:ACCESS_SUB);
+   cv_text(47,7+top_pad,&FONT_B,vc_preset_name(item),ACCESS_LABEL);
+  }
+  cv_blit(0,78+30*row-top_pad);
+ }
+ cv_begin(240,42,ACCESS_BG);
+ cv_rect(0,6,240,1,ACCESS_RULE);
+ cv_rect(119,11,1,26,ACCESS_RULE);
+ cv_text(8,9,&FONT_XS,"K1  BANK",ACCESS_LABEL);
+ cv_text(128,9,&FONT_XS,"K2  PRESET",ACCESS_LABEL);
+ const char *state=wave_state==3?"WAVE ERROR":wave_state||selected!=loaded?"LOADING":"K3  INIT";
+ cv_text(8,24,&FONT_XS,state,ACCESS_SUB);
+ vc_num(level+8,volume);
+ cv_text(128,24,&FONT_XS,level,ACCESS_AMBER);
+ cv_blit(0,198);
+ last_choice=selected;last_loaded=loaded;last_wave=wave_state;last_volume=volume;
 }
 
 static void access_user_cell(unsigned i,AccessCell *cell){
@@ -144,8 +189,8 @@ static void access_status_cell(unsigned i,AccessCell *cell,const perf_stats_t *p
   const unsigned data[]={active_voices,queue_lost,clipped_samples,APP_BLOCK};
   cell->label=names[i];value=data[i];
  }else if(page==PAGE_PROFILE){
-  const char *const names[]={"READY /32","WAIT /12","BUILT","CANCELLED"};
-  cell->label=names[i];value=bank[i];
+  const char *const names[]={"READY /32","WAIT /24","CACHE FILLS","FLASH HITS"};
+  cell->label=names[i];value=i==3?vc_wave_flash_hits():bank[i];
  }else{
   const char *const names[]={"BUILD BUDGET","FAILURES","BUILD %","WORK MAX MS"};
   const unsigned data[]={band_budget,bank[4],bank[5],band_work_peak_ms};
@@ -184,11 +229,6 @@ static void access_draw_footer(void){
  const char *nav="ALGO  NEXT PAGE";
  const char *info="";
  if(page==PAGE_USER){nav="ALGO  NEXT PAGE   SAVE  STORE";info="K2 RECALL   K3 / K4 EDIT NAME";}
- else if(page==PAGE_PRESETS&&preset_loaded<vc_preset_count()){
-  if(vc_preset_partial(preset_loaded))info="PARTIAL PATCH";
-  else if(vc_preset_wave_cache(preset_loaded))info="LIVE WAVE CACHE";
-  else{vc_num(status,vc_preset_count());unsigned n=0;while(status[n])n++;vc_copy(status+n," FACTORY PRESETS");info=status;}
- }
  else if(page==ACCESS_CACHE_TUNE){nav="ALGO  NEXT PAGE   K2 RESET";info="K1  ADJUST BUILD BUDGET";}
  else if(access_profile_page()){nav="ALGO  NEXT PAGE   K2 RESET";info="GLO  NEXT STATUS PAGE";}
  if(wave_state==3){
@@ -217,6 +257,7 @@ static void vc_draw(void){
  }
  const AccessPage *panel=&access_pages[access_page_index()];
  int changed=access_drawn_page!=page;
+ if(page==PAGE_PRESETS){access_draw_presets(changed);access_drawn_page=page;return;}
  char name[32]={0};
  if(page==PAGE_USER){
   unsigned mask=(unsigned)user_bank[12]|(unsigned)user_bank[13]<<8;
@@ -238,11 +279,10 @@ static void vc_draw(void){
  unsigned bank[6];
  if(access_profile_page()){perf_read(&ps);vc_band_device_stats(bank);}
  for(unsigned i=0;i<4;i++){
-  AccessCell cell={0,{0},-1};
-  if(page==PAGE_PRESETS)access_preset_cell(i,&cell);
-  else if(page==PAGE_USER)access_user_cell(i,&cell);
+  AccessCell cell={"",{0},-1};
+  if(page==PAGE_USER)access_user_cell(i,&cell);
   else if(access_profile_page())access_status_cell(i,&cell,&ps,bank);
-  else{
+  else if(panel->control[i]>=0){
    access_parameter(&cell,panel->control[i]);
    if((page==PAGE_FILTER||page==ACCESS_FILTER_2)){
     static const char *const names[]={"CUTOFF","RESONANCE","ENV AMOUNT","KEY TRACK"};

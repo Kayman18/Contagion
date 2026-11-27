@@ -1,9 +1,19 @@
 # Contagion MIDI controls
 
-One omni part: all input channels address the same eight-voice engine. During muted wave loading only CC19/24 requests are accepted; other MIDI is
-ignored. All MIDI is ignored in profiler mode. Mapped parameters update the
-front-panel values; knobs continue from the received value. Raw incoming values
-are clamped to each native range, not scaled to it.
+All MIDI channels address the same eight-voice engine. During wave loading,
+factory program changes and wave requests can replace a pending selection.
+Other performance and parameter messages take effect after loading. Incoming
+CC values are clamped to the supported range.
+
+## Factory selection and USER patches
+
+MIDI CC0 selects a bank. Values 0–1 select Virus A, 2–7 select Virus B, and
+8–13 select Virus C. Program Change uses the original zero-based program
+number within that bank. Program numbers omitted by the build are skipped.
+
+The USB MIDI SysEx protocol transfers the 16 stored USER patches. The editor
+uses this protocol for full patch edits and CC messages for live controls.
+[USB editor setup](web-editor/README.md)
 
 ## Original-source parameter assignments
 
@@ -95,18 +105,15 @@ are clamped to each native range, not scaled to it.
 | CC120 | Panic: clear voices and sustain |
 | CC123 | All notes off: release subject to sustain |
 
-CC71/74 intentionally differ from the original LFO assignments. Unison modes, effects, SysEx, program changes and MIDI
-clock are not implemented. This is a partial original MIDI map.
+CC71 and CC74 select resonance and cutoff. MIDI clock is unsupported.
 
-Patch volume 100 preserves previous output; 0 mutes and 127 is gain 2.1863.
+Patch volume starts at 90 for factory and INIT patches. A value of 0 mutes the patch.
 Portamento 0 is off. Panorama 64 is center; endpoints retain the original curve.
 Envelope sustain-time controls use the native slope mapping: 64 holds sustain.
 CC7/11 have no displayed controls. Panic retains parameter values and controller
-levels; reboot restores defaults. No parameter persistence or MIDI feedback
-output is added. Dense automation CPU cost still needs physical hardware tests.
+levels. Store edits in a USER slot to recall them later.
 
-Wave CC19/24 stop voices and mute until the cache set is ready. Play new notes
-afterward. Values above 63 clamp to 63. Repeating the current selection does
+Wave CC19 and CC24 request oscillator waves. Values above 63 clamp to 63. Repeating the current selection does
 not reload; new requests during loading replace pending selections. OSC3 keeps
 its independent wave selection; slave/built-in modes follow oscillator 2.
 These are load operations, not continuous wavetable-position modulation.

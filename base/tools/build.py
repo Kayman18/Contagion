@@ -268,6 +268,9 @@ def build_loader():
     LDR.mkdir(parents=True, exist_ok=True)
     src = BSP / "loader"
     flags = [*CFLAGS, *inc(BSP / "chip", BSP / "boards" / "fm1")]
+    cache_layout = APP.parent / "runtime" / "wavetable_flash_layout.h"
+    if CONF.get("wave_cache"):
+        flags += ["-include", str(cache_layout)]
     tc_all(("cc", "-c", src / "crt0_ldr.S", "-o", LDR / "crt0_ldr.o"),
            ("cc", *flags, "-c", src / "loader.c", "-o", LDR / "loader.o"))
     elf = LDR / "loader.elf"
@@ -828,7 +831,16 @@ def main():
                                             for f in APP.glob("*.h")))]
     print("parts    " + ", ".join(n for n, x in parts if x) + "  (not built in: " +
           (", ".join(n for n, x in parts if not x) or "none") + ")")
-    pkg = fm1pkg_make.ufw(fm1pkg_make.flash_image(img, fm1pkg_make.KEY), ota, PRODUCT)
+    flash = fm1pkg_make.flash_image(img, fm1pkg_make.KEY)
+    if CONF.get("wave_cache"):
+        cache = (OUT / "wave-cache.bin").read_bytes()
+        layout = (APP.parent / "runtime" / "wavetable_flash_layout.h").read_text()
+        match = re.search(r"^#define CONTAGION_CACHE_IMAGE_CRC16 (0x[0-9A-Fa-f]+)u$", layout, re.M)
+        if (not cache.startswith(b"CTWAVE01") or len(cache) != 0xDC000 - 0x97000 or
+                not match or int(match[1], 16) != fm1pkg_make.crc16(cache)):
+            raise SystemExit("Contagion wave cache payload and loader CRC disagree")
+        flash = flash.ljust(0x97000, b"\xff") + cache
+    pkg = fm1pkg_make.ufw(flash, ota, PRODUCT)
     (OUT / name).write_bytes(pkg)
     print(f"app      {OUT / (NAME + '.bin')}  {len(img)} B")
     print(f"loader   {LDR / 'ota.bin'}  {len(ota)} B")

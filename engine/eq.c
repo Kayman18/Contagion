@@ -1,12 +1,27 @@
 #include "eq.h"
 #include <string.h>
 #include "eq.inc"
+#include "eq_blocks.inc"
 static unsigned limit(unsigned x){return x>127?127:x;}
 static inline __attribute__((always_inline)) float clip(float x){union{float f;uint32_t u;}v={x};return (v.u&0x7fffffff)>=0x7f800000?0:x>0x1.fffffcp-1f?0x1.fffffcp-1f:x< -1?-1:x;}
 /* Dekker split, exactly as TEST's add_product computed it. */
 static inline __attribute__((always_inline)) void split(float a,float *out){float ca=4097*a,ah=ca-(ca-a);out[0]=ah;out[1]=a-ah;}
 static int32_t gain26(const int32_t *t,unsigned n){unsigned i=n>>3;return t[i]*8+(int32_t)(n&7)*(t[i+1]-t[i]);}
-static int32_t packed(unsigned i){const uint8_t *p=eq_mid_packed+i*3;uint32_t u=p[0]|(uint32_t)p[1]<<8|(uint32_t)p[2]<<16;return (int32_t)(u<<8)>>8;}
+/* Decode one indexed block of second differences. Only coefficient
+ * updates call this path. The per-sample filter still uses its cached state. */
+static void mid_pair(unsigned index, int32_t pair[2]){
+ const uint8_t *next=eq_blocks+eq_block_offsets[index/32];
+ for(unsigned lane=0;lane<2;lane++){
+  int32_t value=0,delta=0;
+  for(unsigned i=0;i<32;i++){
+   unsigned encoded=0,shift=0,byte;
+   do{byte=*next++;encoded|=(byte&127u)<<shift;shift+=7;}while(byte&128u);
+   delta+=(int32_t)(encoded>>1)^-(int32_t)(encoded&1u);
+   value+=delta;
+   if(i==index%32u){pair[lane]=value;if(lane==1)return;}
+  }
+ }
+}
 static __attribute__((noinline)) int64_t product(int32_t a,int32_t b){return (int64_t)a*b;}
 static float rounded23(int64_t n){int64_t v=n<0?-((-n+(INT64_C(1)<<25))>>26):(n+(INT64_C(1)<<25))>>26;uint32_t u=(uint32_t)v&0xffffff;return ((int32_t)(u<<8)>>8)*(1.f/8388608);}
 static void shelf(float *out,unsigned gain,unsigned freq,unsigned high){
@@ -27,7 +42,8 @@ void vc_eq_set(VCEQ *s,unsigned lg,unsigned lf,unsigned mg,unsigned mf,unsigned 
  lg=limit(lg);lf=limit(lf);mg=limit(mg);mf=limit(mf);mq=limit(mq);hg=limit(hg);hf=limit(hf);
  shelf(s->low,lg,lf,0);shelf(s->high,hg,hf,1);s->normalization=norm(mg)*norm(lg)*norm(hg);
  int64_t a=gain26(eq_gain_a,mg),b=gain26(eq_gain_b,mg);if(b>33554432)b=33554432;
- int64_t e=packed((mq*128+mf)*2),g=packed((mq*128+mf)*2+1),v=product((int32_t)a,(int32_t)g+4194304);
+ int32_t pair[2];mid_pair(mq*128+mf,pair);
+ int64_t e=pair[0],g=pair[1],v=product((int32_t)a,pair[1]+4194304);
  s->mid[0]=rounded23(b*8388608+v);s->mid[1]=rounded23(product((int32_t)e,(int32_t)(-2*b)));s->mid[2]=rounded23(product((int32_t)(-2*b),(int32_t)g)-v);
  s->mid[3]=(float)e*(1.f/8388608);s->mid[4]=(float)g*(1.f/8388608);
  for(unsigned i=0;i<5;i++)split(s->mid[i],s->mid_split[i]);

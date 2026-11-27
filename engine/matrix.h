@@ -14,7 +14,6 @@ typedef struct { VCMatrixRoute route[VC_MATRIX_ROUTES]; } VCMatrix;
 void vc_matrix_apply(const VCMatrix *, const float sources[VC_MATRIX_SOURCES],
                      const float base[VC_MATRIX_DESTINATIONS],
                      float effective[VC_MATRIX_DESTINATIONS]);
-const VCMatrix *vc_matrix_factory(unsigned preset);
 int vc_matrix_cc_source(unsigned cc);
 /* Output order: destinations 24..31, then 76..79 (filter velocity amounts), then 48,49,54,55, then 32 (filter balance), then 3,56,60,81 (pan), then 16,18,53,75 (FM), then 6,11,52,72,73 (shape), then 7,12,47,74 (PWM), then 9,14,17,45,46 (pitch), then 1,2,80 (amplitude).
  * All route-amount dependencies are evaluated before these sound targets. */

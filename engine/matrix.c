@@ -26,9 +26,6 @@ void vc_matrix_apply(const VCMatrix *m,const float *sources,
         if(a!=64) effective[d]+=2*(a-64)*sources[r->source];
     }
 }
-const VCMatrix *vc_matrix_factory(unsigned preset) {
-    return preset<sizeof(matrix_factory)/sizeof(matrix_factory[0]) ? &matrix_factory[preset] : 0;
-}
 int vc_matrix_cc_source(unsigned cc) {
     switch(cc) {
     case 1:return 3; case 2:return 4; case 3:return 5; case 4:return 6;

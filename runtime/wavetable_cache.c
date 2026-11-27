@@ -1,4 +1,5 @@
 #include "wavetable_cache.h"
+#include "wavetable_flash.h"
 #include <string.h>
 void vc_band_cache_init(VCBandCache *c,float tables[VC_BAND_SLOTS][2049],const double *sines,VCBandLoad load,void *context){
  memset(c,0,sizeof(*c));c->tables=tables;c->sines=sines;c->load=load;c->context=context;c->building=-1;for(unsigned i=0;i<3;i++)c->reserved[i]=-1;
@@ -69,8 +70,12 @@ int vc_band_cache_service(VCBandCache *c,unsigned budget){
   int usable=has_safe(c,v);
   if(c->cold_fallback&&!usable)band=13;
   s->state=0;
-  if(!c->load||!c->load(c->context,(unsigned)v->wave,c->coefficients,&peak)||!vc_band_begin(&c->builder,c->coefficients,c->sines,peak,band,c->tables[slot])){c->failures++;return -1;}
   c->building_clients=0;for(unsigned i=0;i<VC_BAND_CLIENTS;i++)if(c->clients[i].wave==v->wave&&c->clients[i].band==v->band)c->building_clients|=(uint64_t)1<<i;
+  if(vc_wave_flash_copy((unsigned)v->wave,band,c->tables[slot])){
+   *s=(VCBandSlot){v->wave,(int)band,2,0};
+   c->last_completed=slot;c->last_completed_clients=c->building_clients;c->completed++;return 1;
+  }
+  if(!c->load||!c->load(c->context,(unsigned)v->wave,c->coefficients,&peak)||!vc_band_begin(&c->builder,c->coefficients,c->sines,peak,band,c->tables[slot])){c->failures++;return -1;}
   *s=(VCBandSlot){v->wave,(int)band,1,0};c->building=slot;
  }
  if(vc_band_service(&c->builder,budget)==1){c->slots[c->building].state=2;c->last_completed=c->building;c->last_completed_clients=c->building_clients;c->building=-1;c->completed++;return 1;}return 0;

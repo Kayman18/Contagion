@@ -819,7 +819,7 @@ void vc_init(VCSynth *s,float sr){
     for(unsigned id=VC_EQ_LOW_GAIN;id<=VC_EQ_HIGH_FREQ;id++)s->param[id]=64;
     s->param[VC_BOOST_TUNE]=64;s->param[VC_UNISON_DETUNE]=48;s->param[VC_UNISON_PHASE]=64;
     s->param[VC_TEMPO]=57; /* source mapping: 63 + raw = 120 BPM */
-    s->param[VC_SAT_DRIVE]=64;s->param[VC_PATCH_VOLUME]=100;
+    s->param[VC_SAT_DRIVE]=64;s->param[VC_PATCH_VOLUME]=90;
     s->param[VC_TRANSPOSE]=64;s->param[VC_BEND_UP]=66;s->param[VC_BEND_DOWN]=62;
     s->param[VC_AMP_VELOCITY]=128;
     s->param[VC_VEL_SHAPE1]=s->param[VC_VEL_SHAPE2]=s->param[VC_VEL_PW]=s->param[VC_VEL_PAN]=64;
@@ -893,7 +893,9 @@ static void vc_unison_trigger(VCVoice *v,VCLfo *l,unsigned phase){
  if(v->unison_lfo_offset){l->phase+=v->unison_lfo_offset;l->phase-=floorf(l->phase);if(phase)l->start=l->phase;}
 }
 #ifdef VC_DUAL_RENDER
-#define VC_VOICE_FADE 32u
+#define VC_VOICE_FADE 64u
+/* Fade from the last mixed voice sample after a hard start or steal.
+ * The bounded mix ramp adds no per-sample work after it has finished. */
 static void vc_voice_fade(VCSynth *s,unsigned i){
  s->voice_fade_from[i][0]=s->voice_last[i][0];
  s->voice_fade_from[i][1]=s->voice_last[i][1];
@@ -995,6 +997,9 @@ static void vc_mono_retarget(VCSynth *s,VCVoice *v,int note,float velocity,int g
  if(s->matrix){v->portamento_value=previous_portamento;v->portamento_coef=previous_coef;}
 #endif
  if(retrigger){
+#ifdef VC_DUAL_RENDER
+  if(v->env.attack_inc>1.f/VC_VOICE_FADE)vc_voice_fade(s,(unsigned)(v-s->voice));
+#endif
   v->env.stage=v->filter_env.stage=1;v->punch_at=0;v->lfo3_elapsed_frames=0;
   vc_unison_trigger(v,&v->lfo,s->param[VC_LFO_TRIGGER]);
   vc_unison_trigger(v,&v->lfo2,s->param[VC_LFO2_TRIGGER]);vc_unison_trigger(v,&v->lfo3,0);

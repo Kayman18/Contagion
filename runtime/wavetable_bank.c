@@ -5,7 +5,7 @@ static uint32_t rd32(const uint8_t *p){return (uint32_t)p[0]|(uint32_t)p[1]<<8|(
 static uint32_t crc_update(uint32_t c,const uint8_t *p,unsigned n){while(n--){c^=*p++;for(unsigned j=0;j<8;j++)c=(c>>1)^(0xedb88320u&(0u-(c&1)));}return c;
 }
 static uint32_t crc32(const uint8_t *p,unsigned n){return ~crc_update(~0u,p,n);}
-static int unpack(const uint8_t *src,unsigned bytes,uint8_t *dst,unsigned size){
+int vc_lz4_unpack(const uint8_t *src,unsigned bytes,uint8_t *dst,unsigned size){
  unsigned p=0,q=0;
  while(p<bytes){unsigned token=src[p++],n=token>>4;
   if(n==15){unsigned b;do{if(p==bytes)return 0;b=src[p++];n+=b;if(n>size)return 0;}while(b==255);}
@@ -27,6 +27,6 @@ int vc_band_bank_init(VCBandBank *bank,const uint8_t *p,unsigned bytes){
 int vc_band_bank_load(void *context,unsigned wave,double coefficients[256],float *peak){
  VCBandBank *bank=context;if(!bank||!bank->data||!coefficients||!peak||wave>=64)return 0;
  const uint8_t *e=bank->data+32+wave*16;unsigned off=rd32(e),n=rd32(e+4);
- if(off>bank->bytes||n>bank->bytes-off||!unpack(bank->data+off,n,(uint8_t*)coefficients,2048)||crc32((const uint8_t*)coefficients,2048)!=rd32(e+8))return 0;
+ if(off>bank->bytes||n>bank->bytes-off||!vc_lz4_unpack(bank->data+off,n,(uint8_t*)coefficients,2048)||crc32((const uint8_t*)coefficients,2048)!=rd32(e+8))return 0;
  *peak=vc_band_peaks[wave];return 1;
 }

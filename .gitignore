@@ -9,3 +9,9 @@ __pycache__/
 /docs/screenshots/midi_out.txt
 /presets/*.json
 !/presets/midi-map.json
+/engine/presets.inc
+/engine/packed_presets.inc
+/engine/matrix.inc
+/engine/eq_blocks.inc
+/runtime/preset_status.inc
+/runtime/wavetable_flash_layout.h

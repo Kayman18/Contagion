@@ -2,6 +2,7 @@
 #include "perf.h"
 #include "wave_cache.h"
 #include "presets.h"
+#include "../runtime/wavetable_flash.h"
 #ifdef VC_BAND_CACHE
 void vc_band_device_attach(VCSynth *);
 void vc_band_device_service(unsigned);
@@ -23,19 +24,13 @@ static VCEvent events[128];
 static volatile uint32_t event_write,event_read,queue_lost,panic_requested;
 #define VC_BARRIER() __asm__ volatile("" ::: "memory")
 static VCSynth synth;
-/* Boot installation and muted profiling never run together. Keep their
- * scratch objects in one aligned union; profile entry is gated below. */
-/* Profile synth / wave-sector scratch. In the DSP pool on the FM-1 (zeroed at
- * boot like .bss): a second twelve-voice synth does not fit in data RAM. */
-#ifdef PLAT_HOST
-static union {VCSynth benchmark;uint8_t sector[4096];} load_or_profile;
-#else
-static union {VCSynth benchmark;uint8_t sector[4096];} load_or_profile __attribute__((section(".pool"),aligned(8)));
-#endif
-#define benchmark load_or_profile.benchmark
-#define wave_sector load_or_profile.sector
-static int profile_mode=-1,profile_choice;
 static volatile unsigned preset_loaded=~0u;
+#define NO_PRESET_REQUEST (~0u)
+/* The audio callback owns requests and the active matrix. The main loop
+ * unpacks into staging and publishes it by storing the prepared index. */
+static volatile unsigned preset_requested=NO_PRESET_REQUEST, preset_prepared=NO_PRESET_REQUEST;
+static VCFactoryPreset prepared_factory;
+static VCMatrix active_factory_matrix;
 #ifdef VC_BAND_CACHE
 static uint8_t user_bank[VC_PATCH_BANK_BYTES],user_candidate[VC_PATCH_BANK_BYTES];
 static VCPatchRecord user_snapshot,user_recall,user_active;
@@ -56,7 +51,7 @@ static volatile unsigned wave_state,wave_ack,wave_desired[3],wave_ready[3],osc3_
 static volatile unsigned lfo_desired[3],lfo_ready[3];
 static int lfo_build_slot=-1,lfo_build_shape=-1;
 static const unsigned lfo_shape_param[3]={VC_LFO_SHAPE,VC_LFO2_SHAPE,VC_LFO3_SHAPE};
-static unsigned wave_install, wave_install_at,ui_wave_state;
+static unsigned ui_wave_state;
 static int wave_build_slot=-1,wave_build_id=-1;
 static unsigned wave_embedded;
 static const char *wave_error_stage;
@@ -66,68 +61,9 @@ static int vc_wave_fail(const char *stage,unsigned index){
 }
 /* LFO extension occupies only the unused WAV area, below settings at DC000.
  * Reconstruct and verify while muted; no new RAM buffers or audio-time decoding. */
-#define VC_LFO_EXTRA_FLASH 0xAE000u
-#define VC_LFO_EXTRA_BYTES (22u*2049u*4u)
-#include "lfo_extra_crc.inc"
-static unsigned lfo_extra_ready,lfo_extra_index,lfo_extra_used,lfo_extra_written,lfo_extra_build;
-static int vc_lfo_extra_valid(void){
- const uint8_t *p=plat_data(VC_LFO_EXTRA_FLASH);
- if(!p||plat_data(VC_LFO_EXTRA_FLASH+VC_LFO_EXTRA_BYTES-1)!=p+VC_LFO_EXTRA_BYTES-1)return 0;
- for(unsigned i=0;i<22;i++)if(vc_wave_bytes_crc(p+i*8196u,8196)!=lfo_extra_crc[i])return 0;
- return 1;
-}
-static int vc_lfo_extra_flush(void){
- unsigned at=VC_LFO_EXTRA_FLASH+lfo_extra_written;
- unsigned sector=lfo_extra_written/4096;
- if(at+4096>0xDC000u)return vc_wave_fail("LFO RANGE",sector);
- if(plat_data_erase(at))return vc_wave_fail("LFO ERASE",sector);
- if(plat_data_write(at,wave_sector,4096))return vc_wave_fail("LFO WRITE",sector);
- lfo_extra_written+=4096;lfo_extra_used=0;memset(wave_sector,255,4096);return 1;
-}
-static int vc_lfo_extra_service(void){
- if(lfo_extra_ready)return 1;
- if(lfo_extra_index==22){
-  if(lfo_extra_used&&vc_lfo_extra_flush()<0)return -1;
-  if(!vc_lfo_extra_valid())return vc_wave_fail("LFO FLASH VERIFY",22);
-  vc_lfo_set_extra_tables((const float *)plat_data(VC_LFO_EXTRA_FLASH));lfo_extra_ready=1;return 1;
- }
- if(!lfo_extra_build){
-  if(!lfo_extra_index){lfo_extra_used=lfo_extra_written=0;memset(wave_sector,255,4096);}
-  if(!vc_wave_begin(2,42+lfo_extra_index))return vc_wave_fail("LFO REBUILD START",lfo_extra_index);
-  lfo_extra_build=1;
- }
- int result=vc_wave_service(32768);
- if(result<0)return vc_wave_fail("LFO REBUILD",lfo_extra_index);
- if(!result)return 0;
- const uint8_t *p=(const uint8_t *)vc_wave_table(42+lfo_extra_index,0);
- if(vc_wave_bytes_crc(p,8196)!=lfo_extra_crc[lfo_extra_index])return vc_wave_fail("LFO REBUILD CRC",lfo_extra_index);
- unsigned left=8196;while(left){unsigned n=4096-lfo_extra_used;if(n>left)n=left;
-  memcpy(wave_sector+lfo_extra_used,p,n);p+=n;left-=n;lfo_extra_used+=n;
-  if(lfo_extra_used==4096&&vc_lfo_extra_flush()<0)return -1;
- }
- lfo_extra_index++;lfo_extra_build=0;return 0;
-}
-
-static int vc_lfo_needs_cache(unsigned shape){
- return shape>=6&&(shape<46||wave_embedded);
-}
-
+static int vc_lfo_needs_cache(unsigned shape){return shape>=6;}
 static void vc_wave_background(void){
  if(wave_state!=1||!wave_ack)return;
- if(wave_install){
-  unsigned size=vc_wave_seed_size(),at=wave_install_at;
-  if(at<size){unsigned n=size-at;if(n>4096)n=4096;
-   memset(wave_sector,255,sizeof(wave_sector));memcpy(wave_sector,vc_wave_seed()+at,n);
-   if(plat_data_erase(VC_WAVE_BANK_FLASH+at)){vc_wave_fail("BANK ERASE",at/4096);return;}
-   if(plat_data_write(VC_WAVE_BANK_FLASH+at,wave_sector,4096)){vc_wave_fail("BANK WRITE",at/4096);return;}
-   wave_install_at+=4096;return;
-  }
-  const uint8_t *p=plat_data(VC_WAVE_BANK_FLASH);
-  if(!p||memcmp(p,vc_wave_seed(),size)){vc_wave_fail("BANK FLASH VERIFY",0);return;}
-  if(!vc_wave_init(p,size)){vc_wave_fail("BANK FORMAT",0);return;}
-  wave_install=0;
- }
- if(!wave_embedded&&!lfo_extra_ready){vc_lfo_extra_service();return;}
  /* Prepare LFO copies before restoring the oscillator caches they borrow. */
  for(unsigned i=0;i<3;i++){
   unsigned shape=lfo_desired[i];
@@ -169,11 +105,9 @@ static void vc_wave_background(void){
 /* XIP-to-SRAM exceeds the target direct-call range. One indirect dispatch per
  * audio block; calls within the SRAM DSP remain direct. */
 #ifndef PLAT_HOST
-static void (*volatile vc_profile_dispatch)(VCSynth*,unsigned,unsigned)=vc_profile_run;
 static void (*volatile vc_render_dispatch)(VCSynth*,float*,float*,unsigned)=vc_render_stereo;
 #else
 #define vc_render_dispatch vc_render_stereo
-#define vc_profile_dispatch vc_profile_run
 #endif
 static float audio_left[APP_BLOCK],audio_right[APP_BLOCK],master_now;
 static int redraw;
@@ -280,11 +214,30 @@ static int vc_request_lfo(unsigned id,unsigned shape){
  return 0;
 }
 static void vc_request_preset(unsigned index){
+ if(index<=vc_preset_count())preset_requested=index;
+}
+static void vc_preset_background(void){
+ unsigned index=preset_requested;
+ if(index==NO_PRESET_REQUEST||index==preset_prepared)return;
+ preset_prepared=NO_PRESET_REQUEST;
+ VC_BARRIER();
+ if(vc_preset_decode(index,&prepared_factory)&&index==preset_requested){
+  VC_BARRIER();preset_prepared=index;
+ }
+}
+static void vc_apply_factory(unsigned index){
 #ifdef VC_BAND_CACHE
  user_loaded=0;user_name_edit=0;
 #endif
- if(index>vc_preset_count())return;const uint8_t *p=vc_preset_params(index);
- profile_mode=-1;if(p)vc_apply_patch(&synth,p);else vc_init(&synth,44100);preset_loaded=index;vc_set_matrix(&synth,p?vc_matrix_factory(index):0);
+ if(index<vc_preset_count()){
+  active_factory_matrix=prepared_factory.matrix;
+  vc_apply_patch(&synth,prepared_factory.params);
+  vc_set_matrix(&synth,&active_factory_matrix);
+ }else{
+  vc_init(&synth,44100);
+  vc_set_matrix(&synth,0);
+ }
+ preset_loaded=index;
  wave_desired[0]=synth.param[VC_WAVE1];wave_desired[1]=synth.param[VC_WAVE2];
  osc3_desired_mode=synth.param[VC_OSC3_MODE];wave_desired[2]=osc3_desired_mode>=4?osc3_desired_mode-4:wave_desired[1];
  for(unsigned i=0;i<3;i++)lfo_desired[i]=synth.param[lfo_shape_param[i]];
@@ -292,6 +245,7 @@ static void vc_request_preset(unsigned index){
 }
 #ifdef VC_BAND_CACHE
 static void vc_user_audio(unsigned type){
+ if(preset_requested!=NO_PRESET_REQUEST){user_status=4;VC_BARRIER();user_job=0;return;}
  if(type==9||type==11){
   if(wave_state){user_status=4;VC_BARRIER();user_job=0;return;}
   if(type==11)user_snapshot=user_recall;
@@ -300,7 +254,7 @@ static void vc_user_audio(unsigned type){
   const char *name=user_name_edit?user_name:user_loaded?user_active.name:vc_preset_name(preset_loaded);
   for(unsigned i=0;i<10&&name[i];i++)user_snapshot.name[i]=name[i];
   memcpy(user_snapshot.params,synth.param,VC_PARAMS);
-  const VCMatrix *matrix=user_loaded?&user_active.matrix:vc_matrix_factory(preset_loaded);
+  const VCMatrix *matrix=synth.matrix;
   if(matrix)user_snapshot.matrix=*matrix;
   else for(unsigned i=0;i<11;i++)user_snapshot.matrix.route[i].amount=64;
   }
@@ -346,19 +300,13 @@ if(e.type==1){if(!wave_state)vc_note_on(&synth,e.a,e.b);}else if(e.type==2)vc_no
 #endif
   if(wave_desired[2]!=w||e.b>=4){wave_desired[2]=w;wave_state=1;wave_ack=0;}else vc_param(&synth,e.a,e.b);
  }else if(!vc_request_lfo(e.a,e.b))vc_param(&synth,e.a,e.b);}else if(e.type==4)vc_panic(&synth);else if(e.type==5)clipped_samples=0;
- else if(e.type==6){
-#ifdef VC_BAND_CACHE
-continue; /* Full-cache benchmark is not valid for asynchronous band loading. */
-#endif
-if(wave_state)continue;vc_panic(&synth);vc_profile_prepare(&benchmark);vc_set_matrix(&benchmark,synth.matrix);for(unsigned k=0;k<28;k++)benchmark.controllers[k]=synth.controllers[k];vc_param(&benchmark,VC_DIST_MODE,synth.param[VC_DIST_MODE]);vc_param(&benchmark,VC_DIST_LEVEL,synth.param[VC_DIST_LEVEL]);for(unsigned id=VC_EQ_ENABLE;id<=VC_EQ_HIGH_FREQ;id++)vc_param(&benchmark,id,synth.param[id]);profile_mode=e.a;}
- else if(e.type==7){profile_mode=-1;vc_panic(&synth);}
  else if(e.type==8)vc_request_preset(e.a|((unsigned)e.b<<8));
 }
  uint32_t pkt;int port;while(plat_midi_in(&pkt,&port)){
 #ifdef VC_BAND_CACHE
  if(user_job==2)continue;
 #endif
-if(profile_mode>=0)continue;unsigned st=(pkt>>8)&240,a=(pkt>>16)&127,b=(pkt>>24)&127;
+unsigned st=(pkt>>8)&240,a=(pkt>>16)&127,b=(pkt>>24)&127;
  if(st==176&&a==0){if(b<vc_preset_bank_count())midi_preset_bank=b;continue;}
  if(st==192){int i=vc_preset_find(midi_preset_bank,a);if(i>=0)vc_request_preset((unsigned)i);continue;}
  /* Wave requests are accepted even while muted, so the newest request wins.
@@ -379,6 +327,11 @@ void app_overload(void){shed_request=1;}
 #endif
 void app_render(int32_t *lr,uint32_t n,uint32_t master){
  vc_audio_events();
+ unsigned index=preset_requested;
+ if(index!=NO_PRESET_REQUEST&&index==preset_prepared){
+  VC_BARRIER();vc_apply_factory(index);
+  preset_prepared=preset_requested=NO_PRESET_REQUEST;
+ }
 #ifdef VC_DUAL_RENDER
  if(shed_request){shed_request=0;if(vc_shed(&synth))shed_count++;}
 #endif
@@ -386,7 +339,6 @@ void app_render(int32_t *lr,uint32_t n,uint32_t master){
  if(wave_state==2&&(wave_ready[0]!=wave_desired[0]||wave_ready[1]!=wave_desired[1]||wave_ready[2]!=wave_desired[2]))wave_state=1;
  if(wave_state==2){for(unsigned i=0;i<3;i++)vc_param(&synth,lfo_shape_param[i],lfo_desired[i]);vc_param(&synth,VC_WAVE1,wave_desired[0]);vc_param(&synth,VC_WAVE2,wave_desired[1]);vc_param(&synth,VC_OSC3_MODE,osc3_desired_mode);VC_BARRIER();wave_state=0;wave_ack=0;}
  if(wave_state){vc_panic(&synth);active_voices=0;memset(lr,0,n*2*sizeof(*lr));VC_BARRIER();wave_ack=1;return;}
- if(profile_mode>=0){vc_profile_dispatch(&benchmark,(unsigned)profile_mode,n);memset(lr,0,n*2*sizeof(*lr));active_voices=profile_mode==5?0:VC_VOICES;return;}
  float target=master/4096.f;
  for(unsigned at=0;at<n;at+=APP_BLOCK){unsigned count=n-at;if(count>APP_BLOCK)count=APP_BLOCK;vc_render_dispatch(&synth,audio_left,audio_right,count);
  for(unsigned j=0;j<count;j++){
@@ -407,7 +359,7 @@ void perf_reset(void){}
 void perf_mode(int dual){(void)dual;}
 void perf_scan_mode(unsigned div){(void)div;}
 #endif
-void app_init(void){preset_loaded=preset_choice=vc_preset_count();midi_preset_bank=0;vc_init(&synth,44100);memcpy(values,synth.param,sizeof(values));memset((void*)midi_values,0,sizeof(midi_values));memset(midi_seen,0,sizeof(midi_seen));event_read=event_write=queue_lost=panic_requested=0;clipped_samples=0;last_keys=last_buttons=0;page=row=octave=0;profile_mode=-1;profile_choice=0;master_now=0;for(int i=0;i<NKEYS;i++)key_note[i]=-1;perf_mode(
+void app_init(void){preset_requested=preset_prepared=NO_PRESET_REQUEST;preset_loaded=preset_choice=vc_preset_count();midi_preset_bank=0;vc_init(&synth,44100);memcpy(values,synth.param,sizeof(values));memset((void*)midi_values,0,sizeof(midi_values));memset(midi_seen,0,sizeof(midi_seen));event_read=event_write=queue_lost=panic_requested=0;clipped_samples=0;last_keys=last_buttons=0;page=row=octave=0;master_now=0;for(int i=0;i<NKEYS;i++)key_note[i]=-1;perf_mode(
 #ifdef VC_DUAL_RENDER
  1
 #else
@@ -418,23 +370,12 @@ void app_init(void){preset_loaded=preset_choice=vc_preset_count();midi_preset_ba
  access_boot_loading=1;
 #endif
  vc_lfo_active_reset();for(unsigned i=0;i<3;i++)lfo_desired[i]=lfo_ready[i]=synth.param[lfo_shape_param[i]];lfo_build_slot=lfo_build_shape=-1;
- /* Keep the embedded playback path already exercised on the UC25HQ80
-  * without installing bank or LFO data in its writable sectors at boot. */
- int prefer_embedded=plat_flash_jedec()==PLAT_FLASH_UCUN_UC25HQ80;
- vc_lfo_set_extra_tables(0);lfo_extra_index=lfo_extra_used=lfo_extra_written=lfo_extra_build=0;lfo_extra_ready=!prefer_embedded&&vc_lfo_extra_valid();if(lfo_extra_ready)vc_lfo_set_extra_tables((const float *)plat_data(VC_LFO_EXTRA_FLASH));
- wave_state=1;ui_wave_state=255;wave_ack=0;wave_desired[0]=wave_desired[1]=wave_desired[2]=0;osc3_desired_mode=0;wave_install_at=0;wave_build_slot=wave_build_id=-1;
- const uint8_t *p=prefer_embedded?0:plat_data(VC_WAVE_BANK_FLASH);unsigned n=vc_wave_seed_size();
- wave_install=wave_embedded=0;
- if(!n||n>VC_LFO_EXTRA_FLASH-VC_WAVE_BANK_FLASH){
-  vc_wave_fail("BANK SIZE",n);
- }else if(!p||plat_data(VC_WAVE_BANK_FLASH+n-1)!=p+n-1){
-  /* The firmware already carries the same coefficient bank in its app slot. */
-  vc_lfo_set_extra_tables(0);lfo_extra_ready=0;
-  if(vc_wave_init(vc_wave_seed(),n))wave_embedded=1;
-  else vc_wave_fail("EMBEDDED BANK FORMAT",0);
- }else{
-  wave_install=memcmp(p,vc_wave_seed(),n)||!vc_wave_init(p,n);
- }
+ vc_lfo_set_extra_tables(0);
+ wave_state=1;ui_wave_state=255;wave_ack=0;wave_desired[0]=wave_desired[1]=wave_desired[2]=0;osc3_desired_mode=0;wave_build_slot=wave_build_id=-1;
+ wave_embedded=vc_wave_init(vc_wave_seed(),vc_wave_seed_size());
+ if(!wave_embedded)vc_wave_fail("EMBEDDED BANK FORMAT",0);
+ const uint8_t *cache=plat_data(CONTAGION_CACHE_BASE);
+ vc_wave_flash_init(cache && plat_data(CONTAGION_CACHE_END-1u)==cache+(CONTAGION_CACHE_END-CONTAGION_CACHE_BASE-1u)?cache:0);
 #ifdef VC_BAND_CACHE
  vc_band_device_attach(&synth);
  user_slot=user_job=user_status=user_loaded=user_bank_bad=user_name_edit=user_name_pos=user_remote_pending=0;
@@ -494,7 +435,11 @@ static void vc_input(void){
  }else if(page==PAGE_PRESETS&&k==EN_K3){preset_choice=vc_preset_count();vc_post(8,preset_choice&255,preset_choice>>8);redraw=1;
  }else if(page==PAGE_PRESETS&&(k==EN_K1||k==EN_K2)){
  if(k==EN_K1)preset_choice=vc_preset_bank_first((unsigned)clamp((int)vc_preset_bank(preset_choice)+d,0,(int)vc_preset_bank_count()-1));
- else preset_choice=preset_choice>=vc_preset_count()?0:(unsigned)clamp((int)preset_choice+d,0,(int)vc_preset_count()-1);
+ else {
+  unsigned bank=vc_preset_bank(preset_choice),first=vc_preset_bank_first(bank);
+  unsigned end=bank+1<vc_preset_bank_count()?vc_preset_bank_first(bank+1):vc_preset_count();
+  preset_choice=preset_choice>=vc_preset_count()?first:(unsigned)clamp((int)preset_choice+d,(int)first,(int)end-1);
+ }
  vc_post(8,preset_choice&255,preset_choice>>8);redraw=1;
  }
 #ifdef VC_ACCESS_UI
@@ -552,7 +497,7 @@ static void vc_input(void){
 #ifdef VC_ACCESS_UI
  last_keys=keys;last_buttons=btn;plat_glow(1);
  unsigned shortcut=access_pages[access_page_index()].shortcut;
- plat_leds(page==PAGE_PRESETS?0:1u<<shortcut,keys);
+ plat_leds(1u<<shortcut,keys);
 #else
  last_keys=keys;last_buttons=btn;plat_glow(1);plat_leds((1u<<(page==PAGE_OSC?B_HOME:page==PAGE_FILTER?B_EDIT:page==PAGE_ENV?B_ENV:(page==PAGE_FMOD||page==PAGE_LFO1||page==PAGE_LFO_FILTER||page==PAGE_LFO_TIMING||page==PAGE_LFO2||page==PAGE_LFO2_OSC||page==PAGE_LFO3||page==PAGE_LFO_SHARED)?B_LFO:(page==PAGE_STEREO||page>=PAGE_NOISE)?B_FX:B_GLO)),keys);
 #endif
@@ -626,7 +571,7 @@ static void vc_draw(void){
   cv_text(3,17,&FONT_B,t,C_WHITE);cv_blit(x*120,60+y*34);continue;
  }
 #endif
- if(page==PAGE_PRESETS){const char *names[]={"BANK","PROGRAM","STATUS","COUNT","K1: BANK","K2: PROGRAM","K3: INIT","ARP REMOVED"};cv_text(2,5,&FONT_XS,names[index],C_GRAY);if(index==0){t[0]=vc_preset_bank_letter(vc_preset_bank(preset_loaded));t[1]=0;}else if(index==1)vc_num(t,vc_preset_program(preset_loaded));else if(index==2)vc_copy(t,preset_loaded>=vc_preset_count()?"INIT":vc_preset_partial(preset_loaded)?"PARTIAL":vc_preset_wave_cache(preset_loaded)?"CACHE":"MAPPED");else if(index==3)vc_num(t,vc_preset_count());else t[0]=0;cv_text(3,17,&FONT_B,t,C_WHITE);cv_blit(x*120,60+y*34);continue;}
+ if(page==PAGE_PRESETS){const char *names[]={"BANK","PROGRAM","STATUS","COUNT","K1: BANK","K2: PROGRAM","K3: INIT","ARP REMOVED"};cv_text(2,5,&FONT_XS,names[index],C_GRAY);if(index==0){vc_copy(t,vc_preset_bank_label(vc_preset_bank(preset_loaded)));}else if(index==1)vc_num(t,vc_preset_program(preset_loaded));else if(index==2)vc_copy(t,preset_loaded>=vc_preset_count()?"INIT":vc_preset_partial(preset_loaded)?"PARTIAL":vc_preset_wave_cache(preset_loaded)?"CACHE":"MAPPED");else if(index==3)vc_num(t,vc_preset_count());else t[0]=0;cv_text(3,17,&FONT_B,t,C_WHITE);cv_blit(x*120,60+y*34);continue;}
  if(page<PAGE_PERF||page>=PAGE_NOISE){int id=pages[page==PAGE_BOOST?23:page==PAGE_UNISON?22:page==PAGE_EQ?21:page==PAGE_DIST?20:page==PAGE_LFO_SHARED?19:page==PAGE_PITCH?18:page==PAGE_AMP_RESPONSE?17:page==PAGE_VEL_OSC?16:page==PAGE_VELOCITY?15:page==PAGE_SAT?14:page==PAGE_OSC3?13:page==PAGE_LFO3?12:page==PAGE_LFO2_OSC?11:page==PAGE_LFO2?10:page==PAGE_LFO_TIMING?9:page==PAGE_LFO_FILTER?8:page==PAGE_LFO1?7:page==PAGE_FM?6:page==PAGE_NOISE?5:page][index];if(id<0){cv_blit(x*120,60+y*34);continue;}cv_text(2,5,&FONT_XS,labels[id],row==index/4?C_HI:C_GRAY);vc_value(id,t);cv_text(3,17,&FONT_B,t,C_WHITE);cv_rect(2,32,112*(values[id]-minparam(id))/(maxparam(id)-minparam(id)),2,C_HI);}
 #ifdef VC_BAND_CACHE
  else if(page==PAGE_PROFILE){unsigned val[8];vc_band_device_stats(val);val[6]=band_budget;val[7]=band_work_peak_ms;const char *names[]={"READY /32","WAIT /12","BUILT","CANCELLED","FAILURES","BUILD %","BUDGET","WORK MAX MS"};cv_text(2,5,&FONT_XS,names[index],C_GRAY);vc_num(t,val[index]);cv_text(3,17,&FONT_B,t,C_WHITE);}
@@ -638,7 +583,6 @@ static void vc_draw(void){
 #endif
  else {const char *names[]={"CPU %","PEAK %","XRUNS","DEADLINE","VOICES","QUEUE","CLIPPED","BLOCK"};unsigned val[]={ps.audio_pct,ps.peak_pct,ps.dropouts,ps.deadline_misses,active_voices,queue_lost,clipped_samples,APP_BLOCK};cv_text(2,5,&FONT_XS,names[index],C_GRAY);vc_num(t,val[index]);cv_text(3,17,&FONT_B,t,C_WHITE);}
  cv_blit(x*120,60+y*34);}
- if(wave_state&&!wave_embedded&&!lfo_extra_ready){vc_copy(t,"LFO WAVES: ");vc_num(t+11,lfo_extra_index);vc_copy(t+11+(lfo_extra_index>=10?2:1),"/22");}
  const char *footer=page==PAGE_PROFILE?"K1: STAGE  K2: RESET":"SEL: BANK  ALGO: PAGE";
  const char *hint=page==PAGE_PROFILE?"MUTED  PLAY: EXIT":"PLAY: PANIC   4 VOICES";
 #ifdef VC_BAND_CACHE
@@ -659,7 +603,7 @@ static void vc_draw(void){
   vc_copy(t,"EMBEDDED WAVES / FLASH ");
   for(unsigned i=0;i<6;i++)t[23+i]=digits[(id>>(20-4*i))&15u];
   t[29]=0;footer=t;
- }else if(wave_state&&!lfo_extra_ready)footer=t;
+ }
  cv_begin(240,32,C_BLACK);cv_text(8,2,&FONT_XS,footer,C_GRAY);cv_text(8,17,&FONT_XS,wave_state==3?"WAVE DATA ERROR":wave_state?"LOADING WAVES - MUTED":hint,C_GRAY);cv_blit(0,204);
 }
 #endif
@@ -693,7 +637,12 @@ void app_ui_init(void){
 #endif
  redraw=1;
 }
-void app_frame(void){if(event_read==event_write&&preset_choice!=preset_loaded){preset_choice=preset_loaded;redraw=1;}vc_input();
+void app_frame(void){if(event_read==event_write){
+ unsigned selection=preset_requested;
+ if(selection==NO_PRESET_REQUEST)selection=preset_loaded;
+ if(preset_choice!=selection){preset_choice=selection;redraw=1;}
+}
+vc_input();vc_preset_background();
 #ifdef VC_BAND_CACHE
 vc_user_background();
 #endif
@@ -721,10 +670,11 @@ if(!strcmp(s,"user_job")){*v=user_job;return 1;}if(!strcmp(s,"user_status")){*v=
  if(!strcmp(s,"matrix_wheel")){*v=(int)(synth.controllers[3]*127+.5f);return 1;}
  if(!strcmp(s,"matrix_pressure")){*v=(int)(synth.controllers[2]*127+.5f);return 1;}
  if(!strcmp(s,"matrix_cutoff_delta")||!strcmp(s,"matrix_env_delta")||!strcmp(s,"matrix_key_delta")){float source[28],d[VC_MATRIX_FILTERS];for(unsigned i=0;i<28;i++)source[i]=synth.controllers[i];if(synth.matrix){vc_matrix_filters(synth.matrix,source,d);unsigned index=!strcmp(s,"matrix_env_delta")?4:!strcmp(s,"matrix_key_delta")?6:0;*v=(int)(d[index]*1000);}else *v=0;return 1;}
+if(!strcmp(s,"flash_tables")){*v=vc_wave_flash_hits();return 1;}
 if(!strcmp(s,"wave_embedded")){*v=wave_embedded;return 1;}
-if(!strcmp(s,"preset_index")){*v=preset_loaded;return 1;}if(!strcmp(s,"preset_program")){*v=vc_preset_program(preset_loaded);return 1;}if(!strcmp(s,"preset_bank")){*v=vc_preset_bank(preset_loaded);return 1;}if(!strcmp(s,"lfo3_global")){*v=synth.param[VC_LFO3_GLOBAL];return 1;}if(!strcmp(s,"eq_enabled")){*v=synth.param[VC_EQ_ENABLE];return 1;}if(!strcmp(s,"eq_low_gain")){*v=synth.param[VC_EQ_LOW_GAIN];return 1;}if(!strcmp(s,"eq_mid_gain")){*v=synth.param[VC_EQ_MID_GAIN];return 1;}if(!strcmp(s,"eq_mid_q")){*v=synth.param[VC_EQ_MID_Q];return 1;}if(!strcmp(s,"eq_high_gain")){*v=synth.param[VC_EQ_HIGH_GAIN];return 1;}if(!strcmp(s,"dist_mode")){*v=synth.param[VC_DIST_MODE];return 1;}if(!strcmp(s,"dist_level")){*v=synth.param[VC_DIST_LEVEL];return 1;}if(!strcmp(s,"lfo3_shape")){*v=synth.param[VC_LFO3_SHAPE];return 1;}if(!strcmp(s,"lfo_global"))*v=synth.param[VC_LFO_GLOBAL];else if(!strcmp(s,"lfo2_global"))*v=synth.param[VC_LFO2_GLOBAL];else if(!strcmp(s,"ui_lfo_global"))*v=values[VC_LFO_GLOBAL];else if(!strcmp(s,"ui_lfo2_global"))*v=values[VC_LFO2_GLOBAL];else if(!strcmp(s,"ui_lfo_mode"))*v=values[VC_LFO_MODE];else if(!strcmp(s,"ui_lfo2_mode"))*v=values[VC_LFO2_MODE];else if(!strcmp(s,"lfo_extra_verified"))*v=vc_lfo_extra_valid();else if(!strcmp(s,"settings_sentinel"))*v=plat_data(0xDC000u)[0];else if(!strcmp(s,"lfo_extra_ready"))*v=lfo_extra_ready;else if(!strcmp(s,"lfo_extra_written"))*v=lfo_extra_written;else if(!strcmp(s,"lfo_extra_index"))*v=lfo_extra_index;else if(!strcmp(s,"key_mode"))*v=synth.param[VC_KEY_MODE];else if(!strcmp(s,"mono_note"))*v=synth.voice[0].note;else if(!strcmp(s,"mono_held"))*v=synth.mono_count;else if(!strcmp(s,"ui_key_mode"))*v=values[VC_KEY_MODE];else if(!strcmp(s,"lfo_rate"))*v=synth.param[VC_LFO_RATE];else if(!strcmp(s,"ui_lfo_rate"))*v=values[VC_LFO_RATE];else if(!strcmp(s,"lfo2_rate"))*v=synth.param[VC_LFO2_RATE];else if(!strcmp(s,"ui_lfo2_rate"))*v=values[VC_LFO2_RATE];else if(!strcmp(s,"lfo2_contour"))*v=synth.param[VC_LFO2_CONTOUR];else if(!strcmp(s,"ui_wave1"))*v=values[VC_WAVE1];else if(!strcmp(s,"ui_wave2"))*v=values[VC_WAVE2];else if(!strcmp(s,"desired_wave1"))*v=wave_desired[0];else if(!strcmp(s,"desired_wave2"))*v=wave_desired[1];else if(!strcmp(s,"desired_wave3"))*v=wave_desired[2];else if(!strcmp(s,"cached_wave3"))*v=vc_wave_cached(2);else if(!strcmp(s,"shape1"))*v=synth.param[VC_SHAPE1];else if(!strcmp(s,"ui_shape1"))*v=values[VC_SHAPE1];else if(!strcmp(s,"attack"))*v=synth.param[VC_ATTACK];else if(!strcmp(s,"ui_attack"))*v=values[VC_ATTACK];else if(!strcmp(s,"resonance"))*v=synth.param[VC_RESONANCE];else if(!strcmp(s,"ui_cutoff"))*v=values[VC_CUTOFF];else if(!strcmp(s,"ui_patch_volume"))*v=values[VC_PATCH_VOLUME];else if(!strcmp(s,"ui_pan"))*v=values[VC_PAN];else if(!strcmp(s,"ui_portamento"))*v=values[VC_PORTAMENTO];else if(!strcmp(s,"pan"))*v=synth.param[VC_PAN];else if(!strcmp(s,"patch_volume"))*v=synth.param[VC_PATCH_VOLUME];else if(!strcmp(s,"portamento"))*v=synth.param[VC_PORTAMENTO];else if(!strcmp(s,"transpose"))*v=synth.param[VC_TRANSPOSE];else if(!strcmp(s,"bend_up"))*v=synth.param[VC_BEND_UP];else if(!strcmp(s,"bend_down"))*v=synth.param[VC_BEND_DOWN];else if(!strcmp(s,"bend_curve"))*v=synth.param[VC_BEND_SCALE];else if(!strcmp(s,"amp_velocity"))*v=synth.param[VC_AMP_VELOCITY];else if(!strcmp(s,"vel_shape1"))*v=synth.param[VC_VEL_SHAPE1];else if(!strcmp(s,"vel_pw"))*v=synth.param[VC_VEL_PW];else if(!strcmp(s,"vel_pan"))*v=synth.param[VC_VEL_PAN];else if(!strcmp(s,"vel_env1"))*v=synth.param[VC_VEL_ENV1];else if(!strcmp(s,"vel_res2"))*v=synth.param[VC_VEL_RES2];else if(!strcmp(s,"punch"))*v=synth.param[VC_PUNCH];else if(!strcmp(s,"sat_curve"))*v=synth.param[VC_SAT_CURVE];else if((!strcmp(s,"sat_drive")||!strcmp(s,"osc_volume")))*v=synth.param[VC_SAT_DRIVE];else if(!strcmp(s,"osc3_mode"))*v=synth.param[VC_OSC3_MODE];else if(!strcmp(s,"osc3_volume"))*v=synth.param[VC_OSC3_VOLUME];else if(!strcmp(s,"lfo3_enable"))*v=synth.param[VC_LFO3_ENABLE];else if(!strcmp(s,"lfo3_amount"))*v=synth.param[VC_LFO3_AMOUNT];else if(!strcmp(s,"lfo3_dest"))*v=synth.param[VC_LFO3_DEST];else if(!strcmp(s,"lfo2_pan"))*v=synth.param[VC_LFO2_PAN];else if(!strcmp(s,"lfo2_shape_amount"))*v=synth.param[VC_LFO2_SHAPE_AMOUNT];else if(!strcmp(s,"lfo2_fm_amount"))*v=synth.param[VC_LFO2_FM_AMOUNT];else if(!strcmp(s,"lfo2_clock"))*v=synth.param[VC_LFO2_CLOCK];else if(!strcmp(s,"lfo2_mode"))*v=synth.param[VC_LFO2_MODE];else if(!strcmp(s,"lfo2_cutoff1"))*v=synth.param[VC_LFO2_CUTOFF1];else if(!strcmp(s,"lfo2_shape"))*v=synth.param[VC_LFO2_SHAPE];else if(!strcmp(s,"lfo_clock"))*v=synth.param[VC_LFO_CLOCK];else if(!strcmp(s,"tempo"))*v=63+synth.param[VC_TEMPO];else if(!strcmp(s,"lfo_keytrack"))*v=synth.param[VC_LFO_KEYTRACK];else if(!strcmp(s,"lfo_resonance"))*v=synth.param[VC_LFO_RESONANCE];else if(!strcmp(s,"lfo_filter_gain"))*v=synth.param[VC_LFO_FILTER_GAIN];else if(!strcmp(s,"lfo_mode"))*v=synth.param[VC_LFO_MODE];else if(!strcmp(s,"lfo_shape"))*v=synth.param[VC_LFO_SHAPE];else if(!strcmp(s,"lfo_osc1"))*v=synth.param[VC_LFO_OSC1];else if(!strcmp(s,"init_phase"))*v=synth.param[VC_INIT_PHASE];else if(!strcmp(s,"osc2_env"))*v=synth.param[VC_OSC2_ENV];else if(!strcmp(s,"fm_amount"))*v=synth.param[VC_FM_AMOUNT];else if(!strcmp(s,"fm_mode"))*v=synth.param[VC_FM_MODE];else if(!strcmp(s,"fm_env"))*v=synth.param[VC_FM_ENV];else if(!strcmp(s,"wave_install_bytes"))*v=(int)wave_install_at;else if(!strcmp(s,"wave_state"))*v=(int)wave_state;else if(!strcmp(s,"wave_progress"))*v=(int)vc_wave_progress();else if(!strcmp(s,"boost_level"))*v=synth.param[VC_BOOST_LEVEL];else if(!strcmp(s,"boost_tune"))*v=synth.param[VC_BOOST_TUNE];else if(!strcmp(s,"voices"))*v=active_voices;
+if(!strcmp(s,"preset_index")){*v=preset_loaded;return 1;}if(!strcmp(s,"preset_program")){*v=vc_preset_program(preset_loaded);return 1;}if(!strcmp(s,"preset_bank")){*v=vc_preset_bank(preset_loaded);return 1;}if(!strcmp(s,"lfo3_global")){*v=synth.param[VC_LFO3_GLOBAL];return 1;}if(!strcmp(s,"eq_enabled")){*v=synth.param[VC_EQ_ENABLE];return 1;}if(!strcmp(s,"eq_low_gain")){*v=synth.param[VC_EQ_LOW_GAIN];return 1;}if(!strcmp(s,"eq_mid_gain")){*v=synth.param[VC_EQ_MID_GAIN];return 1;}if(!strcmp(s,"eq_mid_q")){*v=synth.param[VC_EQ_MID_Q];return 1;}if(!strcmp(s,"eq_high_gain")){*v=synth.param[VC_EQ_HIGH_GAIN];return 1;}if(!strcmp(s,"dist_mode")){*v=synth.param[VC_DIST_MODE];return 1;}if(!strcmp(s,"dist_level")){*v=synth.param[VC_DIST_LEVEL];return 1;}if(!strcmp(s,"lfo3_shape")){*v=synth.param[VC_LFO3_SHAPE];return 1;}if(!strcmp(s,"lfo_global"))*v=synth.param[VC_LFO_GLOBAL];else if(!strcmp(s,"lfo2_global"))*v=synth.param[VC_LFO2_GLOBAL];else if(!strcmp(s,"ui_lfo_global"))*v=values[VC_LFO_GLOBAL];else if(!strcmp(s,"ui_lfo2_global"))*v=values[VC_LFO2_GLOBAL];else if(!strcmp(s,"ui_lfo_mode"))*v=values[VC_LFO_MODE];else if(!strcmp(s,"ui_lfo2_mode"))*v=values[VC_LFO2_MODE];else if(!strcmp(s,"lfo_extra_verified"))*v=0;else if(!strcmp(s,"settings_sentinel"))*v=plat_data(0xDC000u)[0];else if(!strcmp(s,"lfo_extra_ready"))*v=0;else if(!strcmp(s,"lfo_extra_written"))*v=0;else if(!strcmp(s,"lfo_extra_index"))*v=0;else if(!strcmp(s,"key_mode"))*v=synth.param[VC_KEY_MODE];else if(!strcmp(s,"mono_note"))*v=synth.voice[0].note;else if(!strcmp(s,"mono_held"))*v=synth.mono_count;else if(!strcmp(s,"ui_key_mode"))*v=values[VC_KEY_MODE];else if(!strcmp(s,"lfo_rate"))*v=synth.param[VC_LFO_RATE];else if(!strcmp(s,"ui_lfo_rate"))*v=values[VC_LFO_RATE];else if(!strcmp(s,"lfo2_rate"))*v=synth.param[VC_LFO2_RATE];else if(!strcmp(s,"ui_lfo2_rate"))*v=values[VC_LFO2_RATE];else if(!strcmp(s,"lfo2_contour"))*v=synth.param[VC_LFO2_CONTOUR];else if(!strcmp(s,"ui_wave1"))*v=values[VC_WAVE1];else if(!strcmp(s,"ui_wave2"))*v=values[VC_WAVE2];else if(!strcmp(s,"desired_wave1"))*v=wave_desired[0];else if(!strcmp(s,"desired_wave2"))*v=wave_desired[1];else if(!strcmp(s,"desired_wave3"))*v=wave_desired[2];else if(!strcmp(s,"cached_wave3"))*v=vc_wave_cached(2);else if(!strcmp(s,"shape1"))*v=synth.param[VC_SHAPE1];else if(!strcmp(s,"ui_shape1"))*v=values[VC_SHAPE1];else if(!strcmp(s,"attack"))*v=synth.param[VC_ATTACK];else if(!strcmp(s,"ui_attack"))*v=values[VC_ATTACK];else if(!strcmp(s,"resonance"))*v=synth.param[VC_RESONANCE];else if(!strcmp(s,"ui_cutoff"))*v=values[VC_CUTOFF];else if(!strcmp(s,"ui_patch_volume"))*v=values[VC_PATCH_VOLUME];else if(!strcmp(s,"ui_pan"))*v=values[VC_PAN];else if(!strcmp(s,"ui_portamento"))*v=values[VC_PORTAMENTO];else if(!strcmp(s,"pan"))*v=synth.param[VC_PAN];else if(!strcmp(s,"patch_volume"))*v=synth.param[VC_PATCH_VOLUME];else if(!strcmp(s,"portamento"))*v=synth.param[VC_PORTAMENTO];else if(!strcmp(s,"transpose"))*v=synth.param[VC_TRANSPOSE];else if(!strcmp(s,"bend_up"))*v=synth.param[VC_BEND_UP];else if(!strcmp(s,"bend_down"))*v=synth.param[VC_BEND_DOWN];else if(!strcmp(s,"bend_curve"))*v=synth.param[VC_BEND_SCALE];else if(!strcmp(s,"amp_velocity"))*v=synth.param[VC_AMP_VELOCITY];else if(!strcmp(s,"vel_shape1"))*v=synth.param[VC_VEL_SHAPE1];else if(!strcmp(s,"vel_pw"))*v=synth.param[VC_VEL_PW];else if(!strcmp(s,"vel_pan"))*v=synth.param[VC_VEL_PAN];else if(!strcmp(s,"vel_env1"))*v=synth.param[VC_VEL_ENV1];else if(!strcmp(s,"vel_res2"))*v=synth.param[VC_VEL_RES2];else if(!strcmp(s,"punch"))*v=synth.param[VC_PUNCH];else if(!strcmp(s,"sat_curve"))*v=synth.param[VC_SAT_CURVE];else if((!strcmp(s,"sat_drive")||!strcmp(s,"osc_volume")))*v=synth.param[VC_SAT_DRIVE];else if(!strcmp(s,"osc3_mode"))*v=synth.param[VC_OSC3_MODE];else if(!strcmp(s,"osc3_volume"))*v=synth.param[VC_OSC3_VOLUME];else if(!strcmp(s,"lfo3_enable"))*v=synth.param[VC_LFO3_ENABLE];else if(!strcmp(s,"lfo3_amount"))*v=synth.param[VC_LFO3_AMOUNT];else if(!strcmp(s,"lfo3_dest"))*v=synth.param[VC_LFO3_DEST];else if(!strcmp(s,"lfo2_pan"))*v=synth.param[VC_LFO2_PAN];else if(!strcmp(s,"lfo2_shape_amount"))*v=synth.param[VC_LFO2_SHAPE_AMOUNT];else if(!strcmp(s,"lfo2_fm_amount"))*v=synth.param[VC_LFO2_FM_AMOUNT];else if(!strcmp(s,"lfo2_clock"))*v=synth.param[VC_LFO2_CLOCK];else if(!strcmp(s,"lfo2_mode"))*v=synth.param[VC_LFO2_MODE];else if(!strcmp(s,"lfo2_cutoff1"))*v=synth.param[VC_LFO2_CUTOFF1];else if(!strcmp(s,"lfo2_shape"))*v=synth.param[VC_LFO2_SHAPE];else if(!strcmp(s,"lfo_clock"))*v=synth.param[VC_LFO_CLOCK];else if(!strcmp(s,"tempo"))*v=63+synth.param[VC_TEMPO];else if(!strcmp(s,"lfo_keytrack"))*v=synth.param[VC_LFO_KEYTRACK];else if(!strcmp(s,"lfo_resonance"))*v=synth.param[VC_LFO_RESONANCE];else if(!strcmp(s,"lfo_filter_gain"))*v=synth.param[VC_LFO_FILTER_GAIN];else if(!strcmp(s,"lfo_mode"))*v=synth.param[VC_LFO_MODE];else if(!strcmp(s,"lfo_shape"))*v=synth.param[VC_LFO_SHAPE];else if(!strcmp(s,"lfo_osc1"))*v=synth.param[VC_LFO_OSC1];else if(!strcmp(s,"init_phase"))*v=synth.param[VC_INIT_PHASE];else if(!strcmp(s,"osc2_env"))*v=synth.param[VC_OSC2_ENV];else if(!strcmp(s,"fm_amount"))*v=synth.param[VC_FM_AMOUNT];else if(!strcmp(s,"fm_mode"))*v=synth.param[VC_FM_MODE];else if(!strcmp(s,"fm_env"))*v=synth.param[VC_FM_ENV];else if(!strcmp(s,"wave_install_bytes"))*v=0;else if(!strcmp(s,"wave_state"))*v=(int)wave_state;else if(!strcmp(s,"wave_progress"))*v=(int)vc_wave_progress();else if(!strcmp(s,"boost_level"))*v=synth.param[VC_BOOST_LEVEL];else if(!strcmp(s,"boost_tune"))*v=synth.param[VC_BOOST_TUNE];else if(!strcmp(s,"voices"))*v=active_voices;
 #ifdef VC_DUAL_RENDER
 else if(!strcmp(s,"shed_count"))*v=shed_count;else if(!strcmp(s,"shed_now")){app_overload();*v=0;}
 #endif
-else if(!strcmp(s,"page"))*v=page;else if(!strcmp(s,"row"))*v=row;else if(!strcmp(s,"cutoff"))*v=synth.param[VC_CUTOFF];else if(!strcmp(s,"f_amount1"))*v=synth.param[VC_F_AMOUNT1];else if(!strcmp(s,"routing"))*v=synth.param[VC_ROUTING];else if(!strcmp(s,"f_attack"))*v=synth.param[VC_F_ATTACK];else if(!strcmp(s,"sub_volume"))*v=synth.param[VC_SUB_VOLUME];else if(!strcmp(s,"ring_volume"))*v=synth.param[VC_RING_VOLUME];else if(!strcmp(s,"noise_volume"))*v=synth.param[VC_NOISE_VOLUME];else if(!strcmp(s,"noise_color"))*v=synth.param[VC_NOISE_COLOR];else if(!strcmp(s,"wave1"))*v=synth.param[VC_WAVE1];else if(!strcmp(s,"wave2"))*v=synth.param[VC_WAVE2];else if(!strcmp(s,"width1"))*v=synth.param[VC_PW1];else if(!strcmp(s,"width2"))*v=synth.param[VC_PW2];else if(!strcmp(s,"tune1"))*v=synth.param[VC_TUNE1];else if(!strcmp(s,"tune2"))*v=synth.param[VC_TUNE2];else if(!strcmp(s,"keyfollow1"))*v=synth.param[VC_KEYFOLLOW1];else if(!strcmp(s,"profile_mode"))*v=profile_mode;else if(!strcmp(s,"queue_lost"))*v=queue_lost;else return 0;return 1;}
+else if(!strcmp(s,"page"))*v=page;else if(!strcmp(s,"row"))*v=row;else if(!strcmp(s,"cutoff"))*v=synth.param[VC_CUTOFF];else if(!strcmp(s,"f_amount1"))*v=synth.param[VC_F_AMOUNT1];else if(!strcmp(s,"routing"))*v=synth.param[VC_ROUTING];else if(!strcmp(s,"f_attack"))*v=synth.param[VC_F_ATTACK];else if(!strcmp(s,"sub_volume"))*v=synth.param[VC_SUB_VOLUME];else if(!strcmp(s,"ring_volume"))*v=synth.param[VC_RING_VOLUME];else if(!strcmp(s,"noise_volume"))*v=synth.param[VC_NOISE_VOLUME];else if(!strcmp(s,"noise_color"))*v=synth.param[VC_NOISE_COLOR];else if(!strcmp(s,"wave1"))*v=synth.param[VC_WAVE1];else if(!strcmp(s,"wave2"))*v=synth.param[VC_WAVE2];else if(!strcmp(s,"width1"))*v=synth.param[VC_PW1];else if(!strcmp(s,"width2"))*v=synth.param[VC_PW2];else if(!strcmp(s,"tune1"))*v=synth.param[VC_TUNE1];else if(!strcmp(s,"tune2"))*v=synth.param[VC_TUNE2];else if(!strcmp(s,"keyfollow1"))*v=synth.param[VC_KEYFOLLOW1];else if(!strcmp(s,"profile_mode"))*v=-1;else if(!strcmp(s,"queue_lost"))*v=queue_lost;else return 0;return 1;}
 #endif

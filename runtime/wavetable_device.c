@@ -1,6 +1,7 @@
 /* Experimental device backend: band-zero scratch is for muted LFO loading only. */
 #include "../engine/wave_cache.h"
 #include "wavetable_bank.h"
+#include "wavetable_flash.h"
 #include "wavetable_voice.h"
 #include <string.h>
 #include "../engine/wave_bank.inc"
@@ -29,10 +30,12 @@ int vc_wave_init(const uint8_t *p,unsigned n){
 void vc_band_device_attach(VCSynth *s){vc_band_voice_attach(&binding,&handoff,s);}
 void vc_band_device_service(unsigned budget){vc_band_background(&handoff,budget);}
 int vc_wave_begin(unsigned slot,unsigned wave){
- float peak;if(slot>2||!vc_band_bank_load(&bank,wave,coefficients,&peak))return 0;
+ if(slot>2)return 0;
+ if(vc_wave_flash_copy(wave,0,lfo_table)){builder.active=0;loaded=building=(int)wave;return 1;}
+ float peak;if(!vc_band_bank_load(&bank,wave,coefficients,&peak))return 0;
  loaded=-1;building=(int)wave;return vc_band_begin(&builder,coefficients,vc_bank_sines,peak,0,lfo_table);
 }
-int vc_wave_service(unsigned budget){int r=vc_band_service(&builder,budget);if(r==1)loaded=building;return r;}
+int vc_wave_service(unsigned budget){if(loaded>=0&&!builder.active)return 1;int r=vc_band_service(&builder,budget);if(r==1)loaded=building;return r;}
 int vc_wave_cached(unsigned slot){return slot==2?loaded:-1;}
 const float *const *vc_wave_tables(unsigned wave){(void)wave;return 0;}
 const float *vc_wave_table(unsigned wave,unsigned band){return loaded==(int)wave&&band==0?lfo_table:vc_band_silence;}

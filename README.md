@@ -1,18 +1,34 @@
-# Contagion
+# Contagion 1.1
 
-Contagion is a dual-core, eight-voice wavetable synth firmware for the M‑VAVE FM‑1. It uses the VIROOOS engine with a cyan blueprint boot screen and four physical controls per page. The three firmware images share the same engine, 64 oscillator waveforms, and USER patch format.
+Contagion is a dual-core, eight-voice wavetable synth firmware for the M‑VAVE FM‑1. Version 1.1 contains all 1,525 factory presets in one image, a 34-table flash cache, and a USB‑C MIDI patch editor. [Sound sample](Sound%20Sample.mp3)
 
-## Firmware
+## Downloads
 
-| Factory presets | Banks | Programs | Download |
+- [Contagion 1.1 firmware and USB editor](https://github.com/Kayman18/Contagion/releases/tag/v1.1.0)
+- [Firmware checksums](firmware/SHA256SUMS)
+- [USB editor source and setup](web-editor/README.md)
+
+Install `Contagion-1.1-All-Banks-8V.fwsc` through the FM‑1 updater. The update includes the verified wavetable cache and uses firmware ID `FM-1_15009008`. Back up any important USER patches before updating.
+
+| Factory collection | On-screen banks | Programs | MIDI CC0 |
 | --- | --- | ---: | --- |
-| Virus A | A–B | 227 | [Contagion-Virus-A-8V.fwsc](firmware/Contagion-Virus-A-8V.fwsc) |
-| Virus B | A–F | 648 | [Contagion-Virus-B-8V.fwsc](firmware/Contagion-Virus-B-8V.fwsc) |
-| Virus C | A–F | 650 | [Contagion-Virus-C-8V.fwsc](firmware/Contagion-Virus-C-8V.fwsc) |
+| Virus A | A-A through A-B | 227 | 0–1 |
+| Virus B | B-A through B-F | 648 | 2–7 |
+| Virus C | C-A through C-F | 650 | 8–13 |
 
-Choose one firmware for the factory preset collection you want. Install the `.fwsc` through your usual FM‑1-compatible updater. Back up any important USER patches before flashing. The preset numbers are zero-based and retain the positions in the original SysEx dumps. Programs with arpeggiation enabled were skipped, so some program numbers are gaps. 
+Original zero-based program numbers are preserved. Arpeggiated programs were skipped during import, which leaves gaps. The USB MIDI SysEx protocol reads and writes the 16 native USER slots. Importing original Virus bank dumps is a build-time operation.
 
-The factory files are converted at build time. The synth's USB MIDI SysEx backup and restore serve the 16 native USER slots. Original Virus bank dumps require the build-time importer. Factory sounds can differ where the original patches use unsupported functions such as delay, reverb, chorus, phaser, vocoder, or external input.
+## What changed in 1.1
+
+- **SCL page 1 opens Factory Presets** with a four-row list and a highlighted selection. Page 2 contains USER patches.
+- One firmware combines the 14 factory banks. The presets are packed losslessly, and block decoding happens in the main loop.
+- The secondary flash stores 34 pre-rendered, full-precision wavetables. The firmware still rebuilds tables when needed.
+- Factory and INIT patches default to volume 90. USER patches recall their saved volume.
+- HOME holds the oscillator, mixer, saturation, voice, pitch bend, and Analog Boost pages. FX holds the Filter, Distortion, and EQ pages. EDIT jumps directly to Filter.
+- Fast mono retriggers now use a fade. Hard starts and voice steals use a 64-sample fade, about 1.45 ms at 44.1 kHz.
+- The browser editor sends supported controls over USB MIDI, recalls factory presets, and reads and verifies USER slots.
+
+The original distortion and EQ remain available. This release follows the later test builds with the experimental Chorus and Drive removed.
 
 ## Screens
 
@@ -22,16 +38,15 @@ These are 240 × 240 framebuffer captures rendered by the firmware's host simula
 | :---: | :---: | :---: |
 | ![Blueprint loading splash](docs/screenshots/access-splash.png) | ![Oscillator controls](docs/screenshots/access-oscillators.png) | ![Filter controls](docs/screenshots/access-filter.png) |
 
-| USER patches | Performance |
-| :---: | :---: |
-| ![User patch editor](docs/screenshots/access-user.png) | ![Performance counters](docs/screenshots/access-performance.png) |
+| SCL factory browser | USER patches | Performance |
+| :---: | :---: | :---: |
+| ![Factory presets](docs/screenshots/factory-presets.png) | ![User patch editor](docs/screenshots/access-user.png) | ![Performance counters](docs/screenshots/access-performance.png) |
 
-- Turn **ALGO** to move between pages and **K1–K4** to edit the four controls on the current page.
-- Tap **HOME**, **EDIT**, **ENV**, **LFO**, or **FX** to jump to a section. Repeated taps advance through that section's pages.
-- Turn **PRESET** to browse sounds. On the factory page, **K1** selects the bank and **K2** selects the program. MIDI CC0 selects the zero-based bank and Program Change selects the program.
-- Tap **SEL** for USER patches. **K1** chooses a slot, **K2** recalls it, **K3/K4** edit the name, and **SAVE** stores it.
-- Tap **GLO** for CPU average, peak, xruns, and deadlines. Tap it again to reach core timing, core status, wave cache, and cache budget. **K2** resets counters on these pages.
-- See [MIDI controls](MIDI-CONTROLS.md) for parameter assignments.
+- Tap **SCL** to open Factory Presets. **K1** selects the bank, **K2** scrolls and loads programs in that bank, **K3** selects INIT, and **K4** adjusts patch volume. The dedicated **PRESET** encoder also opens the browser.
+- Tap **SCL** again for USER patches. **K1** chooses a slot, **K2** recalls it, **K3/K4** edit the name, and **SAVE** stores the current patch.
+- Turn **ALGO** to move through the pages. Repeated taps on **HOME**, **ENV**, **LFO**, **FX**, or **GLO** step through the section.
+- **GLO → WAVE CACHE → FLASH HITS** counts pre-rendered tables loaded since startup. The first GLO page shows CPU average and peak, xruns, and deadlines.
+- [MIDI controls](MIDI-CONTROLS.md)
 
 ## How the wavetables fit
 
@@ -39,7 +54,8 @@ These are 240 × 240 framebuffer captures rendered by the firmware's host simula
 | --- | ---: |
 | Full rendered set, 64 waves × 14 pitch bands × 2,049 float32 samples | 7,343,616 bytes |
 | Packed coefficient bank, including header and index | 90,426 bytes |
-| 32 reconstructed tables in the RAM cache | 262,272 bytes |
+| 34 pre-rendered tables, index and checksums before padding | 278,956 bytes |
+| 32 playable tables in the RAM cache | 262,272 bytes |
 
 The packed size is for the coefficient bank itself. The firmware also keeps a shared sine lookup table and per-wave peak constants. Tables in RAM are indexed by **wave number and pitch band**. A slot holds one band of one wave, so several voices or oscillators can reuse the same slot.
 
@@ -47,7 +63,9 @@ The packed size is for the coefficient bank itself. The firmware also keeps a sh
 
 Each wave carries 128 sine and 128 cosine weights as binary64 values. The coefficients are stored in independently compressed blocks, so the firmware can decode a single wave by consulting its offset and length in the index. The bank reader checks the header, index, and payload CRCs and verifies each unpacked 2,048-byte coefficient block. See [bank decoder](runtime/wavetable_bank.c).
 
-On the original Puya flash, the firmware can install the packed bank into the reserved data area starting at `0x97000`, verify the copy, and reuse it on subsequent boots. It also supports extra prebuilt LFO tables in their own flash region at `0xAE000`. On newer UC25HQ80 units (JEDEC `B36014`), it reads coefficients directly from the embedded firmware image and reconstructs custom LFO waves into their active RAM slots. This avoids a wave-bank rewrite at boot on that chip and keeps USER patch storage available.
+The app reads these coefficients from its own embedded bank on all FM‑1 units. The updater installs an additional 276 KiB data image at `0x97000–0xDBFFF`. It holds 34 float32 tables, a CRC32 for each table, and a CRC32 for their index. The loader verifies the package before writing and verifies the data again after programming. USER storage is outside this span.
+
+On a cache hit, the app copies the pre-rendered samples into a playback slot in RAM. It checks the index at startup and checks each table on first use. A miss or bad checksum falls back to the embedded coefficients. This avoids overwriting audio-owned RAM from the loader or reading serial flash in the sample loop.
 
 ### Rebuilding a playable table
 
@@ -68,20 +86,19 @@ The cache publishes completed pointers at an audio boundary. It pins old and new
 
 The synth runs at **44.1 kHz**, with a **512-frame audio buffer**. The firmware splits voice rendering and channel post-processing across both cores. The 8-voice pool is shared by all notes and by unison layers, with up to four layers per note. If the renderer crosses its overload threshold, it may fade out a voice already in release.
 
-Use Linux with Node.js, Python 3, and the JieLi PI32v2 toolchain and AC79 SDK. See the platform's [toolchain helper](base/tools/get_toolchain.sh) and [SDK helper](base/bsp/tools/get_sdk.sh). The app and its build inputs are included alongside the platform and board source.
+Use Linux on x86-64 with Node.js, Python 3, the JieLi PI32v2 toolchain, and the AC79 SDK. [Toolchain helper](base/tools/get_toolchain.sh) · [SDK helper](base/bsp/tools/get_sdk.sh)
 
 ```sh
 export JIELI_TOOLCHAIN=/path/to/jieli-linux-toolchains
 export AC79_SDK=/path/to/fw-AC79_AIoT_SDK
-VIRUS_MODEL=A ./build-firmware.sh
-VIRUS_MODEL=B ./build-firmware.sh
-VIRUS_MODEL=C ./build-firmware.sh
+./build-firmware.sh
 ```
 
-Build one bank variant at a time because each run regenerates the shared preset and modulation tables. The source defaults to the Virus C factory set. The images are emitted under `app/build/`, with identities `FM-1_15008108`, `FM-1_15008208`, and `FM-1_15008308` respectively. `VIRUS_BANK_DIR` can point to a directory of correctly named, checksum-valid Virus bank files. Regenerate the splash with Pillow using `python3 tools/generate-access-ui.py assets/blueprint-splash.png`.
+The build emits `app/build/contagion-0.90.8.fwsc`. It generates the indexed factory preset blocks, packed EQ coefficients, and the 34-table wave image from the checked-in inputs. To build the Linux simulator, run `./build-firmware.sh --host`. To regenerate the standalone USB editor, run `node web-editor/generate.cjs` after a build.
 
-Build the Linux simulator with `./build-firmware.sh --host`. The resulting executable is `app/build/host/contagion_host`.
+The package, secondary flash writes, SCL navigation, and the USB editor's USER slot round-trip passed in simulation. Physical verification of this exact image is pending.
 
 ## Credits
 
 Contagion builds on VIROOOS, fm1-base, and the Felucca BSP. The included platform and board license notices are in [base/LICENSES](base/LICENSES/) and [base/bsp/LICENSES](base/bsp/LICENSES/). Access and Virus identify the instrument and preset families. Contagion is an independent FM‑1 firmware project.
+

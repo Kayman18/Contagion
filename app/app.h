@@ -12,12 +12,13 @@
 #define VC_BAND_FM1_SINGLE_CORE 1
 #endif
 #define APP_NAME "CONTAGION"
-#define APP_TAGLINE "CONTAGION 8V"
+#define APP_TAGLINE "CONTAGION 1.1"
 #define APP_SPLASH
 void app_splash(void);
 #define APP_SPLASH_RGB RGB(210,35,40)
 #define APP_PALETTE 3u
 #define APP_BLOCK 512u
+#define APP_BIG_FONT FONT_M
 #define APP_CANVAS_PX (120u * 86u)
 #define APP_SYSEX
 int app_sysex(const uint8_t*,uint32_t);

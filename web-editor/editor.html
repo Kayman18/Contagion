@@ -1,0 +1,498 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Contagion USB Editor</title>
+<style>
+:root{color-scheme:dark;--bg:#0b131a;--surface:#121e27;--raised:#172732;--line:#29414e;--text:#e6f0f0;--muted:#a3b6bb;--cyan:#72e5dc;--warm:#ffba7a;font-family:system-ui,sans-serif}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--text)}
+main{max-width:1280px;margin:auto;padding:26px 28px 50px}
+header{display:flex;justify-content:space-between;align-items:center;gap:24px;border-bottom:1px solid var(--line);padding:5px 0 23px}
+.brand{font-weight:850;font-size:clamp(26px,5vw,48px);line-height:1;letter-spacing:.07em;margin:0;color:var(--cyan)}
+.subtitle{margin:8px 0 0;color:var(--muted)}
+button,select,input{font:inherit}
+button,select,input:is([type=text],[type=number]){background:var(--raised);border:1px solid var(--line);color:var(--text);border-radius:5px;padding:8px 10px}
+button{cursor:pointer;font-weight:650}
+button:hover:not(:disabled){border-color:var(--cyan)}
+button:disabled{opacity:.45;cursor:default}
+button.primary{color:#072420;background:var(--cyan);border-color:var(--cyan)}
+button:focus-visible,input:focus-visible,select:focus-visible{outline:2px solid var(--warm);outline-offset:3px}
+.status{margin:13px 0;color:var(--muted);min-height:24px}
+.status[data-error=true]{color:var(--warm)}
+.ports,.row{display:flex;align-items:end;gap:10px;flex-wrap:wrap}
+.ports{margin-bottom:22px}
+.ports label{flex:1;min-width:180px}
+label.field{display:flex;flex-direction:column;gap:5px;color:var(--muted);font-size:.8rem}
+label.field :is(input,select){width:100%;font-size:.95rem}
+.workspace{display:grid;grid-template-columns:280px minmax(0,1fr);gap:18px}
+aside,.panel{min-width:0;background:var(--surface);border:1px solid var(--line);border-radius:9px}
+aside{padding:17px;align-self:start}
+h2{font-size:1rem;margin:0 0 12px;letter-spacing:.045em}
+aside section+section{border-top:1px solid var(--line);margin-top:19px;padding-top:17px}
+.stack{display:grid;gap:9px}
+.help{font-size:.79rem;line-height:1.48;color:var(--muted);margin:10px 0 0}
+.panel{padding:18px;align-self:start}
+.patch-header{display:flex;justify-content:space-between;align-items:end;flex-wrap:wrap;gap:12px}
+.patch-header input{font-family:ui-monospace,monospace;font-size:1.1rem!important;letter-spacing:.06em;color:var(--cyan)}
+.source{color:var(--muted);font-size:.79rem;margin:8px 0 15px}
+.live{font-size:.8rem;color:var(--muted);display:flex;align-items:center;gap:6px;min-height:34px}
+.tabs{display:flex;gap:5px;flex-wrap:wrap;border-bottom:1px solid var(--line);margin:0 0 12px;padding-bottom:9px}
+.tabs button{font-size:.84rem;padding:7px 9px}
+.tabs button[aria-pressed=true]{color:var(--cyan);border-color:var(--cyan)}
+.grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px}
+.control{min-width:0;border:1px solid var(--line);background:#0f1921;border-radius:6px;padding:9px 8px;display:grid;justify-items:center;gap:5px}
+.control>span{font-size:.73rem;text-align:center;min-height:1.25em;overflow-wrap:anywhere}
+.control select{padding:4px;width:100%;font-size:.8rem}
+.knob{height:41px;width:41px;border-radius:50%;position:relative;background:radial-gradient(circle at 36% 28%,#506675 0,#354b57 38%,#182731 68%,#090f13 71%,#35424c 77%,#12191f 85%);box-shadow:0 2px 4px #000}
+.knob::before{content:"";position:absolute;inset:4px;border-radius:50%;transform:rotate(var(--angle));background:linear-gradient(var(--cyan),var(--cyan)) center top/2px 9px no-repeat}
+.control input[type=range]{width:100%;margin:2px 0;accent-color:var(--cyan)}
+.control input[type=number]{width:63px;text-align:center;padding:3px;font:12px ui-monospace,monospace}
+.control small{color:var(--muted);font:10px ui-monospace,monospace;min-height:1em}
+.matrix{width:100%;border-collapse:collapse;text-align:left;font-size:.8rem}
+.matrix td,.matrix th{padding:5px;border-bottom:1px solid var(--line)}
+.matrix :is(input,select){width:100%;max-width:220px;padding:4px}
+.play{border-top:1px solid var(--line);margin-top:14px;padding-top:12px}
+.play-title{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:8px;font-size:.82rem}
+.keys{height:82px;display:flex;position:relative;touch-action:none}
+.keys button{border-radius:0 0 4px 4px;border:1px solid #718389;padding:0;font-size:10px;display:flex;align-items:end;justify-content:center}
+.keys button.white{flex:1;background:#d6e4e3;color:#1c3137;padding-bottom:6px}
+.keys button.black{position:absolute;height:51px;width:7%;background:#17262f;color:#dcebed;z-index:1;top:0;transform:translateX(-50%);padding-bottom:4px}
+.keys button.pressed{background:var(--cyan);color:#092a27}
+@media(max-width:780px){main{padding:16px}.workspace{grid-template-columns:1fr}.grid{grid-template-columns:repeat(3,minmax(0,1fr))}aside{display:grid;grid-template-columns:1fr 1fr;gap:13px}aside section+section{margin:0;padding:0;border:0}}
+@media(max-width:450px){.grid{grid-template-columns:repeat(2,minmax(0,1fr))}header{align-items:start;flex-direction:column}.ports label{min-width:100%}}
+</style>
+</head>
+<body>
+<main>
+<header><div><h1 class="brand">CONTAGION</h1><p class="subtitle">FM‑1 USB editor</p></div><button id="connect" class="primary">Connect USB MIDI</button></header>
+<div class="status" id="status" role="status">Offline editing is available. Connect an FM‑1 to send or read patches.</div>
+<div class="ports">
+<label class="field">MIDI input<select id="input"><option value="">Select input</option></select></label>
+<label class="field">MIDI output<select id="output"><option value="">Select output</option></select></label>
+</div>
+<div class="workspace">
+<aside aria-label="Patch library">
+<section class="stack">
+<h2>Factory library</h2>
+<label class="field">Bank<select id="bank"></select></label>
+<label class="field">Program<select id="program"></select></label>
+<label class="field">Find in bank<input id="query" type="search" placeholder="Patch name or number"></label>
+<button id="load">Load into editor</button>
+<button id="recall" disabled>Recall factory sound</button>
+<p class="help">Recall uses the original hardware patch. Knob edits can be sent live where a CC is available.</p>
+</section>
+<section class="stack">
+<h2>USER storage</h2>
+<label class="field">Slot<select id="slot"></select></label>
+<div class="row"><button id="read" disabled>Read slot</button><button id="save" disabled>Write slot</button></div>
+<p class="help">After writing, recall the slot on the FM‑1 with SCL → USER PATCHES → K1 → K2.</p>
+<div class="row"><button id="open">Import</button><button id="download">Export .vcp</button></div>
+<input id="file" type="file" accept=".vcp,.syx" hidden>
+</section>
+</aside>
+<section class="panel" aria-label="Patch controls">
+<div class="patch-header"><label class="field">Patch name<input id="name" maxlength="10" type="text" autocomplete="off" spellcheck="false"></label>
+<label class="live"><input id="live" type="checkbox" checked> Send supported knobs live</label></div>
+<p class="source" id="source"></p>
+<nav class="tabs" id="tabs" aria-label="Parameter sections"></nav>
+<div id="controls"></div>
+<div class="play"><div class="play-title"><span>Audition on FM‑1</span><button id="panic" disabled>All notes off</button></div><div class="keys" id="keys" aria-label="MIDI audition keyboard"></div></div>
+</section>
+</div>
+</main>
+<script>
+'use strict';
+const firmware = /*__BUILD_DATA__*/;
+const $ = id => document.getElementById(id);
+const bytes = text => Uint8Array.from(atob(text), ch => ch.charCodeAt(0));
+const bankNames = ['A-A','A-B','B-A','B-B','B-C','B-D','B-E','B-F','C-A','C-B','C-C','C-D','C-E','C-F'];
+const parameters = bytes(firmware.parameters), matrix = bytes(firmware.routes);
+const schema = 0x49c884bb, recordLength = 189, paramCount = 126, routeCount = 11;
+const prefix = [0xf0,0x7d,0x56,0x49,0x52,1];
+const cmdSize = {1:0,2:recordLength,3:recordLength,4:1};
+const timeout = ms => new Promise(resolve => setTimeout(resolve, ms));
+const pad = value => String(value).padStart(3, '0');
+let draft, section = 'Oscillators', access, pending, busy = false, inputPort;
+const held = new Map();
+
+function notify(message, error = false) {
+  $('status').textContent = message;
+  $('status').dataset.error = String(error);
+}
+function node(tag, attrs = {}, content = '') {
+  const el = document.createElement(tag);
+  for(const [key,value] of Object.entries(attrs)) el.setAttribute(key,value);
+  el.textContent = content;
+  return el;
+}
+function crc32(data) {
+  let crc = -1;
+  for(const value of data) {
+    crc ^= value;
+    for(let bit=0;bit<8;bit++) crc = (crc >>> 1) ^ (0xedb88320 & -(crc & 1));
+  }
+  return (crc ^ -1) >>> 0;
+}
+function validName(name) { return name.trimEnd().slice(0,10).replace(/[^ -~]/g,' '); }
+function encodePatch(patch) {
+  const record = new Uint8Array(recordLength);
+  record.set([86,67,80,49]);
+  const view = new DataView(record.buffer);
+  view.setUint32(4,schema,true);
+  view.setUint32(8,paramCount,true);
+  view.setUint32(12,recordLength,true);
+  record.set(new TextEncoder().encode(validName(patch.name)),16);
+  record.set(patch.params,26);
+  record.set(patch.matrix,152);
+  view.setUint32(185,crc32(record.subarray(0,185)),true);
+  return record;
+}
+function decodePatch(record) {
+  if(record.length!==recordLength || String.fromCharCode(...record.subarray(0,4))!=='VCP1') throw Error('Expected a Contagion VCP1 patch.');
+  const view = new DataView(record.buffer,record.byteOffset,record.byteLength);
+  if(view.getUint32(4,true)!==schema || view.getUint32(8,true)!==paramCount || view.getUint32(12,true)!==recordLength)
+    throw Error('Patch schema is incompatible with this firmware.');
+  if(view.getUint32(185,true)!==crc32(record.subarray(0,185))) throw Error('Patch checksum failed.');
+  const nameBytes = record.subarray(16,26);
+  const end = nameBytes.indexOf(0);
+  const visible = end===-1 ? nameBytes : nameBytes.subarray(0,end);
+  if(visible.some(v=>v<32||v>126) || (end!==-1 && nameBytes.subarray(end).some(Boolean))) throw Error('Patch name is invalid.');
+  const params = record.slice(26,152), routes = record.slice(152,185);
+  if(params.some((value,i)=>value>firmware.controls[i][2]) ||
+     routes.some((value,i)=>value>[27,122,127][i%3])) throw Error('Patch contains an invalid control value.');
+  return {name:String.fromCharCode(...visible),params,matrix:routes};
+}
+function encodeSysEx(cmd, slot, record = new Uint8Array()) {
+  if(cmdSize[cmd]!==record.length||slot<0||slot>15) throw Error('Invalid SysEx command.');
+  const wire = [...prefix,cmd,slot];
+  for(let i=0;i<record.length;i+=7) {
+    const part=record.subarray(i,i+7);
+    let mask=0;
+    part.forEach((value,b)=>{mask|=(value>>>7)<<b;});
+    wire.push(mask,...part.map(value=>value&127));
+  }
+  const sum=wire.slice(1).reduce((a,b)=>a+b,0);
+  return Uint8Array.from([...wire,(-sum)&127,0xf7]);
+}
+function decodeSysEx(wire) {
+  if(wire.length<10 || !prefix.every((v,i)=>wire[i]===v) || wire.at(-1)!==0xf7 || wire[7]>15)
+    throw Error('Expected one complete Contagion SysEx message.');
+  const body=wire.subarray(1,-1);
+  if(body.some(v=>v>127) || (body.reduce((a,b)=>a+b,0)&127)) throw Error('SysEx checksum failed.');
+  const raw=[];
+  for(let i=8;i<wire.length-2;) {
+    const mask=wire[i++], length=Math.min(7,wire.length-2-i);
+    if(!length||mask>>>length) throw Error('Invalid SysEx packing.');
+    for(let j=0;j<length;j++) raw.push(wire[i++]|(((mask>>>j)&1)<<7));
+  }
+  const cmd=wire[6];
+  if(raw.length!==cmdSize[cmd]) throw Error('Unexpected SysEx payload size.');
+  return {cmd,slot:wire[7],record:Uint8Array.from(raw)};
+}
+function send(data, timestamp) {
+  const port = access?.outputs.get($('output').value);
+  if(!port || port.state!=='connected') throw Error('Select a connected MIDI output.');
+  port.send(data,timestamp);
+}
+function receive(event) {
+  if(!pending || event.data?.[0]!==0xf0) return;
+  let message;
+  try { message=decodeSysEx(event.data); } catch { return; }
+  if(message.slot!==pending.slot || !pending.commands.includes(message.cmd)) return;
+  pending.resolve(message);
+}
+function request(cmd,slot,record) {
+  if(pending) throw Error('A USER transfer is already active.');
+  if(!access?.inputs.get($('input').value)) throw Error('Select the FM‑1 MIDI input for USER transfers.');
+  return new Promise((resolve,reject)=>{
+    const finish = (action,value) => {
+      clearTimeout(timer);
+      pending = undefined;
+      action(value);
+    };
+    const timer=setTimeout(()=>finish(reject,Error('FM‑1 did not reply. Check both ports and leave the unit on its normal synth screen.')),7500);
+    pending = {slot,commands:cmd===1?[2,4]:[4],resolve:value=>finish(resolve,value),reject:error=>finish(reject,error)};
+    try { send(encodeSysEx(cmd,slot,record)); }
+    catch(error) { finish(reject,error); }
+  });
+}
+async function transfer(cmd,slot,record) {
+  for(let tries=0;tries<5;tries++) {
+    const reply=await request(cmd,slot,record);
+    if(reply.cmd!==4 || reply.record[0]!==1) return reply;
+    await timeout(420);
+  }
+  throw Error('FM‑1 is busy. Wait for wave loading to finish.');
+}
+function ensureSuccess(message) {
+  if(message.cmd===4&&message.record[0]!==0)
+    throw Error(({2:'That slot is empty.',3:'FM‑1 reported an invalid patch or USER bank.',4:'FM‑1 could not save to flash.'})[message.record[0]]||'FM‑1 rejected the transfer.');
+}
+function buttons() {
+  const output = access?.outputs.get($('output').value)?.state==='connected';
+  const input = access?.inputs.get($('input').value)?.state==='connected';
+  $('load').disabled = !$('program').value || busy;
+  $('recall').disabled = !output || busy || !$('program').value;
+  $('read').disabled = !output || !input || busy;
+  $('save').disabled = !output || !input || busy || !draft;
+  $('panic').disabled = !output || busy;
+  $('slot').disabled = busy;
+  $('input').disabled = busy;
+  $('output').disabled = busy;
+}
+function refreshPorts() {
+  for(const [kind,collection] of [['input',access.inputs],['output',access.outputs]]) {
+    const select=$(kind), value=select.value;
+    select.replaceChildren(node('option',{value:''},'Select '+kind));
+    const ports=[...collection.values()].filter(port=>port.state==='connected');
+    for(const p of ports) select.append(node('option',{value:p.id},p.name||p.id));
+    const match=ports.find(p=>p.id===value) ?? ports.find(p=>/contagion/i.test(p.name||'')) ?? ports.find(p=>/fm[ -]?1/i.test(p.name||''));
+    if(match) select.value=match.id;
+  }
+  attachInput();
+  buttons();
+}
+function attachInput() {
+  if(inputPort) inputPort.onmidimessage=null;
+  inputPort=access?.inputs.get($('input').value);
+  if(inputPort) inputPort.onmidimessage=receive;
+}
+async function connect() {
+  if(!navigator.requestMIDIAccess) {
+    notify('Web MIDI is unavailable. Open the editor in Chrome or Edge at localhost.',true);return;
+  }
+  try {
+    access=await navigator.requestMIDIAccess({sysex:true});
+    access.onstatechange=()=>{if(pending && (inputPort?.state!=='connected'||access.outputs.get($('output').value)?.state!=='connected')) pending.reject(Error('The MIDI device disconnected.'));refreshPorts();};
+    refreshPorts();
+    notify($('output').value && $('input').value?'FM‑1 MIDI input and output are selected.':$('output').value?'MIDI output is ready. Select an input for USER transfers.':'MIDI access granted. Select the FM‑1 input and output.');
+  }catch(error){notify('USB MIDI access failed. '+error.message,true);}
+}
+const sections=['Oscillators','Filters','Envelopes','LFO','Voice & mix','Distortion & EQ','Matrix'];
+const choices={
+  SYNC:['Off','On'], CUTOFF_LINK:['Off','On'], SUB_SHAPE:['Square','Triangle'],
+  FILTER_MODE:['Low-pass','High-pass','Band-pass','Notch'],
+  FILTER_MODE2:['Low-pass','High-pass','Band-pass','Notch'],
+  ROUTING:['Serial 4','Serial 6','Parallel','Split'],
+  KEY_MODE:['Poly','Mono 1','Mono 2','Mono 3','Mono 4','Hold'],
+  UNISON_MODE:['Off','2 voices','3 voices','4 voices'],
+  LFO_MODE:['Off','Cycle','Envelope'], LFO2_MODE:['Off','Cycle','Envelope'],
+  LFO3_ENABLE:['Off','On'], EQ_ENABLE:['Off','On'],
+  LFO_GLOBAL:['Voice','Global'], LFO2_GLOBAL:['Voice','Global'], LFO3_GLOBAL:['Voice','Global'],
+  F_POLARITY1:['Negative','Positive'], F_POLARITY2:['Negative','Positive'],
+  BEND_SCALE:['Linear','Curved'],
+  FM_MODE:['Positive triangle','Triangle','Oscillator 1','Noise']
+};
+function group(id) {
+  if(/^LFO/.test(id)) return 'LFO';
+  if(/^(?:DIST|EQ|BOOST|SAT)_/.test(id)) return 'Distortion & EQ';
+  if(/^(?:ATTACK|DECAY|SUSTAIN|RELEASE|AMP_SLOPE|AMP_VELOCITY|PUNCH|F_ATTACK|F_DECAY|F_SUSTAIN|F_RELEASE|F_SLOPE|VEL_ENV)/.test(id)) return 'Envelopes';
+  if(/^(?:F_|FILTER|CUTOFF|ROUTING|RESONANCE|VEL_RES)/.test(id)) return 'Filters';
+  if(/^(?:SHAPE|WAVE|PW[12]|TUNE|KEYFOLLOW|OSC[23]|SYNC|FM_|INIT_PHASE|VEL_SHAPE|VEL_PW)/.test(id)) return 'Oscillators';
+  return 'Voice & mix';
+}
+function liveCC(index,value) {
+  const [id,,,cc]=firmware.controls[index];
+  if(cc===null || !$('live').checked || !$('output').value || busy || value>127) return;
+  if(id==='LFO_MODE'||id==='LFO2_MODE') {
+    if(!value) return;
+    value=value===2?127:0;
+  }
+  try { send([0xb0,cc,value]); }
+  catch(error) { notify(error.message,true); }
+}
+function field(index) {
+  const [id,label,max,cc]=firmware.controls[index];
+  const box=node('div',{class:'control'});
+  box.append(node('span',{id:'label-'+id},label));
+  const liveLabel=cc===null?'Patch only':(id==='LFO_MODE'||id==='LFO2_MODE'?'CC '+cc+' · Off in patch':'CC '+cc);
+  const initial=draft.params[index];
+  const update=value=>{if(value!==draft.params[index]){draft.params[index]=value;liveCC(index,value);}};
+  if(choices[id]) {
+    const select=node('select',{'aria-labelledby':'label-'+id});
+    choices[id].forEach((name,i)=>select.append(node('option',{value:i},name)));
+    select.value=initial;
+    select.addEventListener('change',()=>update(Number(select.value)));
+    box.append(select);
+  }else{
+    const knob=node('span',{class:'knob','aria-hidden':'true'});
+    const range=node('input',{type:'range',min:0,max,value:initial,'aria-labelledby':'label-'+id});
+    const input=node('input',{type:'number',min:0,max,value:initial,'aria-label':label+' numeric value'});
+    const turn=value=>knob.style.setProperty('--angle',(-135+270*value/max)+'deg');
+    const apply=value=>{range.value=value;input.value=value;turn(value);update(value);};
+    range.addEventListener('input',()=>apply(Number(range.value)));
+    input.addEventListener('change',()=>apply(Math.max(0,Math.min(max,Math.trunc(Number(input.value))||0))));
+    turn(initial);box.append(knob,range,input);
+  }
+  box.append(node('small',{},liveLabel));
+  return box;
+}
+function renderMatrix(view) {
+  const table=node('table',{class:'matrix'});
+  const head=node('tr');
+  for(const title of ['Route','Source','Destination','Amount']) head.append(node('th',{scope:'col'},title));
+  const thead=node('thead');thead.append(head);table.append(thead);
+  const tbody=node('tbody');
+  for(let i=0;i<routeCount;i++) {
+    const tr=node('tr');tr.append(node('th',{scope:'row'},String(i+1)));
+    for(let field=0;field<3;field++){
+      const max=[27,122,127][field], offset=i*3+field;
+      const title=`Route ${i+1} ${['source','destination','amount'][field]}`;
+      const input=field===2?node('input',{type:'number',min:0,max,'aria-label':title}):
+        node('select',{'aria-label':title});
+      if(field<2){
+        const labels=field===0?firmware.matrixSources:firmware.matrixTargets;
+        for(let value=0;value<=max;value++)input.append(node('option',{value},`${labels[value] || 'Unused'} (${value})`));
+      }
+      input.value=draft.matrix[offset];
+      input.addEventListener('change',()=>{
+        draft.matrix[offset]=Math.max(0,Math.min(max,Math.trunc(Number(input.value))||0));
+        input.value=draft.matrix[offset];
+      });
+      const td=node('td');td.append(input);tr.append(td);
+    }
+    tbody.append(tr);
+  }
+  table.append(tbody);
+  view.append(table,node('p',{class:'help'},'Set Source to Off to disable a route. Some Virus destinations have no equivalent in Contagion. Write and recall a USER slot to hear matrix edits.'));
+}
+function renderControls() {
+  [...$('tabs').children].forEach(button=>button.setAttribute('aria-pressed',String(button.textContent===section)));
+  const view=$('controls');view.replaceChildren();
+  if(section==='Matrix'){renderMatrix(view);return;}
+  const grid=node('div',{class:'grid'});
+  firmware.controls.forEach(([id],index)=>{if(group(id)===section)grid.append(field(index));});
+  view.append(grid);
+}
+function showPatch(record,source) {
+  draft=record;
+  $('name').value=draft.name;
+  $('source').textContent=source;
+  renderControls();buttons();
+}
+function loadFactory() {
+  const picked=$('program').value;
+  if(picked===''){buttons();return;}
+  const index=Number(picked), [bank,program,name]=firmware.factoryIndex[index];
+  showPatch({name,params:parameters.slice(index*paramCount,(index+1)*paramCount),matrix:matrix.slice(index*33,(index+1)*33)},
+            `Factory ${bankNames[bank]} · Program ${pad(program)}`);
+}
+function listPrograms(replaceDraft) {
+  const select=$('program'), prev=select.value;
+  const query=$('query').value.toLowerCase().trim();
+  select.replaceChildren();
+  firmware.factoryIndex.forEach(([bank,program,name],index)=>{
+    if(bank===Number($('bank').value) && (!query || (pad(program)+' '+name.toLowerCase()).includes(query)))
+      select.append(node('option',{value:index},pad(program)+'  '+name));
+  });
+  if(!select.options.length) select.append(node('option',{value:''},'No matching programs'));
+  else if([...select.options].some(o=>o.value===prev)) select.value=prev;
+  if(replaceDraft) loadFactory(); else buttons();
+}
+async function perform(action) {
+  busy=true;buttons();
+  try { await action(); } catch(error) { notify(error.message,true); }
+  finally { busy=false;buttons(); }
+}
+$('connect').onclick=connect;
+$('input').onchange=()=>{attachInput();buttons();};
+$('output').onchange=buttons;
+$('bank').onchange=()=>{$('query').value='';listPrograms(true);};
+$('query').oninput=()=>listPrograms(false);
+$('program').onchange=loadFactory;
+$('load').onclick=loadFactory;
+$('name').oninput=()=>{draft.name=$('name').value;};
+$('recall').onclick=()=>{
+  if($('program').value==='')return;
+  const [bank,prog,name]=firmware.factoryIndex[Number($('program').value)];
+  try {
+    send([0xb0,0,bank,0xc0,prog]);
+    notify(`Recalled factory ${bankNames[bank]} ${pad(prog)} · ${name}. Wait for wave loading before auditioning.`);
+  } catch(error) { notify(error.message,true); }
+};
+$('read').onclick=()=>perform(async()=>{
+  const slot=Number($('slot').value);
+  notify(`Reading USER ${slot+1}…`);
+  const reply=await transfer(1,slot);
+  ensureSuccess(reply);
+  if(reply.cmd!==2) throw Error('Expected a USER patch dump.');
+  showPatch(decodePatch(reply.record),`USER ${slot+1} · Read from FM‑1`);
+  notify(`Loaded USER ${slot+1} into the editor.`);
+});
+$('save').onclick=()=>{
+  const slot=Number($('slot').value), record=encodePatch(draft);
+  if(!window.confirm(`Write “${validName(draft.name)}” to USER ${slot+1}? This replaces the patch stored there.`))return;
+  perform(async()=>{
+    notify(`Writing USER ${slot+1}…`);
+    ensureSuccess(await transfer(3,slot,record));
+    const reply=await transfer(1,slot);
+    ensureSuccess(reply);
+    if(reply.cmd!==2 || !reply.record.every((v,i)=>v===record[i])) throw Error('The USER patch could not be verified after writing.');
+    showPatch(decodePatch(reply.record),`USER ${slot+1} · Verified on FM‑1`);
+    notify(`USER ${slot+1} written and verified. Recall it from SCL → USER PATCHES on the FM‑1.`);
+  });
+};
+$('open').onclick=()=>$('file').click();
+$('file').onchange=async()=>{
+  const file=$('file').files[0];
+  if(!file)return;
+  try {
+    let raw=new Uint8Array(await file.arrayBuffer());
+    if(raw[0]===0xf0) {
+      const msg=decodeSysEx(raw);
+      if(msg.cmd!==2&&msg.cmd!==3) throw Error('The file does not contain a native USER patch.');
+      raw=msg.record;
+    }
+    showPatch(decodePatch(raw),'Imported patch');
+    notify('Imported patch into the editor.');
+  }catch(error){notify(error.message,true);}
+  $('file').value='';
+};
+$('download').onclick=()=>{
+  const url=URL.createObjectURL(new Blob([encodePatch(draft)],{type:'application/octet-stream'}));
+  const a=node('a',{href:url,download:(validName(draft.name).replace(/[^a-z0-9_-]+/gi,'-')||'Contagion-patch')+'.vcp'});
+  a.click();setTimeout(()=>URL.revokeObjectURL(url),1000);
+};
+function off(key) {
+  const value=held.get(key);if(!value)return;
+  held.delete(key);value.button.classList.remove('pressed');
+  try { value.port.send([0x80,value.note,0]); } catch {}
+}
+function on(key,note,button) {
+  const port=access?.outputs.get($('output').value);
+  if(busy||!port||held.has(key)) return;
+  try {
+    port.send([0x90,note,100]);held.set(key,{port,note,button});button.classList.add('pressed');
+  }catch(error){notify(error.message,true);}
+}
+function allOff() {
+  for(const key of held.keys()) off(key);
+}
+$('panic').onclick=()=>{allOff();try{send([0xb0,123,0]);}catch(error){notify(error.message,true);}};
+window.addEventListener('blur',allOff);
+document.addEventListener('visibilitychange',()=>{if(document.hidden)allOff();});
+const notes=['C','C♯','D','D♯','E','F','F♯','G','G♯','A','A♯','B','C'];
+let whites=0;
+notes.forEach((label,i)=>{
+  const sharp=label.includes('♯'), button=node('button',{type:'button',class:sharp?'black':'white','aria-label':'Play '+label+(i===12?'5':'4')},label);
+  if(sharp)button.style.left=(whites/8*100)+'%';else whites++;
+  button.addEventListener('pointerdown',event=>{button.setPointerCapture(event.pointerId);on(event.pointerId,60+i,button);});
+  for(const name of ['pointerup','pointercancel','lostpointercapture'])button.addEventListener(name,event=>off(event.pointerId));
+  button.addEventListener('keydown',event=>{if(['Enter',' '].includes(event.key)){event.preventDefault();on('key-'+i,60+i,button);}});
+  button.addEventListener('keyup',event=>{if(['Enter',' '].includes(event.key))off('key-'+i);});
+  $('keys').append(button);
+});
+sections.forEach(title=>{
+  const button=node('button',{type:'button','aria-pressed':'false'},title);
+  button.onclick=()=>{section=title;renderControls();};
+  $('tabs').append(button);
+});
+bankNames.forEach((name,i)=>$('bank').append(node('option',{value:i},name)));
+for(let i=0;i<16;i++) $('slot').append(node('option',{value:i},'USER '+(i+1)));
+$('bank').value='8';
+listPrograms(true);
+</script>
+</body>
+</html>
