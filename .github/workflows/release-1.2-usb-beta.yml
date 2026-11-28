@@ -3,7 +3,7 @@ name: Publish Contagion 1.2 USB BETA
 on:
   push:
     branches: [usb-beta]
-    paths: ['firmware/SHA256SUMS-1.2-USB-BETA']
+    paths: ['firmware/SHA256SUMS-1.2-USB-BETA', '.github/workflows/release-1.2-usb-beta.yml']
   workflow_dispatch:
 
 permissions:
@@ -26,6 +26,9 @@ jobs:
         run: |
           (cd firmware && sha256sum -c SHA256SUMS-1.2-USB-BETA)
           if gh release view v1.2.0-usb-beta >/dev/null 2>&1; then
+            if [ "$(gh release view v1.2.0-usb-beta --json isPrerelease --jq .isPrerelease)" = true ]; then
+              gh release edit v1.2.0-usb-beta --prerelease=false --latest=false
+            fi
             exit 0
           fi
           gh release create v1.2.0-usb-beta \
@@ -34,5 +37,5 @@ jobs:
             firmware/SHA256SUMS-1.2-USB-BETA \
             --target "$GITHUB_SHA" \
             --title "Contagion 1.2 USB BETA" \
-            --prerelease --latest=false \
+            --latest=false \
             --notes-file docs/release-1.2-usb-beta.md
