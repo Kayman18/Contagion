@@ -83,12 +83,20 @@ static struct {
  * band: ~5.8 ms). Measured under load (65 % CPU): a 64..112 band started renders at
  * 48..119 with no glitch; one render was once seen 29 frames under the floor: a packet (46) must
  * still be in hand then. */
-#define UA_N 512u                /* ring, frames (16-bit L | R << 16); a power of two */
-#if HALF_FRAMES > 128u           /* 256-frame halves: the band X0X measured for them */
+#if HALF_FRAMES > 256u
+/* Leave a complete 512-frame render and a packet in hand when rendering
+ * starts. The audio ISR publishes the block only once it has finished. */
+#define UA_N 2048u
+#define UA_PRIME 640u
+#define UA_LO 576u
+#define UA_HI 704u
+#elif HALF_FRAMES > 128u         /* 256-frame halves: the band X0X measured for them */
+#define UA_N 512u
 #define UA_PRIME 128u
 #define UA_LO 96u
 #define UA_HI 160u
 #else
+#define UA_N 512u
 #define UA_PRIME 104u            /* silence ahead of the first rendered frame */
 #define UA_LO 80u                /* a render may start late: keep a packet and more in hand */
 #define UA_HI 128u

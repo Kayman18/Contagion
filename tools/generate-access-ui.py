@@ -7,30 +7,23 @@ from PIL import Image
 
 ROOT = Path(__file__).resolve().parent.parent
 OUT = ROOT / "app" / "access_art.inc"
+sys.path.insert(0, str(ROOT / "base" / "tools"))
+from lz4blk import compress
+
+BLOCK_ROWS = 4
 
 
 def rgb565(red, green, blue):
     return ((red >> 3) << 11) | ((green >> 2) << 5) | (blue >> 3)
 
 
-def packbits(data):
-    encoded = []
-    cursor = 0
-    while cursor < len(data):
-        run = cursor + 1
-        while run < len(data) and run - cursor < 128 and data[run] == data[cursor]:
-            run += 1
-        if run - cursor >= 3:
-            encoded.extend((127 + run - cursor, data[cursor]))
-        else:
-            run = cursor
-            while run < len(data) and run - cursor < 128:
-                if run + 2 < len(data) and data[run] == data[run + 1] == data[run + 2]:
-                    break
-                run += 1
-            encoded.append(run - cursor - 1)
-            encoded.extend(data[cursor:run])
-        cursor = run
+def pack_splash(data, row_bytes):
+    block_bytes = BLOCK_ROWS * row_bytes
+    encoded = bytearray()
+    for start in range(0, len(data), block_bytes):
+        block = compress(data[start:start + block_bytes])
+        encoded.extend(len(block).to_bytes(2, "little"))
+        encoded.extend(block)
     return encoded
 
 
@@ -70,7 +63,7 @@ pixels = splash.crop((0, 0, 168, 145)).quantize(
     palette=indexed, dither=Image.Dither.NONE
 ).tobytes()
 assert max(pixels) < 16
-packed = packbits(bytes(pixels[i] << 4 | pixels[i + 1] for i in range(0, len(pixels), 2)))
+packed = pack_splash(bytes(pixels[i] << 4 | pixels[i + 1] for i in range(0, len(pixels), 2)), 168 // 2)
 knob = [knob_shade(x, y) for y in range(-24, 25) for x in range(-24, 25)]
 knob_palette = [rgb565(16 + k * 6, 16 + k * 6, 16 + k * 6) for k in range(16)]
 x_outer, y_outer, x_inner, y_inner = [], [], [], []
@@ -83,6 +76,7 @@ for step in range(33):
 OUT.write_text(
     "/* Generated FM-1 RGB565 assets. Splash image and rotary knob geometry. */\n"
     + "#define ACCESS_SPLASH_ROWS 207u\n#define ACCESS_ART_WIDTH 168u\n#define ACCESS_ART_HEIGHT 145u\n"
+    + f"#define ACCESS_ART_BLOCK_ROWS {BLOCK_ROWS}u\n"
     + c_array("access_splash_palette", [rgb565(*palette[i:i+3]) for i in range(0, len(palette), 3)], "uint16_t")
     + c_array("access_splash_pixels", packed)
     + c_array("access_knob", knob)

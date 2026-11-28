@@ -1,0 +1,38 @@
+name: Publish Contagion 1.2 USB BETA
+
+on:
+  push:
+    branches: [usb-beta]
+    paths: ['firmware/SHA256SUMS-1.2-USB-BETA']
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: contagion-v1-2-usb-beta-release
+
+jobs:
+  release:
+    if: github.ref == 'refs/heads/usb-beta'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+        with:
+          persist-credentials: false
+      - name: Verify and publish 1.2 USB BETA
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          (cd firmware && sha256sum -c SHA256SUMS-1.2-USB-BETA)
+          if gh release view v1.2.0-usb-beta >/dev/null 2>&1; then
+            exit 0
+          fi
+          gh release create v1.2.0-usb-beta \
+            firmware/Contagion-1.2-USB-BETA.fwsc \
+            firmware/Contagion-USB-Editor-1.2.zip \
+            firmware/SHA256SUMS-1.2-USB-BETA \
+            --target "$GITHUB_SHA" \
+            --title "Contagion 1.2 USB BETA" \
+            --prerelease --latest=false \
+            --notes-file docs/release-1.2-usb-beta.md

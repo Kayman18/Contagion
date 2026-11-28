@@ -9,7 +9,7 @@ case "$model" in
   A) release=84 ;;
   B) release=85 ;;
   C) release=86 ;;
-  ALL) major=1; release=20 ;;
+  ALL) major=1; release=21 ;;
   *) echo "VIRUS_MODEL must be A, B, C or ALL" >&2; exit 1 ;;
 esac
 case "$voices" in
@@ -26,4 +26,4 @@ python3 tools/pack_eq.py
 python3 tools/make_wave_cache.py
 printf '/* Set by build-firmware.sh. */\n#define VC_VOICES_BUILD %s\n' "$voices" > engine/voice_count.h
 export AC79_SDK="${AC79_SDK:-$PWD/build-deps/sdk}"
-python3 base/tools/build.py app --release "$major.$release.$voices" --display-version "CONTAGION 1.2" "$@"
+python3 base/tools/build.py app --release "$major.$release.$voices" --display-version "CONTAGION 1.2 USB" "$@"

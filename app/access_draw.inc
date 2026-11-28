@@ -1,4 +1,5 @@
 #include "access_art.inc"
+#include "../runtime/wavetable_bank.h"
 
 #define ACCESS_BG RGB(16,16,16)
 #define ACCESS_RED RGB(77,15,22)
@@ -26,31 +27,31 @@ static int access_drawn_page=-1;
 void app_splash(void){
  access_drawn_page=-1;redraw=1;
  const uint8_t *packed=access_splash_pixels;
- unsigned remaining=0,repeat=0,color=0,next_source_row=0;
- uint8_t scanline[ACCESS_ART_WIDTH];
+ unsigned block_end=0;
+ int block_ok=0;
+ uint8_t decoded[ACCESS_ART_BLOCK_ROWS*(ACCESS_ART_WIDTH/2)];
  for(unsigned y=0;y<ACCESS_SPLASH_ROWS;y+=24){
   unsigned rows=ACCESS_SPLASH_ROWS-y;
   if(rows>24)rows=24;
   cv_begin(240,rows,ACCESS_BG);
   for(unsigned row=0;row<rows;row++){
    unsigned source_row=(y+row)*ACCESS_ART_HEIGHT/ACCESS_SPLASH_ROWS;
-   if(next_source_row<=source_row){
-    for(unsigned x=0;x<ACCESS_ART_WIDTH;x+=2){
-     if(!remaining){
-      unsigned token=*packed++;
-      repeat=token>=128;
-      remaining=(token&127)+1;
-      if(repeat)color=*packed++;
-     }
-     if(!repeat)color=*packed++;
-     remaining--;
-     scanline[x]=color>>4;
-     scanline[x+1]=color&15;
-    }
-    next_source_row++;
+   if(source_row>=block_end){
+    unsigned block_rows=ACCESS_ART_HEIGHT-block_end;
+    if(block_rows>ACCESS_ART_BLOCK_ROWS)block_rows=ACCESS_ART_BLOCK_ROWS;
+    unsigned bytes=packed[0]|(unsigned)packed[1]<<8;
+    packed+=2;
+    block_ok=vc_lz4_unpack(packed,bytes,decoded,block_rows*(ACCESS_ART_WIDTH/2));
+    packed+=bytes;
+    block_end+=block_rows;
    }
-   for(unsigned x=0;x<240;x++)
-    cv_px[row*240+x]=swap16(access_splash_palette[scanline[x*ACCESS_ART_WIDTH/240]]);
+   if(!block_ok)continue;
+   const uint8_t *scanline=decoded+(source_row%ACCESS_ART_BLOCK_ROWS)*(ACCESS_ART_WIDTH/2);
+   for(unsigned x=0;x<240;x++){
+    unsigned sx=x*ACCESS_ART_WIDTH/240;
+    unsigned pair=scanline[sx/2];
+    cv_px[row*240+x]=swap16(access_splash_palette[(sx&1)?pair&15:pair>>4]);
+   }
   }
   cv_blit(0,y);
  }
