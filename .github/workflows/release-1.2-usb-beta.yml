@@ -1,9 +1,9 @@
-name: Publish Contagion 1.2 USB BETA
+name: Replace Contagion 1.2 USB BETA with the audio and MIDI test
 
 on:
   push:
     branches: [usb-beta]
-    paths: ['firmware/SHA256SUMS-1.2-USB-BETA', '.github/workflows/release-1.2-usb-beta.yml']
+    paths: ['firmware/SHA256SUMS-1.2-Audio-MIDI-USBC-Test']
   workflow_dispatch:
 
 permissions:
@@ -20,22 +20,39 @@ jobs:
       - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
         with:
           persist-credentials: false
-      - name: Verify and publish 1.2 USB BETA
+      - name: Replace the 1.2 beta download
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
-          (cd firmware && sha256sum -c SHA256SUMS-1.2-USB-BETA)
-          if gh release view v1.2.0-usb-beta >/dev/null 2>&1; then
-            if [ "$(gh release view v1.2.0-usb-beta --json isPrerelease --jq .isPrerelease)" = true ]; then
-              gh release edit v1.2.0-usb-beta --prerelease=false --latest=false
+          set -euo pipefail
+          old_tag=v1.2.0-usb-beta
+          test_tag=v1.2.0-audio-midi-usbc-test
+          release_api="repos/$GITHUB_REPOSITORY/releases/461260666"
+          firmware=Contagion-1.2-Audio-and-MIDI-USBC-Test.fwsc
+          checksums=SHA256SUMS-1.2-Audio-MIDI-USBC-Test
+          (cd firmware && sha256sum -c "$checksums")
+
+          current=$(gh api "$release_api" --jq .tag_name)
+          test "$current" = "$old_tag" || test "$current" = "$test_tag"
+          for name in "$firmware" "$checksums"; do
+            hash=$(sha256sum "firmware/$name" | cut -d' ' -f1)
+            digest=$(gh api "$release_api" --jq ".assets[] | select(.name == \"$name\") | .digest")
+            if [ "$digest" != "sha256:$hash" ]; then
+              gh release upload "$current" "firmware/$name" --clobber
             fi
-            exit 0
+            test "$(gh api "$release_api" --jq ".assets[] | select(.name == \"$name\") | .digest")" = "sha256:$hash"
+          done
+
+          if ! gh api "repos/$GITHUB_REPOSITORY/git/ref/tags/$test_tag" >/dev/null 2>&1; then
+            gh api "repos/$GITHUB_REPOSITORY/git/refs" -f ref="refs/tags/$test_tag" -f sha="$GITHUB_SHA"
           fi
-          gh release create v1.2.0-usb-beta \
-            firmware/Contagion-1.2-USB-BETA.fwsc \
-            firmware/Contagion-USB-Editor-1.2.zip \
-            firmware/SHA256SUMS-1.2-USB-BETA \
-            --target "$GITHUB_SHA" \
-            --title "Contagion 1.2 USB BETA" \
-            --latest=false \
-            --notes-file docs/release-1.2-usb-beta.md
+          test "$(gh api "repos/$GITHUB_REPOSITORY/git/ref/tags/$test_tag" --jq .object.sha)" = "$GITHUB_SHA"
+          gh release edit "$current" --tag "$test_tag" --verify-tag --latest=false \
+            --title "Contagion 1.2 Audio and MIDI USBC Test" \
+            --notes-file docs/release-1.2-audio-midi-usbc-test.md
+
+          for name in Contagion-1.2-USB-BETA.fwsc SHA256SUMS-1.2-USB-BETA; do
+            if [ -n "$(gh api "$release_api" --jq ".assets[] | select(.name == \"$name\") | .id")" ]; then
+              gh release delete-asset "$test_tag" "$name" --yes
+            fi
+          done

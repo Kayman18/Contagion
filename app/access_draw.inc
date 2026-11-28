@@ -209,6 +209,15 @@ static void access_status_cell(unsigned i,AccessCell *cell,const perf_stats_t *p
   const char *const names[]={"VOICES","QUEUE LOST","CLIPPED","BLOCK FRAMES"};
   const unsigned data[]={active_voices,queue_lost,clipped_samples,APP_BLOCK};
   cell->label=names[i];value=data[i];
+ }else if(page==ACCESS_USB_MIDI){
+  static const char *const names[]={"USB CONFIG","NOTES GENERATED","USB QUEUED","USB COMPLETED"};
+  unsigned generated=plat_midi_count(PORT_USB,1);
+#ifdef PLAT_HOST
+  const unsigned data[]={1,generated,generated,generated};
+#else
+  const unsigned data[]={usb.config,generated,mo_w,midi_tx_completed};
+#endif
+  cell->label=names[i];value=data[i];
  }else if(page==PAGE_PROFILE){
   const char *const names[]={"READY /32","WAIT /24","CACHE FILLS","FLASH HITS"};
   cell->label=names[i];value=i==3?vc_wave_flash_hits():bank[i];
@@ -284,7 +293,7 @@ static void vc_draw(void){
   access_draw_generative(changed);access_drawn_page=page;return;
  }
  char name[32]={0};
- vc_copy(name,user_loaded?user_active.name:preset_loaded<vc_preset_count()?vc_preset_name(preset_loaded):"INIT PATCH");
+ vc_copy(name,page==ACCESS_USB_MIDI?"MIDI TEST 2":user_loaded?user_active.name:preset_loaded<vc_preset_count()?vc_preset_name(preset_loaded):"INIT PATCH");
  if(changed||memcmp(access_drawn_name,name,sizeof(name))){
   cv_begin(240,34,ACCESS_RED);
   access_center(240,-2,&FONT_M,panel->title,ACCESS_LABEL);

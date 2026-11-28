@@ -1,3 +1,4 @@
+#define APP_USB_MIDI_DIAG 1
 #pragma once
 #include <stdint.h>
 #include "plat.h"

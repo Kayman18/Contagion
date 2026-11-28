@@ -138,10 +138,17 @@ static int seq_manual_held(unsigned note){
  return ((seq.manual[0][note>>5]|seq.manual[1][note>>5])>>(note&31u))&1u;
 }
 
+/* USB MIDI channels 1 (keys), 2 (lane A), and 3 (lane B). */
+static void seq_midi_note(unsigned channel,unsigned note,unsigned velocity){
+ unsigned status=(velocity?0x90u:0x80u)|channel;
+ plat_midi_out((status>>4)|(status<<8)|(note<<16)|(velocity<<24));
+}
+
 static void seq_release_lane(unsigned index){
  SeqLane *lane=&seq.lane[index];
  int note=lane->note;
  if(note<0)return;
+ seq_midi_note(index+1u,(unsigned)note,0);
  lane->note=-1;
  if(seq.lane[index^1u].note!=note&&!seq_manual_held((unsigned)note)){
   unsigned limit=127;
@@ -156,6 +163,8 @@ static void seq_release_lane(unsigned index){
 static void seq_manual(unsigned source,unsigned note,unsigned velocity,unsigned release_velocity){
  if(note>=128)return;
  uint32_t mask=1u<<(note&31u);
+ if(source==0&&(velocity||(seq.manual[0][note>>5]&mask)))
+  seq_midi_note(0,note,velocity);
  if(velocity){
   seq.manual[source][note>>5]|=mask;
   for(unsigned i=0;i<SEQ_LANES;i++)if(seq.lane[i].note==(int)note)seq_release_lane(i);
@@ -183,7 +192,13 @@ static void seq_stop(void){
 }
 
 static void seq_silence(void){
+ for(unsigned word=0;word<4;word++){
+  uint32_t held=seq.manual[0][word];
+  for(unsigned bit=0;held;held>>=1,bit++)
+   if(held&1u)seq_midi_note(0,32u*word+bit,0);
+ }
  for(unsigned i=0;i<SEQ_LANES;i++){
+  if(seq.lane[i].note>=0)seq_midi_note(i+1u,(unsigned)seq.lane[i].note,0);
   seq.lane[i].note=seq.lane[i].previous=-1;
   seq.lane[i].gate_left=0;
  }
@@ -372,6 +387,7 @@ static void seq_pulse(unsigned index,const SeqPattern *p){
    vc_generated_slide_on(&synth,note,seq.velocity,lane->previous);
   else vc_note_on(&synth,note,seq.velocity);
  }
+ seq_midi_note(index+1u,note,seq.velocity);
  lane->note=lane->previous=(int)note;
  seq_key_flash[index]=((seq_key_flash[index]+128u)&~127u)|note;
  lane->gate_percent=p->gate;

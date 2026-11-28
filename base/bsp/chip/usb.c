@@ -208,6 +208,9 @@ static uint32_t midi_in_ms[MQ];
 static uint8_t midi_in_source[MQ];                    /* 1 USB, 2 TRS */
 static volatile uint32_t fm1_ms;                    /* also declared by core.h; parser-only host tests */
 static volatile uint32_t mi_w, mi_r, mo_w, mo_r;
+#ifdef APP_USB_MIDI_DIAG
+static uint32_t midi_tx_pending, midi_tx_completed;
+#endif
 static volatile uint8_t midi_in_overflow;               /* audio ISR discards a broken stream and releases notes */
 
 static int midi_enqueue(uint32_t pkt, uint32_t source)
@@ -558,6 +561,9 @@ static void uac_rate_set(uint32_t hz)
 
 static void ep1_config(void)
 {
+#ifdef APP_USB_MIDI_DIAG
+    midi_tx_pending = 0;
+#endif
     fm1_usb_ep_txbuf(1, ep1tx);
     fm1_usb_ep_rxbuf(1, ep1rx);
     sie_wr(S_INDEX, 1);
@@ -1035,7 +1041,11 @@ static void ep1_tx(void)
 {
     uint32_t csr, n = 0;
 #if FELUCCA_OTA
-    if (mo_w == mo_r && so_w == so_r)
+    if (mo_w == mo_r && so_w == so_r
+#ifdef APP_USB_MIDI_DIAG
+        && !midi_tx_pending
+#endif
+    )
         return;
 #else
     if (mo_w == mo_r)
@@ -1045,6 +1055,11 @@ static void ep1_tx(void)
     csr = sie_rd(S_TXCSR1);
     if (csr & 0x01u)
         return;                                         /* previous packet still pending */
+#ifdef APP_USB_MIDI_DIAG
+    midi_tx_completed += midi_tx_pending;
+    uint32_t midi_start = mo_r;
+    midi_tx_pending = 0;
+#endif
     if (csr & 0x80u)
         sie_wr(S_TXCSR1, csr & ~0x80u);
 #if FELUCCA_OTA
@@ -1074,6 +1089,9 @@ static void ep1_tx(void)
     }
     if (!n)
         return;
+#ifdef APP_USB_MIDI_DIAG
+    midi_tx_pending = mo_r - midi_start;
+#endif
     fm1_usb_ep_send(1, ep1tx, n);
     sie_wr(S_TXCSR1, sie_rd(S_TXCSR1) | 0x01u);
     usb.tx_pkts++;
@@ -1475,6 +1493,9 @@ static void usb_poll(void)                              /* TIMER5 ISR, 2 kHz */
         usb.config = 0;
         usb.suspended = 0;
         mo_r = mo_w;                                    /* nothing stale for the next host */
+#ifdef APP_USB_MIDI_DIAG
+        midi_tx_pending = 0;
+#endif
         usb.sx_on = 0;
 #if FELUCCA_OTA
         so_r = so_w;

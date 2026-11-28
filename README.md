@@ -1,16 +1,16 @@
-# Contagion 1.2 USB BETA
+# Contagion 1.2 Audio and MIDI USBC Test
 
 Contagion is a dual-core, eight-voice wavetable synth firmware for the M‑VAVE FM‑1. Version 1.2 adds two generative sequencer modes, eight USER sequence snapshots, and a 32-slot USER patch browser. It includes all 1,525 factory presets and the 34-table flash cache. [Sound sample](Sound%20Sample.mp3)
 
 ## Downloads
 
-- [Contagion 1.2 USB BETA firmware and USB editor](https://github.com/Kayman18/Contagion/releases/tag/v1.2.0-usb-beta)
-- [USB BETA install and recording guide](docs/release-1.2-usb-beta.md) · [USB BETA checksums](firmware/SHA256SUMS-1.2-USB-BETA)
+- [Contagion 1.2 Audio and MIDI USBC Test firmware and USB editor](https://github.com/Kayman18/Contagion/releases/tag/v1.2.0-audio-midi-usbc-test)
+- [USB-C audio and MIDI setup](docs/release-1.2-audio-midi-usbc-test.md) · [USB-C test checksums](firmware/SHA256SUMS-1.2-Audio-MIDI-USBC-Test)
 - [Contagion 1.2 firmware and USB editor](https://github.com/Kayman18/Contagion/releases/tag/v1.2.0)
 - [Firmware checksums](firmware/SHA256SUMS-1.2)
 - [USB editor source and setup](web-editor/README.md) · [MIDI controls](MIDI-CONTROLS.md)
 
-Install `Contagion-1.2-USB-BETA.fwsc` through the FM‑1 updater. The beta uses firmware ID `FM-1_15012108`. USB‑C sends stereo 16-bit PCM at 44.1 kHz to the computer and carries MIDI and SysEx for the editor. The analog outputs are available for monitoring. The firmware preserves the original factory program numbers, including gaps where arpeggiated presets were omitted.
+Install `Contagion-1.2-Audio-and-MIDI-USBC-Test.fwsc` through the FM‑1 updater. The test build uses firmware ID `FM-1_15012308`. USB‑C sends stereo 16-bit PCM at 44.1 kHz to the computer and carries MIDI and SysEx for the editor. The onboard keys send notes on channel 1. Sequencer lanes A and B send notes on channels 2 and 3. The analog outputs are available for monitoring. The firmware preserves the original factory program numbers, including gaps where arpeggiated presets were omitted.
 
 All screenshots below are 240 × 240 framebuffer captures from the firmware simulator.
 
@@ -156,7 +156,7 @@ export AC79_SDK=/path/to/fw-AC79_AIoT_SDK
 ./build-firmware.sh
 ```
 
-The build emits `app/build/contagion-1.21.8.fwsc`. It generates the indexed factory preset blocks, packed EQ coefficients, and the 34-table wave image from the checked-in inputs. To build the Linux simulator, run `./build-firmware.sh --host`. To regenerate the standalone USB editor, run `node web-editor/generate.cjs` after a build.
+The build emits `app/build/contagion-1.23.8.fwsc`. It generates the indexed factory preset blocks, packed EQ coefficients, and the 34-table wave image from the checked-in inputs. To build the Linux simulator, run `./build-firmware.sh --host`. To regenerate the standalone USB editor, run `node web-editor/generate.cjs` after a build.
 
 The release build passed package and updater checks, browser navigation, sequencer operation, and USER save and recall in simulation. The release is based on TEST13, which was confirmed on an FM‑1.
 
