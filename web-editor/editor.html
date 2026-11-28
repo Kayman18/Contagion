@@ -87,7 +87,7 @@ aside section+section{border-top:1px solid var(--line);margin-top:19px;padding-t
 <h2>USER storage</h2>
 <label class="field">Slot<select id="slot"></select></label>
 <div class="row"><button id="read" disabled>Read slot</button><button id="save" disabled>Write slot</button></div>
-<p class="help">After writing, recall the slot on the FM‑1 with SCL → USER PATCHES → K1 → K2.</p>
+<p class="help">After writing, open SCL → USER PATCHES. Turn K1 to auto-load an occupied slot, or turn K2 to recall the selected slot immediately.</p>
 <div class="row"><button id="open">Import</button><button id="download">Export .vcp</button></div>
 <input id="file" type="file" accept=".vcp,.syx" hidden>
 </section>
@@ -165,7 +165,7 @@ function decodePatch(record) {
   return {name:String.fromCharCode(...visible),params,matrix:routes};
 }
 function encodeSysEx(cmd, slot, record = new Uint8Array()) {
-  if(cmdSize[cmd]!==record.length||slot<0||slot>15) throw Error('Invalid SysEx command.');
+  if(cmdSize[cmd]!==record.length||slot<0||slot>31) throw Error('Invalid SysEx command.');
   const wire = [...prefix,cmd,slot];
   for(let i=0;i<record.length;i+=7) {
     const part=record.subarray(i,i+7);
@@ -177,7 +177,7 @@ function encodeSysEx(cmd, slot, record = new Uint8Array()) {
   return Uint8Array.from([...wire,(-sum)&127,0xf7]);
 }
 function decodeSysEx(wire) {
-  if(wire.length<10 || !prefix.every((v,i)=>wire[i]===v) || wire.at(-1)!==0xf7 || wire[7]>15)
+  if(wire.length<10 || !prefix.every((v,i)=>wire[i]===v) || wire.at(-1)!==0xf7 || wire[7]>31)
     throw Error('Expected one complete Contagion SysEx message.');
   const body=wire.subarray(1,-1);
   if(body.some(v=>v>127) || (body.reduce((a,b)=>a+b,0)&127)) throw Error('SysEx checksum failed.');
@@ -490,7 +490,7 @@ sections.forEach(title=>{
   $('tabs').append(button);
 });
 bankNames.forEach((name,i)=>$('bank').append(node('option',{value:i},name)));
-for(let i=0;i<16;i++) $('slot').append(node('option',{value:i},'USER '+(i+1)));
+for(let i=0;i<32;i++) $('slot').append(node('option',{value:i},'USER '+(i+1)));
 $('bank').value='8';
 listPrograms(true);
 </script>

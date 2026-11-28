@@ -15,7 +15,7 @@ def encode(cmd,slot,raw=b''):
 def decode(frame):
  if len(frame)<10 or frame[0]!=240 or frame[-1]!=247:raise ValueError('Expected one complete SysEx message')
  p=frame[1:-1]
- if p[:5]!=HEADER or p[6]>15 or any(x>127 for x in p) or sum(p)&127:raise ValueError('Invalid header/checksum')
+ if p[:5]!=HEADER or p[6]>31 or any(x>127 for x in p) or sum(p)&127:raise ValueError('Invalid header/checksum')
  raw=bytearray();payload=p[7:-1]
  while payload:
   mask=payload[0];group=payload[1:8]
@@ -26,8 +26,8 @@ def decode(frame):
  return p[5],p[6],bytes(raw)
 def main():
  parser=argparse.ArgumentParser(description=__doc__);sub=parser.add_subparsers(dest='command',required=True)
- p=sub.add_parser('request');p.add_argument('slot',type=int,choices=range(1,17));p.add_argument('output')
- p=sub.add_parser('restore');p.add_argument('slot',type=int,choices=range(1,17));p.add_argument('input');p.add_argument('output')
+ p=sub.add_parser('request');p.add_argument('slot',type=int,choices=range(1,33));p.add_argument('output')
+ p=sub.add_parser('restore');p.add_argument('slot',type=int,choices=range(1,33));p.add_argument('input');p.add_argument('output')
  p=sub.add_parser('extract');p.add_argument('input');p.add_argument('output')
  p=sub.add_parser('inspect');p.add_argument('input')
  a=parser.parse_args()

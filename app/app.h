@@ -12,7 +12,7 @@
 #define VC_BAND_FM1_SINGLE_CORE 1
 #endif
 #define APP_NAME "CONTAGION"
-#define APP_TAGLINE "CONTAGION 1.1"
+#define APP_TAGLINE "CONTAGION 1.2"
 #define APP_SPLASH
 void app_splash(void);
 #define APP_SPLASH_RGB RGB(210,35,40)
@@ -24,8 +24,10 @@ void app_splash(void);
 int app_sysex(const uint8_t*,uint32_t);
 #define APP_TOUCH
 #define APP_HOST_EXPECT
-enum {OBJ_SETTINGS,OBJ_PANEL,OBJ_BLE,OBJ_NOBJ};
-#define APP_STORE_MAP {0xFC000u,0xDC000u,0xDE000u}
+/* Contagion has Bluetooth disabled. Its second USER bank uses the spare
+ * sector pair with a new object type, leaving the legacy bank at 0xFC000. */
+enum {OBJ_SETTINGS,OBJ_PANEL,OBJ_USER_EXTRA=3,OBJ_USER_SEQUENCES,OBJ_NOBJ};
+#define APP_STORE_MAP {[OBJ_SETTINGS]=0xFC000u,[OBJ_PANEL]=0xDC000u,[OBJ_USER_EXTRA]=0xDE000u,[OBJ_USER_SEQUENCES]=0xE5000u}
 void app_init(void);
 void app_render(int32_t*,uint32_t,uint32_t);
 void app_panic(void);

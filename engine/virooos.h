@@ -114,6 +114,8 @@ typedef struct {
     float fm_depth,fm_scale,fm_noise_sample;
     float pitch2_base_inc,pitch2_env_last;
     int note,held,control_remaining;
+    unsigned generated_glide_left;
+    float generated_glide_delta;
     uint32_t age;
 } VCVoice;
 enum {
@@ -184,6 +186,8 @@ void vc_init(VCSynth*,float sr);
 unsigned vc_param_max(unsigned id);
 void vc_param(VCSynth*,unsigned id,unsigned value);
 void vc_note_on(VCSynth*,int note,int velocity);
+void vc_generated_note_off(VCSynth *,int note,unsigned release_limit);
+void vc_generated_slide_on(VCSynth *,int note,int velocity,int previous);
 void vc_note_off(VCSynth*,int note);
 #ifdef VC_MATRIX
 void vc_set_matrix(VCSynth*,const VCMatrix*);

@@ -1,4 +1,5 @@
 #include "virooos.h"
+#include <stddef.h>
 #include "perf.h"
 #include "wave_cache.h"
 #include "presets.h"
@@ -24,6 +25,7 @@ static VCEvent events[128];
 static volatile uint32_t event_write,event_read,queue_lost,panic_requested;
 #define VC_BARRIER() __asm__ volatile("" ::: "memory")
 static VCSynth synth;
+#include "generative_seq.inc"
 static volatile unsigned preset_loaded=~0u;
 #define NO_PRESET_REQUEST (~0u)
 /* The audio callback owns requests and the active matrix. The main loop
@@ -32,12 +34,30 @@ static volatile unsigned preset_requested=NO_PRESET_REQUEST, preset_prepared=NO_
 static VCFactoryPreset prepared_factory;
 static VCMatrix active_factory_matrix;
 #ifdef VC_BAND_CACHE
-static uint8_t user_bank[VC_PATCH_BANK_BYTES],user_candidate[VC_PATCH_BANK_BYTES];
+static uint8_t user_bank[2][VC_PATCH_BANK_BYTES],user_candidate[VC_PATCH_BANK_BYTES];
+static const uint8_t user_objects[]={OBJ_SETTINGS,OBJ_USER_EXTRA};
 static VCPatchRecord user_snapshot,user_recall,user_active;
-static unsigned user_slot,user_bank_bad,user_name_pos;
+static unsigned user_slot,user_bad_banks,user_name_pos;
+static unsigned vc_user_bank(unsigned slot){return slot/VC_PATCH_BANK_SLOTS;}
+static int vc_user_bad(unsigned slot){return (user_bad_banks>>vc_user_bank(slot))&1u;}
+static int vc_user_get(VCPatchRecord *patch,unsigned slot){
+ return !vc_user_bad(slot)&&vc_patch_bank_get(patch,user_bank[vc_user_bank(slot)],
+                                         VC_PATCH_BANK_BYTES,slot%VC_PATCH_BANK_SLOTS);
+}
+static const char *vc_user_name(unsigned slot,char out[VC_PATCH_NAME+1]){
+ if(vc_user_bad(slot))return "INVALID BANK";
+ return vc_patch_bank_name(user_bank[vc_user_bank(slot)],slot%VC_PATCH_BANK_SLOTS,out);
+}
 static char user_name[11];
 static volatile unsigned user_name_edit;
 static unsigned user_remote_pending;
+static unsigned user_pending_slot,user_recall_slot,user_recall_auto;
+static uint32_t user_recall_at;
+static void vc_user_queue_recall(unsigned slot,unsigned automatic){
+ user_pending_slot=slot;user_recall_auto=automatic;
+ user_recall_at=plat_ms()+(automatic?150u:0u);
+}
+static volatile unsigned user_active_slot,user_recall_retry;
 static void vc_user_reply(unsigned,unsigned);
 static volatile unsigned user_job,user_status,user_loaded;
 /* job: 0 idle,1 save queued,2 snapshot published,3 recall queued.
@@ -188,6 +208,7 @@ static const char *const labels[VC_PARAMS]={
 static int minparam(int id){return id==VC_TUNE1||id==VC_TUNE2||id==VC_OSC3_TUNE?16:0;}
 static int maxparam(int id){return id==VC_TUNE1||id==VC_TUNE2||id==VC_OSC3_TUNE?112:(int)vc_param_max((unsigned)id);}
 static void vc_post(unsigned type,unsigned a,unsigned b){uint32_t w=event_write;if(w-event_read>=128){queue_lost++;panic_requested=1;return;}events[w&127]=(VCEvent){type,a,b};VC_BARRIER();event_write=w+1;}
+#include "sequence_store.inc"
 /* Only the audio owner requests cache changes. MIDI and knobs use the same
  * mute/acknowledge/load/publish transaction. Repeating a selection is a no-op. */
 static void vc_request_wave(unsigned which,unsigned wave){
@@ -237,6 +258,8 @@ static void vc_apply_factory(unsigned index){
   vc_init(&synth,44100);
   vc_set_matrix(&synth,0);
  }
+ seq.trim_fusion_tail=index<vc_preset_count()&&vc_preset_bank(index)==0&&
+  vc_preset_program(index)==13&&!memcmp(vc_preset_name(index),"FusionBrs",sizeof("FusionBrs"));
  preset_loaded=index;
  wave_desired[0]=synth.param[VC_WAVE1];wave_desired[1]=synth.param[VC_WAVE2];
  osc3_desired_mode=synth.param[VC_OSC3_MODE];wave_desired[2]=osc3_desired_mode>=4?osc3_desired_mode-4:wave_desired[1];
@@ -245,9 +268,11 @@ static void vc_apply_factory(unsigned index){
 }
 #ifdef VC_BAND_CACHE
 static void vc_user_audio(unsigned type){
- if(preset_requested!=NO_PRESET_REQUEST){user_status=4;VC_BARRIER();user_job=0;return;}
+ if(preset_requested!=NO_PRESET_REQUEST||(type==10?wave_state==1||wave_state==2:wave_state!=0)){
+  if(type==10)user_recall_retry=1;
+  user_status=4;VC_BARRIER();user_job=0;return;
+ }
  if(type==9||type==11){
-  if(wave_state){user_status=4;VC_BARRIER();user_job=0;return;}
   if(type==11)user_snapshot=user_recall;
   else {
   memset(&user_snapshot,0,sizeof(user_snapshot));
@@ -260,9 +285,9 @@ static void vc_user_audio(unsigned type){
   }
   wave_state=1;wave_ack=0;VC_BARRIER();user_job=2;
  }else{
-  if(wave_state){user_status=4;VC_BARRIER();user_job=0;return;}
   user_active=user_recall;vc_apply_patch(&synth,user_active.params);vc_set_matrix(&synth,&user_active.matrix);
-  preset_loaded=vc_preset_count();user_loaded=1;user_name_edit=0;
+  seq.trim_fusion_tail=0;
+  preset_loaded=vc_preset_count();user_active_slot=user_recall_slot;user_loaded=1;user_name_edit=0;
   wave_desired[0]=synth.param[VC_WAVE1];wave_desired[1]=synth.param[VC_WAVE2];
   osc3_desired_mode=synth.param[VC_OSC3_MODE];wave_desired[2]=osc3_desired_mode>=4?osc3_desired_mode-4:wave_desired[1];
   for(unsigned i=0;i<3;i++)lfo_desired[i]=synth.param[lfo_shape_param[i]];
@@ -272,35 +297,65 @@ static void vc_user_audio(unsigned type){
 static void vc_user_background(void){
  if(user_remote_pending&&!user_job){user_remote_pending=0;vc_user_reply(user_slot,1);}
  if(user_job!=2||!wave_ack)return;
- VC_BARRIER();memcpy(user_candidate,user_bank,sizeof(user_bank));
- if(!user_bank_bad&&vc_patch_bank_put(user_candidate,sizeof(user_candidate),user_slot,&user_snapshot)&&!plat_store_save(OBJ_SETTINGS,user_candidate,sizeof(user_candidate))){
-  /* Verify flash readback before accepting the saved bank in RAM. */
-  if(plat_store_load(OBJ_SETTINGS,user_bank,sizeof(user_bank))==(int)sizeof(user_bank)&&!memcmp(user_bank,user_candidate,sizeof(user_bank))&&vc_patch_bank_valid(user_bank,sizeof(user_bank)))user_status=1;
-  else {user_status=5;user_bank_bad=1;}
- }else user_status=user_bank_bad?6:5;
+ VC_BARRIER();
+ unsigned bank=vc_user_bank(user_slot),object=user_objects[bank];
+ uint8_t *current=user_bank[bank];
+ memcpy(user_candidate,current,sizeof(user_candidate));
+ if(!vc_user_bad(user_slot)&&vc_patch_bank_put(user_candidate,sizeof(user_candidate),user_slot%VC_PATCH_BANK_SLOTS,&user_snapshot)&&
+    !plat_store_save(object,user_candidate,sizeof(user_candidate))){
+  if(plat_store_load(object,current,VC_PATCH_BANK_BYTES)==VC_PATCH_BANK_BYTES&&
+     !memcmp(current,user_candidate,sizeof(user_candidate))){user_status=1;user_name_edit=0;}
+  else {user_status=5;user_bad_banks|=1u<<bank;}
+ }else user_status=vc_user_bad(user_slot)?6:5;
  VC_BARRIER();user_job=0;redraw=1;
  if(user_remote_pending){user_remote_pending=0;vc_user_reply(user_slot,user_status==1?0:4);}
 }
+/* Panel recalls wait for the current save or wavetable publication. Keep
+ * the slot that was requested even if the browser's cursor moves. */
+static void vc_user_service_recall(void){
+ if(user_job)return;
+ if(user_recall_retry){
+  user_recall_retry=0;
+  if(user_pending_slot==VC_PATCH_SLOTS)user_pending_slot=user_recall_slot;
+ }
+ if(user_recall_auto&&(page!=PAGE_USER||user_name_edit))user_pending_slot=VC_PATCH_SLOTS;
+ if(user_pending_slot==VC_PATCH_SLOTS||wave_state==1||wave_state==2||
+    preset_requested!=NO_PRESET_REQUEST||(int32_t)(plat_ms()-user_recall_at)<0)return;
+ unsigned slot=user_pending_slot;
+ user_pending_slot=VC_PATCH_SLOTS;
+ if(vc_user_bad(slot))user_status=6;
+ else if(!vc_user_get(&user_recall,slot))user_status=3;
+ else{
+  user_recall_slot=slot;
+  VC_BARRIER();user_job=3;
+  vc_post(10,0,0);
+ }
+ redraw=1;
+}
+
 #endif
 static void vc_audio_events(void){
- if(panic_requested){vc_panic(&synth);event_read=event_write;panic_requested=0;
+ if(panic_requested){seq_mute();vc_panic(&synth);event_read=event_write;panic_requested=0;
 #ifdef VC_BAND_CACHE
  if(user_job==1||user_job==3){user_status=5;VC_BARRIER();user_job=0;}
+ if(sequence_job==1||sequence_job==3){sequence_pending=USER_SEQ_SLOTS;sequence_status=5;sequence_job=0;}
 #endif
 }
  while(event_read!=event_write){VC_BARRIER();VCEvent e=events[event_read&127];event_read++;
+ if(e.type==USER_SEQ_EVENT){sequence_audio(e.a);continue;}
 #ifdef VC_BAND_CACHE
  if(user_job==2)continue;
  if(e.type==9||e.type==10||e.type==11){vc_user_audio(e.type);continue;}
 #endif
-if(e.type==1){if(!wave_state)vc_note_on(&synth,e.a,e.b);}else if(e.type==2)vc_note_off(&synth,e.a);else if(e.type==3){if(e.a==VC_WAVE1||e.a==VC_WAVE2){vc_request_wave(e.a==VC_WAVE2,e.b);}
+if(e.type==1){if(!wave_state)seq_manual(0,e.a,e.b,0);}else if(e.type==2)seq_manual(0,e.a,0,0);else if(e.type==3){if(e.a==VC_WAVE1||e.a==VC_WAVE2){vc_request_wave(e.a==VC_WAVE2,e.b);}
  else if(e.a==VC_OSC3_MODE){if(osc3_desired_mode==e.b)continue;osc3_desired_mode=e.b;unsigned w=e.b>=4?e.b-4:wave_desired[1];
 #ifdef VC_BAND_CACHE
   if(!wave_state){wave_desired[2]=w;vc_param(&synth,e.a,e.b);continue;}
 #endif
   if(wave_desired[2]!=w||e.b>=4){wave_desired[2]=w;wave_state=1;wave_ack=0;}else vc_param(&synth,e.a,e.b);
- }else if(!vc_request_lfo(e.a,e.b))vc_param(&synth,e.a,e.b);}else if(e.type==4)vc_panic(&synth);else if(e.type==5)clipped_samples=0;
+ }else if(!vc_request_lfo(e.a,e.b))vc_param(&synth,e.a,e.b);}else if(e.type==4){seq_mute();vc_panic(&synth);}else if(e.type==5)clipped_samples=0;
  else if(e.type==8)vc_request_preset(e.a|((unsigned)e.b<<8));
+ else if(e.type==SEQ_EVENT)seq_event(e.a,e.b);
 }
  uint32_t pkt;int port;while(plat_midi_in(&pkt,&port)){
 #ifdef VC_BAND_CACHE
@@ -316,8 +371,9 @@ unsigned st=(pkt>>8)&240,a=(pkt>>16)&127,b=(pkt>>24)&127;
   vc_midi_publish(which?VC_WAVE2:VC_WAVE1,wave_desired[which]);continue;
  }
  if(st==176){int id=vc_cc_param(a);if(id>=0&&vc_request_lfo((unsigned)id,b)){vc_midi_publish((unsigned)id,b>VC_LFO_MAX_SHAPE?VC_LFO_MAX_SHAPE:b);continue;}}
+ if(st==176&&(a==120||a==123)){seq_mute();}
  if(wave_state)continue;
- if(st==144&&b)vc_note_on(&synth,a,b);else if(st==128||st==144)vc_note_off_velocity(&synth,a,st==128?b:0);else if(st==208)vc_pressure(&synth,a);else if(st==176){vc_cc(&synth,a,b);int id=vc_cc_param(a);if(id>=0)vc_midi_publish((unsigned)id,synth.param[id]);}else if(st==224)vc_bend(&synth,a+(b<<7));}
+ if(st==144&&b)seq_manual(1,a,b,0);else if(st==128||st==144)seq_manual(1,a,0,st==128?b:0);else if(st==208)vc_pressure(&synth,a);else if(st==176){vc_cc(&synth,a,b);int id=vc_cc_param(a);if(id>=0)vc_midi_publish((unsigned)id,synth.param[id]);}else if(st==224)vc_bend(&synth,a+(b<<7));}
 }
 #ifdef VC_DUAL_RENDER
 /* APP_OVERLOAD: the platform calls app_overload() after a block that used
@@ -338,9 +394,9 @@ void app_render(int32_t *lr,uint32_t n,uint32_t master){
  if(wave_state==2)for(unsigned i=0;i<3;i++)if(lfo_ready[i]!=lfo_desired[i])wave_state=1;
  if(wave_state==2&&(wave_ready[0]!=wave_desired[0]||wave_ready[1]!=wave_desired[1]||wave_ready[2]!=wave_desired[2]))wave_state=1;
  if(wave_state==2){for(unsigned i=0;i<3;i++)vc_param(&synth,lfo_shape_param[i],lfo_desired[i]);vc_param(&synth,VC_WAVE1,wave_desired[0]);vc_param(&synth,VC_WAVE2,wave_desired[1]);vc_param(&synth,VC_OSC3_MODE,osc3_desired_mode);VC_BARRIER();wave_state=0;wave_ack=0;}
- if(wave_state){vc_panic(&synth);active_voices=0;memset(lr,0,n*2*sizeof(*lr));VC_BARRIER();wave_ack=1;return;}
+ if(wave_state){seq_silence();vc_panic(&synth);active_voices=0;memset(lr,0,n*2*sizeof(*lr));VC_BARRIER();wave_ack=1;return;}
  float target=master/4096.f;
- for(unsigned at=0;at<n;at+=APP_BLOCK){unsigned count=n-at;if(count>APP_BLOCK)count=APP_BLOCK;vc_render_dispatch(&synth,audio_left,audio_right,count);
+ for(unsigned at=0;at<n;){unsigned count=n-at;if(count>APP_BLOCK)count=APP_BLOCK;count=seq_render_span(count);vc_render_dispatch(&synth,audio_left,audio_right,count);
  for(unsigned j=0;j<count;j++){
   master_now+=(target-master_now)*.004f;
   float l=audio_left[j]*master_now,r=audio_right[j]*master_now;
@@ -349,17 +405,19 @@ void app_render(int32_t *lr,uint32_t n,uint32_t master){
   if(r>1){r=1;clipped=1;}if(r< -1){r=-1;clipped=1;}
   clipped_samples+=(unsigned)clipped;
   lr[2*(at+j)]=(int32_t)(l*8300000);lr[2*(at+j)+1]=(int32_t)(r*8300000);
- }}
+ }
+ at+=count;
+ }
  active_voices=vc_active(&synth);
 }
-void app_panic(void){vc_panic(&synth);event_read=event_write;active_voices=0;}
+void app_panic(void){seq_mute();vc_panic(&synth);event_read=event_write;active_voices=0;}
 #ifdef PLAT_HOST
 void perf_read(perf_stats_t *s){memset(s,0,sizeof(*s));}
 void perf_reset(void){}
 void perf_mode(int dual){(void)dual;}
 void perf_scan_mode(unsigned div){(void)div;}
 #endif
-void app_init(void){preset_requested=preset_prepared=NO_PRESET_REQUEST;preset_loaded=preset_choice=vc_preset_count();midi_preset_bank=0;vc_init(&synth,44100);memcpy(values,synth.param,sizeof(values));memset((void*)midi_values,0,sizeof(midi_values));memset(midi_seen,0,sizeof(midi_seen));event_read=event_write=queue_lost=panic_requested=0;clipped_samples=0;last_keys=last_buttons=0;page=row=octave=0;master_now=0;for(int i=0;i<NKEYS;i++)key_note[i]=-1;perf_mode(
+void app_init(void){seq_init();preset_requested=preset_prepared=NO_PRESET_REQUEST;preset_loaded=preset_choice=vc_preset_count();midi_preset_bank=0;vc_init(&synth,44100);memcpy(values,synth.param,sizeof(values));memset((void*)midi_values,0,sizeof(midi_values));memset(midi_seen,0,sizeof(midi_seen));event_read=event_write=queue_lost=panic_requested=0;clipped_samples=0;last_keys=last_buttons=0;page=row=octave=0;master_now=0;for(int i=0;i<NKEYS;i++)key_note[i]=-1;perf_mode(
 #ifdef VC_DUAL_RENDER
  1
 #else
@@ -378,16 +436,22 @@ void app_init(void){preset_requested=preset_prepared=NO_PRESET_REQUEST;preset_lo
  vc_wave_flash_init(cache && plat_data(CONTAGION_CACHE_END-1u)==cache+(CONTAGION_CACHE_END-CONTAGION_CACHE_BASE-1u)?cache:0);
 #ifdef VC_BAND_CACHE
  vc_band_device_attach(&synth);
- user_slot=user_job=user_status=user_loaded=user_bank_bad=user_name_edit=user_name_pos=user_remote_pending=0;
- int bytes=plat_store_load(OBJ_SETTINGS,user_bank,sizeof(user_bank));
- if(bytes<0)vc_patch_bank_init(user_bank);
- else if(bytes!=(int)sizeof(user_bank)||!vc_patch_bank_valid(user_bank,sizeof(user_bank))){user_bank_bad=1;user_status=6;}
+ user_slot=user_job=user_status=user_loaded=user_bad_banks=user_name_edit=user_name_pos=user_remote_pending=user_recall_retry=user_recall_auto=0;
+ user_pending_slot=user_recall_slot=user_active_slot=VC_PATCH_SLOTS;
+ for(unsigned i=0;i<2;i++){
+  int bytes=plat_store_load(user_objects[i],user_bank[i],VC_PATCH_BANK_BYTES);
+  if(bytes<0)vc_patch_bank_init(user_bank[i]);
+  else if(bytes!=VC_PATCH_BANK_BYTES||!vc_patch_bank_valid(user_bank[i],VC_PATCH_BANK_BYTES))user_bad_banks|=1u<<i;
+ }
+ if(vc_user_bad(user_slot))user_status=6;
+ sequence_load_bank();
 #endif
 }
 void app_say(const char *a,const char *b){(void)a;(void)b;redraw=1;}
 #ifdef VC_BAND_CACHE
 static void vc_user_edit_name(unsigned knob,int delta){
  if(!user_name_edit){
+  if(user_recall_auto)user_pending_slot=VC_PATCH_SLOTS;
   const char *name=user_loaded?user_active.name:vc_preset_name(preset_loaded);
   memset(user_name,' ',10);user_name[10]=0;
   for(unsigned i=0;i<10&&name[i];i++)user_name[i]=name[i];
@@ -395,6 +459,62 @@ static void vc_user_edit_name(unsigned knob,int delta){
  }
  if(knob==EN_K3)user_name_pos=(unsigned)clamp((int)user_name_pos+delta,0,9);
  else user_name[user_name_pos]=(char)clamp((unsigned char)user_name[user_name_pos]+delta,32,126);
+}
+#endif
+#ifdef VC_ACCESS_UI
+static void access_seq_follow_keys(void){
+ uint32_t now=plat_ms();
+ const unsigned flash_ms=75;
+ for(unsigned i=0;i<SEQ_LANES;i++){
+  uint32_t flash=seq_key_flash[i];
+  if(flash!=seq_seen_flash[i]){
+   seq_seen_flash[i]=flash;
+   seq_flash_time[i]=now;
+  }
+  int note=-1;
+  if(seq.running&&seq.enabled[i]&&!wave_state){
+   note=seq.lane[i].note;
+   if(note<0&&flash&&now-seq_flash_time[i]<flash_ms)note=(int)(flash&127u);
+  }else seq_flash_time[i]=now-flash_ms;
+  seq_live_key[i]=note<0?-1:note%12;
+  if(page==ACCESS_SEQ_NOTES&&seq_live_key[i]!=seq_drawn_key[i]&&
+     (!seq.running||now-last_draw>=40u))redraw=1;
+ }
+}
+
+static void access_seq_input(unsigned knob,int delta){
+ static const uint8_t controls[2][2][4]={
+  {{SEQ_DENSITY,SEQ_DIVISION,SEQ_GATE,SEQ_SWING},{SEQ_PITCH_EVOLVE,SEQ_RHYTHM_EVOLVE,SEQ_LENGTH,SEQ_HOLD}},
+  {{SEQ_DURATION_WEIGHT,SEQ_DURATION_WEIGHT,SEQ_REST_CHANCE,SEQ_BARS},{SEQ_GATE,SEQ_RATCHET,SEQ_GLIDE,SEQ_HOLD}}
+ };
+ unsigned mode=seq.mode,index=seq_ui_lane,control;
+ if(page==ACCESS_SEQ_MORPH){
+  if(knob||mode!=SEQ_EVENT_STREAM)return;
+  control=SEQ_MORPH+index*64u;
+ }else if(page==ACCESS_SEQ_SETUP){
+  static const uint8_t setup[]={0,SEQ_BPM,SEQ_ROOT,SEQ_SCALE};
+  if(!knob){seq_ui_lane=(unsigned)clamp((int)index+delta,0,1);return;}
+  control=setup[knob];
+ }else if(page==ACCESS_SEQ_MODE){
+  static const uint8_t mode_page[]={SEQ_MODE,SEQ_ENABLE_A,SEQ_ENABLE_B,SEQ_VELOCITY};
+  control=mode_page[knob];
+ }else{
+  if(page==ACCESS_SEQ_NOTES){
+   uint8_t notes[12];
+   unsigned count=seq_scale_notes(seq.scale,notes),selected=seq_note_index(index,count);
+   if(!knob){
+    seq_note_cursor[index]=(unsigned)clamp((int)selected+delta,0,(int)count-1);
+    return;
+   }
+   control=knob==1?SEQ_NOTE_WEIGHT+notes[selected]:knob==2?SEQ_LOW:SEQ_HIGH;
+  }else if(mode==SEQ_EVENT_STREAM&&page==ACCESS_SEQ_RHYTHM&&knob<=1){
+   unsigned *cursor=&seq_duration_cursor[index];
+   if(!knob){*cursor=(unsigned)clamp((int)*cursor+delta,0,4);return;}
+   control=SEQ_DURATION_WEIGHT+*cursor;
+  }else control=controls[mode][page-ACCESS_SEQ_RHYTHM][knob];
+  control+=index*64u;
+ }
+ vc_post(SEQ_EVENT,control,128+clamp(delta,-127,127));
 }
 #endif
 static void vc_input(void){
@@ -406,17 +526,31 @@ static void vc_input(void){
  for(int k=0;k<NKEYS;k++){uint32_t bit=1u<<k;if(VC_PROFILE_KEYS&&(keys&bit)&&!(last_keys&bit)){key_note[k]=53+k+12*octave;vc_post(1,key_note[k],touch_vel(k));}else if(!(keys&bit)&&(last_keys&bit)){if(key_note[k]>=0)vc_post(2,key_note[k],0);key_note[k]=-1;}}
 #ifdef VC_BAND_CACHE
  if(pressed&(1u<<B_SAVE)){
+  if(page==ACCESS_USER_SEQUENCES){
+   if(sequence_bad)sequence_status=6;
+   else if(!sequence_job){
+    sequence_pending=USER_SEQ_SLOTS;
+    if(!sequence_name_edit)sequence_name_for(sequence_slot,sequence_name);
+    sequence_job=1;vc_post(USER_SEQ_EVENT,0,0);
+   }
+  }else{
   page=PAGE_USER;
-  if(user_bank_bad)user_status=6;
+  if(user_recall_auto)user_pending_slot=VC_PATCH_SLOTS;
+  if(vc_user_bad(user_slot))user_status=6;
   else if(user_job||wave_state)user_status=4;
   else {user_job=1;vc_post(9,0,0);}
+  }
   redraw=1;
  }
 #endif
 #ifdef VC_ACCESS_UI
- const uint8_t shortcuts[]={B_HOME,B_EDIT,B_ENV,B_LFO,B_FX,B_GLO,B_SEL};
+ const uint8_t shortcuts[]={B_HOME,B_EDIT,B_ENV,B_LFO,B_FX,B_GLO,B_SEL,B_SEQ};
  for(unsigned i=0;i<sizeof(shortcuts);i++)if(pressed&(1u<<shortcuts[i])){access_shortcut(shortcuts[i]);break;}
- if(pressed&(1u<<B_PLAY)){vc_post(4,0,0);redraw=1;}
+ if(pressed&(1u<<B_PLAY)){
+  if(access_seq_page()||seq.running)vc_post(SEQ_EVENT,SEQ_TOGGLE,0);
+  else vc_post(4,0,0);
+  redraw=1;
+ }
 #else
  if(pressed&(1u<<B_HOME)){page=0;row=0;redraw=1;}
  if(pressed&(1u<<B_ENV)){row=page==PAGE_ENV?!row:0;page=PAGE_ENV;redraw=1;}
@@ -427,8 +561,15 @@ static void vc_input(void){
  if(pressed&(1u<<B_SEL)){row^=1;redraw=1;}
  if(pressed&(1u<<B_PLAY)){if(page==PAGE_PROFILE)page=PAGE_PERF;vc_post(4,0,0);redraw=1;}
 #endif
- if(pressed&(1u<<B_OCTDN)){octave=clamp(octave-1,-2,2);redraw=1;}
- if(pressed&(1u<<B_OCTUP)){octave=clamp(octave+1,-2,2);redraw=1;}
+ int oct_delta=((pressed>>B_OCTUP)&1u)!=0;
+ oct_delta-=((pressed>>B_OCTDN)&1u)!=0;
+ if(oct_delta){
+#ifdef VC_ACCESS_UI
+  if(access_seq_page())vc_post(SEQ_EVENT,SEQ_OCTAVE,128+oct_delta);
+  else
+#endif
+  {octave=clamp(octave+oct_delta,-2,2);redraw=1;}
+ }
  for(int k=0;k<NE;k++){int d=plat_enc(k);if(!d)continue;
  if(k==EN_PRESET){
  preset_choice=preset_choice>=vc_preset_count()?0:(unsigned)clamp((int)preset_choice+d,0,(int)vc_preset_count()-1);page=PAGE_PRESETS;row=0;vc_post(8,preset_choice&255,preset_choice>>8);redraw=1;
@@ -443,9 +584,13 @@ static void vc_input(void){
  vc_post(8,preset_choice&255,preset_choice>>8);redraw=1;
  }
 #ifdef VC_ACCESS_UI
+ else if(k>=EN_K1&&k<=EN_K4&&access_seq_page()){
+  access_seq_input(k-EN_K1,d);redraw=1;
+ }
  else if(k==EN_ALGO){
-  int next=((int)access_page_index()+d)%(int)ACCESS_PAGE_COUNT;
-  if(next<0)next+=ACCESS_PAGE_COUNT;
+  int count=(int)access_page_count();
+  int next=((int)access_page_index()+d)%count;
+  if(next<0)next+=count;
   page=access_pages[next].id;redraw=1;
  }
 #else
@@ -453,14 +598,17 @@ static void vc_input(void){
  else if(k==EN_ALGO){page=clamp(page+d,0,PAGE_LAST);if(page==PAGE_STEREO||page>=PAGE_NOISE)row=0;redraw=1;}
 #endif
 #ifdef VC_BAND_CACHE
+ else if(page==ACCESS_USER_SEQUENCES&&k>=EN_K1&&k<=EN_K4)sequence_input(k,d);
  else if(page==PAGE_USER){
-  if(k==EN_K1&&!user_job){user_slot=(unsigned)clamp((int)user_slot+d,0,15);user_status=user_bank_bad?6:0;}
-  else if(k==EN_K2){
-   if(user_job||wave_state)user_status=4;
-   else if(user_bank_bad)user_status=6;
-   else if(vc_patch_bank_get(&user_recall,user_bank,sizeof(user_bank),user_slot)){user_job=3;vc_post(10,0,0);}
-   else user_status=3;
-  }else if((k==EN_K3||k==EN_K4)&&!user_job)vc_user_edit_name(k,d);
+  if(k==EN_K1&&!user_job){
+   unsigned slot=(unsigned)clamp((int)user_slot+d,0,VC_PATCH_SLOTS-1);
+   if(slot!=user_slot){
+    user_slot=slot;user_status=vc_user_bad(slot)?6:0;
+    if(!user_name_edit)vc_user_queue_recall(slot,1);
+   }
+  }
+  else if(k==EN_K2)vc_user_queue_recall(user_slot,0);
+  else if((k==EN_K3||k==EN_K4)&&!user_job)vc_user_edit_name(k,d);
   redraw=1;
  }
 #endif
@@ -564,7 +712,7 @@ static void vc_draw(void){
   cv_text(2,5,&FONT_XS,names[index],C_GRAY);t[0]=0;
   if(index==0)vc_num(t,user_slot+1);
   else if(index==1)vc_copy(t,user_job?"WORKING":user_status_names[user_status]);
-  else if(index==2){unsigned mask=(unsigned)user_bank[12]|(unsigned)user_bank[13]<<8;if(user_bank_bad)vc_copy(t,"INVALID");else if(mask&(1u<<user_slot)){memcpy(t,user_bank+16+user_slot*VC_PATCH_BYTES+16,10);t[10]=0;}else vc_copy(t,"EMPTY");}
+  else if(index==2){char saved[VC_PATCH_NAME+1];vc_copy(t,vc_user_name(user_slot,saved));}
   else if(index==3)vc_copy(t,user_name_edit?user_name:user_loaded?user_active.name:vc_preset_name(preset_loaded));
   else if(index==6)vc_num(t,user_name_pos+1);
   else if(index==7){const char *name=user_name_edit?user_name:user_loaded?user_active.name:vc_preset_name(preset_loaded);unsigned length=0;while(length<10&&name[length])length++;t[0]=user_name_pos<length?name[user_name_pos]:' ';t[1]=0;}
@@ -612,18 +760,19 @@ static void vc_user_reply(unsigned slot,unsigned status){uint8_t frame[12],value
 int app_sysex(const uint8_t *p,uint32_t n){
  if(n<4||p[0]!=0x7d||p[1]!=0x56||p[2]!=0x49||p[3]!=0x52)return 0;
  unsigned cmd,slot,bytes;uint8_t raw[VC_PATCH_BYTES];
- if(!vc_patch_sysex_decode(p,n,&cmd,&slot,raw,&bytes)){vc_user_reply(n>6&&p[6]<16?p[6]:0,3);return 1;}
+ if(!vc_patch_sysex_decode(p,n,&cmd,&slot,raw,&bytes)){vc_user_reply(n>6&&p[6]<VC_PATCH_SLOTS?p[6]:0,3);return 1;}
  if(cmd==2||cmd==4)return 1; /* Responses are never treated as writes. */
  if(user_job||wave_state){vc_user_reply(slot,1);return 1;}
- if(user_bank_bad){vc_user_reply(slot,3);return 1;}
+ if(vc_user_bad(slot)){vc_user_reply(slot,3);return 1;}
  if(cmd==1){
   VCPatchRecord record;
-  if(!vc_patch_bank_get(&record,user_bank,sizeof(user_bank),slot)){vc_user_reply(slot,2);return 1;}
+  if(!vc_user_get(&record,slot)){vc_user_reply(slot,2);return 1;}
   uint8_t frame[VC_PATCH_WIRE_MAX];vc_patch_encode(raw,sizeof(raw),&record);
   unsigned count=vc_patch_sysex_encode(frame,sizeof(frame),2,slot,raw,sizeof(raw));if(count)plat_sysex_send(frame,count);
  }else if(cmd==3){
   if(!vc_patch_decode(&user_recall,raw,bytes)){vc_user_reply(slot,3);return 1;}
-  user_slot=slot;user_remote_pending=1;user_job=3;vc_post(11,0,0);
+  if(user_recall_auto)user_pending_slot=VC_PATCH_SLOTS;
+  user_slot=slot;user_name_edit=0;redraw=1;user_remote_pending=1;user_job=3;vc_post(11,0,0);
  }
  return 1;
 }
@@ -643,8 +792,21 @@ void app_frame(void){if(event_read==event_write){
  if(preset_choice!=selection){preset_choice=selection;redraw=1;}
 }
 vc_input();vc_preset_background();
+#ifdef VC_ACCESS_UI
+ access_seq_follow_keys();
+ unsigned stamp=seq_stamp;
+ if(stamp!=seq_ui_stamp){
+  seq_ui_stamp=stamp;
+  if(access_seq_page())redraw=1;
+ }
+ if(seq.running&&plat_ms()-last_draw>=110u&&
+    ((page==ACCESS_SEQ_RHYTHM&&seq.mode==SEQ_PATTERN)||
+     ((page==ACCESS_SEQ_SHAPE||page==ACCESS_SEQ_MORPH)&&seq.mode==SEQ_EVENT_STREAM)))redraw=1;
+#endif
 #ifdef VC_BAND_CACHE
 vc_user_background();
+vc_user_service_recall();
+sequence_background();
 #endif
 vc_wave_background();
 #ifdef VC_BAND_CACHE
@@ -660,9 +822,37 @@ if(ui_wave_state!=wave_state){ui_wave_state=wave_state;redraw=1;}if(event_read==
 }
 #ifdef PLAT_HOST
 int app_expect(const char *s,int *v){
+ if(!strcmp(s,"seq_octave")){*v=seq.root_octave;return 1;}
+ if(!strcmp(s,"keyboard_octave")){*v=octave;return 1;}
+ if(!strcmp(s,"seq_selected_degree")||!strcmp(s,"seq_selected_weight")){
+  uint8_t notes[12];
+  unsigned count=seq_scale_notes(seq.scale,notes),degree=notes[seq_note_index(seq_ui_lane,count)];
+  *v=!strcmp(s,"seq_selected_degree")?(int)degree:seq.pattern[seq.mode][seq_ui_lane].weights[degree];
+  return 1;
+ }
+ if(!strcmp(s,"seq_a_live_key")){*v=seq_live_key[0];return 1;}
+ if(!strcmp(s,"seq_b_live_key")){*v=seq_live_key[1];return 1;}
+ if(!strcmp(s,"sig_morph_a")||!strcmp(s,"sig_morph_b")){
+  *v=seq.pattern[SEQ_EVENT_STREAM][s[10]=='b'].morph;
+  return 1;
+ }
+ if(!strcmp(s,"seq_running")){*v=seq.running;return 1;}
+ if(!strcmp(s,"seq_mode")){*v=seq.mode;return 1;}
+ if(!strcmp(s,"seq_lane")){*v=(int)seq_ui_lane;return 1;}
+ if(!strcmp(s,"seq_a_note")){*v=seq.lane[0].note;return 1;}
+ if(!strcmp(s,"seq_b_note")){*v=seq.lane[1].note;return 1;}
+ if(!strcmp(s,"seq_a_step")){*v=seq.lane[0].position;return 1;}
+ if(!strcmp(s,"seq_b_step")){*v=seq.lane[1].position;return 1;}
+ if(!strcmp(s,"seq_a_hold")){*v=seq.pattern[seq.mode][0].hold;return 1;}
+ if(!strcmp(s,"seq_bpm")){*v=seq.bpm;return 1;}
 #ifdef VC_BAND_CACHE
+if(!strcmp(s,"sequence_status")){*v=sequence_status;return 1;}
+if(!strcmp(s,"sequence_active")){*v=sequence_active;return 1;}
+if(!strcmp(s,"sequence_occupied")){*v=sequence_bank.occupied;return 1;}
+if(!strcmp(s,"user_active_slot")){*v=user_loaded?(int)user_active_slot:-1;return 1;}
+if(!strcmp(s,"user_pending_slot")){*v=(int)user_pending_slot;return 1;}
 if(!strcmp(s,"user_name_first")){*v=(unsigned char)user_active.name[0];return 1;}
-if(!strcmp(s,"user_matches_slot")){VCPatchRecord saved;*v=user_loaded&&vc_patch_bank_get(&saved,user_bank,sizeof(user_bank),user_slot)&&!memcmp(saved.params,synth.param,VC_PARAMS)&&!memcmp(&saved.matrix,&user_active.matrix,sizeof(VCMatrix));return 1;}
+if(!strcmp(s,"user_matches_slot")){VCPatchRecord saved;*v=user_loaded&&vc_user_get(&saved,user_slot)&&!memcmp(saved.params,synth.param,VC_PARAMS)&&!memcmp(&saved.matrix,&user_active.matrix,sizeof(VCMatrix));return 1;}
 if(!strcmp(s,"user_job")){*v=user_job;return 1;}if(!strcmp(s,"user_status")){*v=user_status;return 1;}if(!strcmp(s,"user_loaded")){*v=user_loaded;return 1;}if(!strcmp(s,"user_slot")){*v=user_slot;return 1;}
 #endif
 

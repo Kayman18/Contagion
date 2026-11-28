@@ -1,0 +1,36 @@
+name: Publish Contagion 1.2
+
+on:
+  push:
+    branches: [main]
+    paths: ['firmware/SHA256SUMS-1.2']
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: contagion-v1-2-release
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+        with:
+          persist-credentials: false
+      - name: Verify and publish 1.2
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          (cd firmware && sha256sum -c SHA256SUMS-1.2)
+          if gh release view v1.2.0 >/dev/null 2>&1; then
+            exit 0
+          fi
+          gh release create v1.2.0 \
+            firmware/Contagion-1.2-All-Banks-8V.fwsc \
+            firmware/Contagion-USB-Editor-1.2.zip \
+            firmware/SHA256SUMS-1.2 \
+            --target "$GITHUB_SHA" \
+            --title "Contagion 1.2" \
+            --notes-file docs/release-1.2.md

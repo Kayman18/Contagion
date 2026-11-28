@@ -104,27 +104,51 @@ static void access_program_number(char out[4], unsigned program){
  out[3]=0;
 }
 
-static void access_draw_presets(int changed){
+static const char *access_sequence_name(unsigned slot,char *name){
+ if(sequence_bad)return "INVALID BANK";
+ if(!sequence_occupied(slot))return "EMPTY SLOT";
+ sequence_name_for(slot,name);
+ return name[0]?name:"UNTITLED";
+}
+
+static void access_draw_browser(int changed){
  static unsigned last_choice,last_loaded,last_wave,last_volume;
- unsigned selected=preset_choice,loaded=preset_loaded,volume=values[VC_PATCH_VOLUME];
- if(!changed&&selected==last_choice&&loaded==last_loaded&&wave_state==last_wave&&volume==last_volume)return;
- unsigned bank=vc_preset_bank(selected),first=vc_preset_bank_first(bank),count=vc_preset_count();
- unsigned end=bank+1<vc_preset_bank_count()?vc_preset_bank_first(bank+1):count;
- unsigned top=selected<count&&selected>=first+2?selected-2:first;
+ int sequences=page==ACCESS_USER_SEQUENCES,user=page!=PAGE_PRESETS;
+ unsigned selected=sequences?sequence_slot:user?user_slot:preset_choice,loaded=preset_loaded,volume=values[VC_PATCH_VOLUME];
+ unsigned editing=sequences?sequence_name_edit:user&&user_name_edit;
+ unsigned name_pos=sequences?sequence_name_pos:user_name_pos;
+ const char *draft=sequences?sequence_name:user_name;
+ if(!user&&!changed&&selected==last_choice&&loaded==last_loaded&&wave_state==last_wave&&volume==last_volume)return;
+ unsigned bank=vc_preset_bank(selected),count=vc_preset_count();
+ unsigned first=user?0:vc_preset_bank_first(bank);
+ unsigned end=sequences?USER_SEQ_SLOTS:user?VC_PATCH_SLOTS:bank+1<vc_preset_bank_count()?vc_preset_bank_first(bank+1):count;
+ unsigned top=selected<end&&selected>=first+2?selected-2:first;
  if(top+4>end)top=end>=first+4?end-4:first;
- char bank_text[16]="BANK ",program[4],caption[20]="PROGRAM ",level[14]="K4  VOL ";
- vc_copy(bank_text+5,vc_preset_bank_label(bank));
- access_program_number(program,vc_preset_program(selected));
- vc_copy(caption+8,selected<count?program:"---");
+ char bank_text[16]="BANK ",program[4],caption[20],level[14]="K4  VOL ",name[VC_PATCH_NAME+1];
+ vc_copy(bank_text+5,user?"USER":vc_preset_bank_label(bank));
+ access_program_number(program,user?selected+1:vc_preset_program(selected));
+ vc_copy(caption,user?"SLOT ":"PROGRAM ");
+ vc_copy(caption+(user?5:8),selected<end?program:"---");
+ const char *title=sequences?"USER SEQUENCES":user?"USER PATCHES":"FACTORY PRESETS";
+ const char *tab=sequences?"SCL 3":user?"SCL 2":"SCL 1";
+ const char *selected_name=user?(editing?draft:sequences?access_sequence_name(selected,name):vc_user_name(selected,name)):
+  selected<count?vc_preset_name(selected):user_loaded?user_active.name:"INIT PATCH";
  cv_begin(240,32,ACCESS_RED);
- cv_text(8,2,&FONT_M,"FACTORY PRESETS",ACCESS_LABEL);
- cv_text(232-text_w(&FONT_XS,"SCL 1"),9,&FONT_XS,"SCL 1",ACCESS_LABEL);
+ cv_text(8,2,&FONT_M,title,ACCESS_LABEL);
+ cv_text(232-text_w(&FONT_XS,tab),9,&FONT_XS,tab,ACCESS_LABEL);
  cv_rect(0,31,240,1,ACCESS_RULE);
  cv_blit(0,0);
  cv_begin(240,43,ACCESS_BG);
  cv_text(8,5,&FONT_XS,bank_text,ACCESS_AMBER);
  cv_text(232-text_w(&FONT_XS,caption),5,&FONT_XS,caption,ACCESS_SUB);
- cv_text(8,19,&FONT_M,selected<count?vc_preset_name(selected):user_loaded?user_active.name:"INIT PATCH",ACCESS_LABEL);
+ cv_text(8,19,&FONT_M,selected_name,ACCESS_LABEL);
+ if(editing){
+  int x=8;
+  char glyph[2]={0};
+  for(unsigned i=0;i<name_pos;i++){glyph[0]=draft[i];x+=text_w(&FONT_M,glyph);}
+  glyph[0]=draft[name_pos];
+  cv_rect(x,40,text_w(&FONT_M,glyph),1,ACCESS_AMBER);
+ }
  cv_blit(0,32);
  for(unsigned row=0;row<4;row++){
   unsigned top_pad=row==0?3u:0u;
@@ -135,39 +159,35 @@ static void access_draw_presets(int changed){
    cv_rect(6,3+top_pad,228,27,active?RGB(110,63,37):ACCESS_RULE);
    cv_rect(7,4+top_pad,226,25,active?RGB(51,24,25):RGB(24,23,23));
    if(active)cv_rect(6,3+top_pad,3,27,ACCESS_AMBER);
-   access_program_number(program,vc_preset_program(item));
+   access_program_number(program,user?item+1:vc_preset_program(item));
    cv_text(16,8+top_pad,&FONT_XS,program,active?ACCESS_AMBER:ACCESS_SUB);
-   cv_text(47,7+top_pad,&FONT_B,vc_preset_name(item),ACCESS_LABEL);
+   cv_text(47,7+top_pad,&FONT_B,sequences?access_sequence_name(item,name):user?vc_user_name(item,name):vc_preset_name(item),ACCESS_LABEL);
+   if(sequences?item==sequence_active:user&&user_loaded&&!wave_state&&item==user_active_slot)
+    cv_text(225-text_w(&FONT_XS,"LIVE"),8+top_pad,&FONT_XS,"LIVE",ACCESS_AMBER);
   }
   cv_blit(0,78+30*row-top_pad);
  }
  cv_begin(240,42,ACCESS_BG);
  cv_rect(0,6,240,1,ACCESS_RULE);
  cv_rect(119,11,1,26,ACCESS_RULE);
- cv_text(8,9,&FONT_XS,"K1  BANK",ACCESS_LABEL);
- cv_text(128,9,&FONT_XS,"K2  PRESET",ACCESS_LABEL);
- const char *state=wave_state==3?"WAVE ERROR":wave_state||selected!=loaded?"LOADING":"K3  INIT";
- cv_text(8,24,&FONT_XS,state,ACCESS_SUB);
- vc_num(level+8,volume);
- cv_text(128,24,&FONT_XS,level,ACCESS_AMBER);
- cv_blit(0,198);
- last_choice=selected;last_loaded=loaded;last_wave=wave_state;last_volume=volume;
-}
-
-static void access_user_cell(unsigned i,AccessCell *cell){
- static const char *const names[]={"USER SLOT","RECALL","NAME POS","NAME CHARACTER"};
- cell->label=names[i];
- if(i==0){vc_num(cell->value,user_slot+1);cell->step=user_slot*32/15;}
- else if(i==1){vc_copy(cell->value,user_job?"WORKING":user_status_names[user_status]);cell->step=0;}
- else if(i==2){vc_num(cell->value,user_name_pos+1);cell->step=user_name_pos*32/9;}
- else{
-  const char *name=user_name_edit?user_name:user_loaded?user_active.name:vc_preset_name(preset_loaded);
-  unsigned count=0;while(count<10&&name[count])count++;
-  unsigned letter=user_name_pos<count?(unsigned char)name[user_name_pos]:' ';
-  cell->value[0]=(char)letter;cell->value[1]=0;
-  if(letter==' ')vc_copy(cell->value,"SPACE");
-  cell->step=clamp((int)letter-32,0,94)*32/94;
+ cv_text(8,9,&FONT_XS,user?(editing?"K1  DEST":"K1  SLOT"):"K1  BANK",ACCESS_LABEL);
+ cv_text(128,9,&FONT_XS,user?"K2  RECALL":"K2  PRESET",ACCESS_LABEL);
+ if(sequences){
+  cv_text(8,24,&FONT_XS,sequence_job?"WORKING":sequence_status?user_status_names[sequence_status]:"SAVE  STORE",ACCESS_AMBER);
+  cv_text(128,24,&FONT_XS,"K3 / K4  NAME",ACCESS_SUB);
+ }else if(user){
+  const char *state=user_pending_slot<VC_PATCH_SLOTS?"QUEUED":user_job?"WORKING":
+   wave_state==3?"WAVE ERROR":wave_state?"LOADING":user_status?user_status_names[user_status]:"SAVE  STORE";
+  cv_text(8,24,&FONT_XS,state,ACCESS_AMBER);
+  cv_text(128,24,&FONT_XS,"K3 / K4  NAME",ACCESS_SUB);
+ }else{
+  const char *state=wave_state==3?"WAVE ERROR":wave_state||selected!=loaded?"LOADING":"K3  INIT";
+  cv_text(8,24,&FONT_XS,state,ACCESS_SUB);
+  vc_num(level+8,volume);
+  cv_text(128,24,&FONT_XS,level,ACCESS_AMBER);
+  last_choice=selected;last_loaded=loaded;last_wave=wave_state;last_volume=volume;
  }
+ cv_blit(0,198);
 }
 
 static void access_status_cell(unsigned i,AccessCell *cell,const perf_stats_t *ps,const unsigned bank[6]){
@@ -228,8 +248,7 @@ static void access_draw_footer(void){
  char status[40];
  const char *nav="ALGO  NEXT PAGE";
  const char *info="";
- if(page==PAGE_USER){nav="ALGO  NEXT PAGE   SAVE  STORE";info="K2 RECALL   K3 / K4 EDIT NAME";}
- else if(page==ACCESS_CACHE_TUNE){nav="ALGO  NEXT PAGE   K2 RESET";info="K1  ADJUST BUILD BUDGET";}
+ if(page==ACCESS_CACHE_TUNE){nav="ALGO  NEXT PAGE   K2 RESET";info="K1  ADJUST BUILD BUDGET";}
  else if(access_profile_page()){nav="ALGO  NEXT PAGE   K2 RESET";info="GLO  NEXT STATUS PAGE";}
  if(wave_state==3){
   const char *stage=wave_error_stage?wave_error_stage:"UNKNOWN";
@@ -250,6 +269,8 @@ static void access_draw_footer(void){
  cv_blit(0,206);
 }
 
+#include "generative_draw.inc"
+
 static void vc_draw(void){
  if(access_boot_loading){
   if(wave_state==1||wave_state==2){access_splash_progress(access_wave_progress());return;}
@@ -257,17 +278,12 @@ static void vc_draw(void){
  }
  const AccessPage *panel=&access_pages[access_page_index()];
  int changed=access_drawn_page!=page;
- if(page==PAGE_PRESETS){access_draw_presets(changed);access_drawn_page=page;return;}
- char name[32]={0};
- if(page==PAGE_USER){
-  unsigned mask=(unsigned)user_bank[12]|(unsigned)user_bank[13]<<8;
-  if(user_name_edit)vc_copy(name,user_name);
-  else if(user_bank_bad)vc_copy(name,"INVALID BANK");
-  else if(mask&(1u<<user_slot))memcpy(name,user_bank+16+user_slot*VC_PATCH_BYTES+16,10);
-  else vc_copy(name,"EMPTY SLOT");
- }else{
-  vc_copy(name,user_loaded?user_active.name:preset_loaded<vc_preset_count()?vc_preset_name(preset_loaded):"INIT PATCH");
+ if(page==PAGE_PRESETS||page==PAGE_USER||page==ACCESS_USER_SEQUENCES){access_draw_browser(changed);access_drawn_page=page;return;}
+ if(access_seq_page()){
+  access_draw_generative(changed);access_drawn_page=page;return;
  }
+ char name[32]={0};
+ vc_copy(name,user_loaded?user_active.name:preset_loaded<vc_preset_count()?vc_preset_name(preset_loaded):"INIT PATCH");
  if(changed||memcmp(access_drawn_name,name,sizeof(name))){
   cv_begin(240,34,ACCESS_RED);
   access_center(240,-2,&FONT_M,panel->title,ACCESS_LABEL);
@@ -280,8 +296,7 @@ static void vc_draw(void){
  if(access_profile_page()){perf_read(&ps);vc_band_device_stats(bank);}
  for(unsigned i=0;i<4;i++){
   AccessCell cell={"",{0},-1};
-  if(page==PAGE_USER)access_user_cell(i,&cell);
-  else if(access_profile_page())access_status_cell(i,&cell,&ps,bank);
+  if(access_profile_page())access_status_cell(i,&cell,&ps,bank);
   else if(panel->control[i]>=0){
    access_parameter(&cell,panel->control[i]);
    if((page==PAGE_FILTER||page==ACCESS_FILTER_2)){

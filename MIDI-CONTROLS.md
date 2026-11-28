@@ -11,7 +11,7 @@ MIDI CC0 selects a bank. Values 0–1 select Virus A, 2–7 select Virus B, and
 8–13 select Virus C. Program Change uses the original zero-based program
 number within that bank. Program numbers omitted by the build are skipped.
 
-The USB MIDI SysEx protocol transfers the 16 stored USER patches. The editor
+The USB MIDI SysEx protocol transfers the 32 stored USER patches. The editor
 uses this protocol for full patch edits and CC messages for live controls.
 [USB editor setup](web-editor/README.md)
 

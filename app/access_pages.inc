@@ -2,7 +2,8 @@
 enum {
  ACCESS_OSC_MIX=PAGE_USER+1, ACCESS_OSC_TUNE, ACCESS_OSC_WIDTH, ACCESS_FILTER_2,
  ACCESS_FILTER_KEY, ACCESS_FILTER_ENV, ACCESS_LFO1_OSC, ACCESS_LFO3_SETUP,
- ACCESS_EQ_HIGH, ACCESS_CORE_TIME, ACCESS_CORE_STATE, ACCESS_AUDIO_STATS, ACCESS_CACHE_TUNE
+ ACCESS_EQ_HIGH, ACCESS_CORE_TIME, ACCESS_CORE_STATE, ACCESS_AUDIO_STATS, ACCESS_CACHE_TUNE,
+ ACCESS_SEQ_NOTES, ACCESS_SEQ_RHYTHM, ACCESS_SEQ_SHAPE, ACCESS_SEQ_SETUP, ACCESS_SEQ_MODE, ACCESS_SEQ_MORPH, ACCESS_USER_SEQUENCES
 };
 typedef struct {
  uint8_t id, shortcut;
@@ -47,20 +48,35 @@ static const AccessPage access_pages[]={
  ACCESS_CONTROLS(ACCESS_EQ_HIGH,B_FX,"EQ MID / HIGH",VC_EQ_MID_Q,VC_EQ_HIGH_GAIN,VC_EQ_HIGH_FREQ,VC_EQ_ENABLE),
  ACCESS_INFO(PAGE_PRESETS,B_SEL,"FACTORY PRESETS"),
  ACCESS_INFO(PAGE_USER,B_SEL,"USER PATCHES"),
+ ACCESS_INFO(ACCESS_USER_SEQUENCES,B_SEL,"USER SEQUENCES"),
  ACCESS_INFO(PAGE_PERF,B_GLO,"PERFORMANCE"),
  ACCESS_INFO(ACCESS_CORE_TIME,B_GLO,"CORE TIMING"),
  ACCESS_INFO(ACCESS_CORE_STATE,B_GLO,"CORE STATUS"),
  ACCESS_INFO(ACCESS_AUDIO_STATS,B_GLO,"AUDIO STATUS"),
  ACCESS_INFO(PAGE_PROFILE,B_GLO,"WAVE CACHE"),
  ACCESS_INFO(ACCESS_CACHE_TUNE,B_GLO,"CACHE BUDGET"),
+ ACCESS_INFO(ACCESS_SEQ_NOTES,B_SEQ,"NOTE WEIGHTS"),
+ ACCESS_INFO(ACCESS_SEQ_RHYTHM,B_SEQ,"RHYTHM"),
+ ACCESS_INFO(ACCESS_SEQ_SHAPE,B_SEQ,"EVOLVE"),
+ ACCESS_INFO(ACCESS_SEQ_SETUP,B_SEQ,"SETUP"),
+ ACCESS_INFO(ACCESS_SEQ_MODE,B_SEQ,"MODE AND LANES"),
+ ACCESS_INFO(ACCESS_SEQ_MORPH,B_SEQ,"MORPH"),
 };
 #undef ACCESS_CONTROLS
 #undef ACCESS_INFO
 #define ACCESS_PAGE_COUNT (sizeof(access_pages)/sizeof(access_pages[0]))
 
+/* Morph is the last page and belongs only to SIG+. */
+static unsigned access_page_count(void){
+ return ACCESS_PAGE_COUNT-(seq.mode==SEQ_PATTERN);
+}
+
 static unsigned access_page_index(void){
  for(unsigned i=0;i<ACCESS_PAGE_COUNT;i++)if(access_pages[i].id==page)return i;
  return 0;
+}
+static int access_seq_page(void){
+ return page>=ACCESS_SEQ_NOTES&&page<=ACCESS_SEQ_MORPH;
 }
 static int access_profile_page(void){
  return access_pages[access_page_index()].shortcut==B_GLO;
@@ -69,7 +85,7 @@ static void access_shortcut(unsigned button){
  unsigned current=access_page_index();
  unsigned next=current+1;
  if(button==B_EDIT){page=PAGE_FILTER;redraw=1;return;}
- if(next<ACCESS_PAGE_COUNT&&access_pages[current].shortcut==button&&access_pages[next].shortcut==button){
+ if(next<access_page_count()&&access_pages[current].shortcut==button&&access_pages[next].shortcut==button){
   page=access_pages[next].id;
  }else{
   for(unsigned i=0;i<ACCESS_PAGE_COUNT;i++)if(access_pages[i].shortcut==button){page=access_pages[i].id;break;}

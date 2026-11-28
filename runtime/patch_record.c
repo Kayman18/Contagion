@@ -34,15 +34,23 @@ void vc_patch_bank_init(uint8_t bank[VC_PATCH_BANK_BYTES]){
 int vc_patch_bank_valid(const uint8_t *bank,unsigned bytes){
  if(!bank||bytes!=VC_PATCH_BANK_BYTES||memcmp(bank,"VCB1",4)||read32(bank+4)!=VC_PATCH_SCHEMA||read32(bank+8)!=bytes||read32(bank+12)>65535||read32(bank+bytes-4)!=crc(bank,bytes-4))return 0;
  VCPatchRecord tmp;unsigned mask=read32(bank+12);
- for(unsigned i=0;i<16;i++)if(mask&(1u<<i))if(!vc_patch_decode(&tmp,bank+16+i*VC_PATCH_BYTES,VC_PATCH_BYTES))return 0;
+ for(unsigned i=0;i<VC_PATCH_BANK_SLOTS;i++)if(mask&(1u<<i))if(!vc_patch_decode(&tmp,bank+16+i*VC_PATCH_BYTES,VC_PATCH_BYTES))return 0;
  return 1;
 }
 int vc_patch_bank_put(uint8_t *bank,unsigned bytes,unsigned slot,const VCPatchRecord *record){
  uint8_t encoded[VC_PATCH_BYTES];
- if(slot>=16||!vc_patch_bank_valid(bank,bytes)||!vc_patch_encode(encoded,sizeof(encoded),record))return 0;
+ if(slot>=VC_PATCH_BANK_SLOTS||!vc_patch_bank_valid(bank,bytes)||!vc_patch_encode(encoded,sizeof(encoded),record))return 0;
  memcpy(bank+16+slot*VC_PATCH_BYTES,encoded,sizeof(encoded));write32(bank+12,read32(bank+12)|(1u<<slot));write32(bank+bytes-4,crc(bank,bytes-4));return 1;
 }
 int vc_patch_bank_get(VCPatchRecord *record,const uint8_t *bank,unsigned bytes,unsigned slot){
- if(slot>=16||!vc_patch_bank_valid(bank,bytes)||!(read32(bank+12)&(1u<<slot)))return 0;
+ if(slot>=VC_PATCH_BANK_SLOTS||!vc_patch_bank_valid(bank,bytes)||!(read32(bank+12)&(1u<<slot)))return 0;
  return vc_patch_decode(record,bank+16+slot*VC_PATCH_BYTES,VC_PATCH_BYTES);
+}
+
+/* The browser reads names only from banks validated at boot or after save. */
+const char *vc_patch_bank_name(const uint8_t *bank,unsigned slot,char out[VC_PATCH_NAME+1]){
+ if(slot>=VC_PATCH_BANK_SLOTS||!(read32(bank+12)&(1u<<slot)))return "EMPTY SLOT";
+ memcpy(out,bank+16+slot*VC_PATCH_BYTES+16,VC_PATCH_NAME);
+ out[VC_PATCH_NAME]=0;
+ return out[0]?out:"UNTITLED";
 }

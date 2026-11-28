@@ -397,7 +397,10 @@ static VC_HOT void vc_glide_control(VCSynth *s,VCVoice *v){
 #else
  float portamento=s->param[VC_PORTAMENTO],coefficient=s->glide_coef;
 #endif
- if(!portamento||fabsf(v->pitch-v->note)<.001f){v->pitch=v->note;v->glide_error=0;}
+ if(v->generated_glide_left){
+  v->generated_glide_left--;
+  v->pitch=v->generated_glide_left?v->pitch+v->generated_glide_delta:v->note;
+ }else if(!portamento||fabsf(v->pitch-v->note)<.001f){v->pitch=v->note;v->glide_error=0;}
  else {float delta=(v->note-v->pitch)*coefficient-v->glide_error;float next=v->pitch+delta;v->glide_error=(next-v->pitch)-delta;v->pitch=next;}
  if(v->pitch==before)return;
  {void (*volatile pitch_bases)(VCSynth*,VCVoice*)=vc_pitch_bases;pitch_bases(s,v);}
@@ -753,7 +756,7 @@ static void vc_update_voice(VCSynth *s,VCVoice *v){
     v->velocity_pan=2*((int)p[VC_VEL_PAN]-64)*v->velocity;
     vc_amp_update(s,v);
     v->punch_gain=p[VC_PUNCH]?vc_punchLevel[p[VC_PUNCH]]*vc_oscVolume[p[VC_SAT_DRIVE]]:0;
-    if(!p[VC_PORTAMENTO]
+    if(!v->generated_glide_left&&!p[VC_PORTAMENTO]
 #ifdef VC_MATRIX
        && !(s->matrix&&v->env.stage&&v->portamento_value>0)
 #endif
@@ -986,6 +989,7 @@ static void vc_mono_retarget(VCSynth *s,VCVoice *v,int note,float velocity,int g
 #ifdef VC_MATRIX
  float previous_portamento=v->portamento_value,previous_coef=v->portamento_coef;
 #endif
+ v->generated_glide_left=0;
  v->note=note;v->pitch=start;v->glide_error=0;v->velocity=velocity;v->held=1;v->age=++s->counter;
  if(retrigger){
   v->lfo_deviation=vc_lfo_deviation(&v->lfo);
@@ -1080,6 +1084,40 @@ void vc_note_off(VCSynth *s,int n){
     if(s->param[VC_KEY_MODE]==5){vc_hold_note_off(s,n);return;}
     if(s->param[VC_KEY_MODE]){vc_mono_note_off(s,n);return;}
     for(int i=0;i<VC_VOICES;i++){VCVoice *v=&s->voice[i];if(v->note==n&&v->env.stage){v->held=0;if(!s->pedal)vc_voice_release(v);}}
+}
+/* A short per-voice glide leaves the patch's portamento and matrix alone. */
+void vc_generated_slide_on(VCSynth *s,int n,int velocity,int previous){
+ enum {SLIDE_TICKS=48};
+ vc_note_on(s,n,velocity);
+ for(unsigned i=0;i<VC_VOICES;i++){
+  VCVoice *v=&s->voice[i];
+  if(!v->env.stage||!v->held||v->note!=n)continue;
+  v->pitch=(float)previous;
+  v->control_remaining=0;
+  v->generated_glide_delta=(n-previous)*(1.f/SLIDE_TICKS);
+  v->generated_glide_left=SLIDE_TICKS;
+ }
+}
+
+/* A generated gate releases on time even when the player's pedal is held.
+ * HOLD mode still latches played keys; sequencer notes are released here. */
+void vc_generated_note_off(VCSynth *s,int n,unsigned release_limit){
+ unsigned pedal=s->pedal;
+ s->pedal=0;
+ vc_note_off(s,n);
+ s->pedal=pedal;
+ if(s->param[VC_KEY_MODE]==5){
+  s->hold_latched[n>>3]&=(uint8_t)~(1u<<(n&7));
+  vc_hold_release(s,n);
+ }
+ if(release_limit<127){
+  float coefficient=expf(-1/fmaxf(1,vc_release[release_limit]*s->sample_rate));
+  for(unsigned i=0;i<VC_VOICES;i++){
+   VCVoice *v=&s->voice[i];
+   if(v->note==n&&v->env.stage==4&&v->env.release_coef>coefficient)
+    v->env.release_coef=coefficient;
+  }
+ }
 }
 #ifdef VC_MATRIX
 void vc_note_off_velocity(VCSynth *s,int n,int velocity){

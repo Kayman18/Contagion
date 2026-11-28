@@ -31,6 +31,11 @@ for(const [fileIndex,input] of inputs.entries()){
   const bytes=m.subarray(9,265);
   const patch=Object.fromEntries(fa.map(n=>[n,Math.min(da[n].max,bytes[ua(da[n].page,da[n].no)])]));
   const name=Array.from(bytes.subarray(240,250),b=>b>=32&&b<127?String.fromCharCode(b):' ').join('').trimEnd();
+  // Give FusionBrs a softer onset in the FM-1 preset bank.
+  if(banks[fileIndex].label==='A-A' && m[8]===13 && name==='FusionBrs'){
+   patch.ampEnvAttack=43;
+   patch.filtEnvAttack=13;
+  }
   patches.push({bank:fileIndex+1,program:m[8],name,patch});
  }
 }
